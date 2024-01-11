@@ -39,33 +39,22 @@ public class ActionController : MonoBehaviour
         }
     }
 
-    
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.CompareTag("TransitionPoint"))
-        {
-            encountered = true;
-            nextScene = collision.gameObject.name;
-        }
-    }
-
-    /*
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("TransitionPoint"))
         {
             encountered = true;
-            nextScene = other.gameObject.name;
+            nextScene = other.gameObject.GetComponent<TransitionPoint>().nextScene;
         }
-    }*/
-    /*
-    private void OnCollisionExit(Collision collision)
+    }
+
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.transform.CompareTag("TransitionPoint"))
+        if (other.transform.CompareTag("TransitionPoint"))
         {
             encountered = false;
         }
-    }*/
+    }
 
 
 }
