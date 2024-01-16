@@ -18,6 +18,7 @@ public class SceneMgr : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
             actionController = FindObjectOfType<ActionController>();
         }
         else
@@ -58,4 +59,9 @@ public class SceneMgr : MonoBehaviour
         }
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 새로운 씬이 로드될 때 초기화 코드 실행
+        actionController = FindObjectOfType<ActionController>();
+    }
 }

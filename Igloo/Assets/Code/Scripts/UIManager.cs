@@ -46,6 +46,8 @@ public class UIManager : MonoBehaviour
         moveConfirmationUIInstance = Instantiate(moveConfirmationUIPrefab);
         // 초기에는 비활성화
         moveConfirmationUIInstance.SetActive(false);
+
+        actionController = FindObjectOfType<ActionController>();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
