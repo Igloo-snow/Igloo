@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8840642388262884957}
   - component: {fileID: 7841940926011155055}
   - component: {fileID: 3755366040990305316}
-  - component: {fileID: 3967294309058648307}
   m_Layer: 0
   m_Name: Graphics
   m_TagString: Untagged
@@ -98,21 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9cda72926ef4436394bbd7457ba5d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3967294309058648307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5123752384627558221}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bbb456216a16ae4d8094d0f6b941233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  encountered: 0
-  changingScene: 0
-  nextScene: 
 --- !u!1 &6014246905065879575
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,6 +191,7 @@ GameObject:
   - component: {fileID: 6382519856155826101}
   - component: {fileID: 1575104491931894234}
   - component: {fileID: 8031935879253835588}
+  - component: {fileID: 1748815934156684984}
   m_Layer: 0
   m_Name: TempPlayer
   m_TagString: Player
@@ -272,3 +257,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1748815934156684984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028252368940385533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbb456216a16ae4d8094d0f6b941233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  encountered: 0
+  changingScene: 0
+  nextScene: 
