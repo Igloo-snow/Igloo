@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c4507349286d484caed246f9f5bae50, type: 3}
-  m_Name: TutorialQuest
+  m_Name: TestQuest
   m_EditorClassIdentifier: 
-  <id>k__BackingField: TutorialQuest
+  <id>k__BackingField: TestQuest
   displayName: Tutorial
   description: "\uD29C\uD1A0\uB9AC\uC5BC \uD018\uC2A4\uD2B8\uB97C \uC9C4\uD589\uD574\uBCF4\uC790."
   questPrerequisites: []
-  questStepPrefabs: []
+  questStepPrefabs:
+  - {fileID: 3232509325606632484, guid: f1efd7f8b90e7dc49994744317c3c2f8, type: 3}
   reward: {fileID: 0}

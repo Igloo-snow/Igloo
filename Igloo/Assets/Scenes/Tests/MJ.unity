@@ -704,6 +704,7 @@ MonoBehaviour:
     - 
   visualCue: {fileID: 1572080054}
   isFirst: 0
+  isQuestRelated: 0
 --- !u!1 &556259690
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +757,7 @@ MonoBehaviour:
     - "\uC219\uBA85\uC5EC\uC790\uB300\uD559\uAD50\uC5D0 \uAC00\uBCF4\uC790."
   visualCue: {fileID: 66473203}
   isFirst: 0
+  isQuestRelated: 1
 --- !u!65 &556259693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -791,7 +793,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questInfoForPoint: {fileID: 11400000, guid: 6db6aa7b62884a4448fb75d20fb043ca, type: 2}
   startPoint: 1
-  finishPoint: 0
+  finishPoint: 1
 --- !u!1 &568550118
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,7 +1763,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740068045}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16220927, y: -0.000000019572592, z: 0.0000000032174667, w: 0.98675644}
+  m_LocalRotation: {x: 0.16220927, y: 0.000000019572596, z: -0.0000000032174672, w: 0.98675644}
   m_LocalPosition: {x: 0, y: 4.487257, z: -9.185143}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2055,19 +2057,19 @@ PrefabInstance:
       objectReference: {fileID: 404839556983830416}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016968263
+      value: 0.000000016968274
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000002852621
+      value: -0.0000000028526226
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000019025837
+      value: -0.000000019025839
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000028446405
+      value: 0.0000000028446407
       objectReference: {fileID: 0}
     - target: {fileID: 3340692996179612504, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalPosition.x

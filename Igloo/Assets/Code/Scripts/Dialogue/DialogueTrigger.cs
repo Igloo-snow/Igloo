@@ -7,7 +7,10 @@ public class DialogueTrigger : MonoBehaviour
     public Dialogue dialogue;
     public GameObject visualCue;
     public bool isFirst;
+
     private QuestPoint questPoint;
+    [SerializeField]
+    private bool isQuestRelated;
     private bool isPlayerInRange;
 
     private void Awake()
@@ -36,11 +39,24 @@ public class DialogueTrigger : MonoBehaviour
 
         if (isPlayerInRange)
         {
-            if (Input.GetKeyDown(KeyCode.E) && isFirst)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                TriggerDialogue();
-                questPoint.AcceptQuest();
-                isFirst = false;
+                if (isFirst && isQuestRelated)
+                {
+                    TriggerDialogue();
+                    questPoint.AcceptQuest();
+                    isFirst = false;
+                }
+                else if (isFirst && !isQuestRelated)
+                {
+                    TriggerDialogue();
+                    isFirst = false;
+                }
+                else if (!isFirst && isQuestRelated)
+                {
+                    questPoint.ClearQuest();
+                }
+
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
