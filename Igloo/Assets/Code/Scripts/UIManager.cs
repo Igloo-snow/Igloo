@@ -9,9 +9,14 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     private ActionController actionController;
+    private PlayerMovement player;
 
+    private Canvas canvas;
+
+    //이동확인 UI
     public GameObject moveConfirmationUIPrefab;
     private GameObject moveConfirmationUIInstance;
+
 
     void Awake()
     {
@@ -38,13 +43,16 @@ public class UIManager : MonoBehaviour
         {
             HideMoveConfirmationUI();
         }
+
     }
 
     void InitializeUI()
     {
+        canvas = FindObjectOfType<Canvas>();
         // 프리팹으로부터 인스턴스 생성
-        moveConfirmationUIInstance = Instantiate(moveConfirmationUIPrefab);
-        // 초기에는 비활성화
+        moveConfirmationUIInstance = Instantiate(moveConfirmationUIPrefab, canvas.transform);
+        //questUIInstance = Instantiate(questUIPrefab, canvas.transform);
+        // 초기 설정
         moveConfirmationUIInstance.SetActive(false);
 
         actionController = FindObjectOfType<ActionController>();
