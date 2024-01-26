@@ -12,9 +12,14 @@ public class GameEventsManager : MonoBehaviour
     {
         if(instance != null)
         {
-            Debug.Log("GameEventsManager ม฿บน");
-        }   
-        instance = this;
+            Destroy(instance);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
 
         questEvents = new QuestEvents();
     }

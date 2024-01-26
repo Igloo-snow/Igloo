@@ -19,9 +19,8 @@ public abstract class QuestStep : MonoBehaviour
         if(!isFinished)
         {
             isFinished = true;
-            //TODO - 삭제되기 전 다음 스텝 넘어가라고 Advance 신호 보내기
+
             GameEventsManager.instance.questEvents.AdvanceQuest(questId);
-            Debug.Log(questId);
 
             Destroy(this.gameObject);
         }

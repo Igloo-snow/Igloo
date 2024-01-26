@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 public class QuestUI : MonoBehaviour
 {
     [Header("Quest UI")]
-    public GameObject simpleQuest;
     public GameObject questsBoard;
     public GameObject questPage;
 
@@ -19,27 +20,34 @@ public class QuestUI : MonoBehaviour
     [SerializeField] private Button btnPrefab;
 
     [Header("SimpleQuset")]
-    public Image checkImg;
-    public TMP_Text title;
-    public TMP_Text description;
+    public Image simpleQuest;
+    public Transform parent;
+    private Dictionary<string, Image> simpleQuestMap;
 
     public bool isCheckingQuest = false;
 
-    private void Start()
+    private void Awake()
     {
         buttons = new Dictionary<string, Button>();
+        simpleQuestMap = new Dictionary<string, Image>();
         questManager = FindObjectOfType<QuestManager>();
     }
+
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         GameEventsManager.instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest += FinishQuest;
+
 
     }
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
         GameEventsManager.instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest -= FinishQuest;
@@ -52,6 +60,37 @@ public class QuestUI : MonoBehaviour
             QuestCheking();
         }
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //진행중인 퀘스트 확인 후 UI 세팅
+        if (questManager.startedQuests.Count > 0)
+        {
+            for (int i = 0; i < questManager.startedQuests.Count; i++)
+            {
+                Quest questTemp = questManager.GetQuestById(questManager.startedQuests[i]);
+
+                if (questTemp.state.Equals(QuestState.FINISHED))
+                {
+                    ButtonSetting(questTemp);
+                    buttons[questTemp.info.id].image.color = Color.gray;
+                }
+                else if (questTemp.state.Equals(QuestState.IN_PROGRESS))
+                {
+                    ButtonSetting(questTemp);
+                    CreateSimpleQuestUI(questTemp);
+                }
+                else if (questTemp.state.Equals(QuestState.CAN_FINISH))
+                {
+                    ButtonSetting(questTemp);
+                    CreateSimpleQuestUI(questTemp);
+                    UpdateSimpleQuestUI(questTemp.info.id);
+
+                }
+            }
+        }
+    }
+
     private void StartQuest(string id)
     {
         if(buttons.ContainsKey(id)) {
@@ -61,13 +100,12 @@ public class QuestUI : MonoBehaviour
 
         Quest questTemp = questManager.GetQuestById(id);
         ButtonSetting(questTemp);
-        SimpleQuestSetting(questTemp);
+        CreateSimpleQuestUI(questTemp);
     }
 
     private void AdvanceQuest(string id)
     {
-        Quest questTemp = questManager.GetQuestById(id);
-        SimpleQuestSetting(questTemp);
+        UpdateSimpleQuestUI(id);
     }
 
     private void FinishQuest(string id)
@@ -75,12 +113,11 @@ public class QuestUI : MonoBehaviour
         //버튼 관리
         if ( buttons.ContainsKey(id))
         {
-            Destroy(buttons[id].gameObject);
-            buttons.Remove(id);
+            buttons[id].image.color = Color.gray; 
         }
 
         //simpleQuest 관리
-        FinishSimpleQuest(id);
+        RemoveSimpleQuestUI(id);
     }
 
     private void ButtonSetting(Quest questTemp)
@@ -91,43 +128,36 @@ public class QuestUI : MonoBehaviour
         buttons.Add(questTemp.info.id, tempbtn);
     }
 
-    private void SimpleQuestSetting(Quest questTemp)
+    private void CreateSimpleQuestUI(Quest quest)
     {
-        //체크 이미지 변경
-        if (questTemp.state.Equals(QuestState.IN_PROGRESS))
-            checkImg.color = Color.white;
-        else if (questTemp.state.Equals(QuestState.CAN_FINISH))
-            checkImg.color = Color.yellow;
-        checkImg.gameObject.SetActive(true);
-
-        //텍스트 변경
-        title.text = questTemp.info.id;
-        description.text = questTemp.info.description;
+        Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
+        simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
+        simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.description;
+        simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
+        simpleQuestMap.Add(quest.info.id, simpleQuestUI);
     }
 
-    private void FinishSimpleQuest(string id)
+    private void UpdateSimpleQuestUI(string id)
     {
-        foreach(string questId in buttons.Keys)
+        if(simpleQuestMap.ContainsKey(id))
         {
-            Quest questTemp = questManager.GetQuestById(questId);
-            if (questTemp.state.Equals(QuestState.IN_PROGRESS) || questTemp.state.Equals(QuestState.CAN_FINISH))
-            {
-                SimpleQuestSetting(questTemp);
-                return;
-            }
-
+            simpleQuestMap[id].transform.Find("Check").GetComponent<Image>().color = Color.yellow;
         }
-        
-        checkImg.color = Color.white;
-        checkImg.gameObject.SetActive(true);
-        title.text = "진행중인 퀘스트가 없습니다";
-        description.text = null;
+    }
+
+    private void RemoveSimpleQuestUI(string id)
+    {
+        if (simpleQuestMap.ContainsKey(id))
+        {
+            Destroy(simpleQuestMap[id].gameObject);
+            simpleQuestMap.Remove(id);
+        }
     }
 
     public void QuestCheking()
     {
         isCheckingQuest = !isCheckingQuest;
-        simpleQuest.SetActive(!isCheckingQuest);
+        parent.gameObject.SetActive(!isCheckingQuest);
         questsBoard.SetActive(isCheckingQuest);
     }
     
