@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,7 @@ public class QuestManager : MonoBehaviour
     private Dictionary<string, Quest> questMap;
     public List<string> startedQuests = new List<string>();
     public List<string> inProgressQuests = new List<string>();
-    private int sqIndex;
-    private int pqIndex;
+    private string currentScene;
 
 
     private void Awake()
@@ -22,6 +22,7 @@ public class QuestManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             questMap = CreateQuestMap();
+            currentScene = SceneManager.GetActiveScene().name;
         }
         else
         {
@@ -31,6 +32,7 @@ public class QuestManager : MonoBehaviour
 
     private void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         GameEventsManager.instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest += AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest += FinishQuest;
@@ -38,6 +40,7 @@ public class QuestManager : MonoBehaviour
 
     private void OnDisable()
     {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         GameEventsManager.instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvanceQuest;
         GameEventsManager.instance.questEvents.onFinishQuest -= FinishQuest;
@@ -62,6 +65,26 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        StepSetActive(scene.name);
+    }
+
+    private void StepSetActive(string sceneName) {
+        int stepCount = transform.childCount;
+        for(int i = 0; i < stepCount; i++)
+        {
+            if(transform.GetChild(i).GetComponent<QuestStep>().targetScene == sceneName)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
+    }
     private void ChangeQuestState(string id, QuestState state)
     {
         Quest quest = GetQuestById(id);
@@ -87,9 +110,10 @@ public class QuestManager : MonoBehaviour
 
     private void StartQuest(string id)
     {
-        Debug.Log("씬 이동 후 퀘스트 스탭 프리팹 생성 안되는 문제의 원인 찾기 시도");
         Quest quest = GetQuestById(id);
         quest.InstantiateCurrnetQuestStep(this.transform);
+        StepSetActive(currentScene);
+
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
         startedQuests.Add(id);
         inProgressQuests.Add(id);
