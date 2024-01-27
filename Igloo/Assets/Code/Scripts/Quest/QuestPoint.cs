@@ -17,7 +17,7 @@ public class QuestPoint : MonoBehaviour
     private QuestState currentQuestState;
     private QuestManager questManager;
 
-    private void Awake()
+    private void Start()
     {
         questId = questInfoForPoint.id;
         //새로 시작할때마다 questManager에서 현 상태 받아오기

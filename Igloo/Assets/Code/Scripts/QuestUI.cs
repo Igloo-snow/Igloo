@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class QuestUI : MonoBehaviour
 {
+    private QuestManager questManager;
+
     [Header("Quest UI")]
     public GameObject questsBoard;
     public GameObject questPage;
-
-    private QuestManager questManager;
 
     [Header("Quests Board")]
     public Transform questButtonGroup;  //content transform
@@ -124,7 +125,13 @@ public class QuestUI : MonoBehaviour
     {
         Button tempbtn = Instantiate(btnPrefab, questButtonGroup.transform);
         tempbtn.transform.Find("Title").GetComponent<TMP_Text>().text = questTemp.info.id;
-        tempbtn.transform.Find("Detail").GetComponent<TMP_Text>().text = questTemp.info.description;
+        StringBuilder stepDescriptions = new StringBuilder("");
+        for (int i = 0; i < questTemp.info.questStepPrefabs.Length; i++)
+        {
+            stepDescriptions.Append("Step " + (i+1) + ": " + questTemp.info.questStepPrefabs[i].GetComponent<QuestStep>().stepDescription + "\n");
+        }
+        //stepDescriptions += questTemp.info.questStepPrefabs[questTemp.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
+        tempbtn.transform.Find("Detail").GetComponent<TMP_Text>().text = stepDescriptions.ToString();
         buttons.Add(questTemp.info.id, tempbtn);
     }
 
@@ -132,16 +139,27 @@ public class QuestUI : MonoBehaviour
     {
         Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
         simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
-        simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.description;
+        simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
         simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
         simpleQuestMap.Add(quest.info.id, simpleQuestUI);
     }
 
     private void UpdateSimpleQuestUI(string id)
     {
+        //만약 다음 스텝이 있으면 그걸로 상세내용 바꾸기
+        //없으면 체크 색 변경
         if(simpleQuestMap.ContainsKey(id))
         {
-            simpleQuestMap[id].transform.Find("Check").GetComponent<Image>().color = Color.yellow;
+            Quest tempQuest = questManager.GetQuestById(id);
+            
+            if (tempQuest.state.Equals(QuestState.CAN_FINISH)){
+                simpleQuestMap[id].transform.Find("Check").GetComponent<Image>().color = Color.yellow;
+            }
+            else
+            {
+                QuestStep questStep = tempQuest.info.questStepPrefabs[tempQuest.currentQuestStepIndex].GetComponent<QuestStep>();
+                simpleQuestMap[id].transform.Find("Detail").GetComponent<TMP_Text>().text = questStep.stepDescription;
+            }
         }
     }
 

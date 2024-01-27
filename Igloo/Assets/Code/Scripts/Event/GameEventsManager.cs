@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameEventsManager : MonoBehaviour
 {
@@ -10,17 +11,16 @@ public class GameEventsManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
-        {
-            Destroy(instance);
-        }
-        else
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            questEvents = new QuestEvents();
         }
-
-
-        questEvents = new QuestEvents();
+        else
+        {
+            Destroy(gameObject);
+        }
+  
     }
 }

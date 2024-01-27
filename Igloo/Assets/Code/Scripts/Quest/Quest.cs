@@ -7,7 +7,7 @@ public class Quest
     public QuestInfoSO info;
     public QuestState state;
     public string currentScene;
-    private int currentQuestStepIndex;
+    public int currentQuestStepIndex;
 
     public Quest(QuestInfoSO questInfo)
     {
