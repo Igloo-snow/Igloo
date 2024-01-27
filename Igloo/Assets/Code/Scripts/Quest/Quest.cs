@@ -6,7 +6,8 @@ public class Quest
 {
     public QuestInfoSO info;
     public QuestState state;
-    private int currentQuestStepIndex;
+    public string currentScene;
+    public int currentQuestStepIndex;
 
     public Quest(QuestInfoSO questInfo)
     {
@@ -32,12 +33,26 @@ public class Quest
         {
             //QuestStep questStep = Object.Instantiate<GameObject>(questStepPrefab, parentTransform).GetComponent<QuestStep>(); °­ÀÇ ¿øº» ÄÚµå
             QuestStep questStep = Object.Instantiate(questStepPrefab, parentTransform).GetComponent<QuestStep>();
+            
             questStep.InitializeQuestStep(info.id);
         }
         else
         {
             Debug.Log("Äù½ºÆ® ½ºÅÇ ÇÁ¸®ÆÕ null");
         }
+    }
+
+    private void QuestStepSetActive(QuestStep questStep)
+    {
+        if(questStep.targetScene == currentScene)
+        {
+            questStep.gameObject.SetActive(true);
+        }
+        else
+        {
+            questStep.gameObject.SetActive(false);
+        }
+        
     }
 
     private GameObject GetCurrentQuestStepPrefab()

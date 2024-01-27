@@ -15,10 +15,14 @@ public class QuestPoint : MonoBehaviour
 
     private string questId;
     private QuestState currentQuestState;
+    private QuestManager questManager;
 
-    private void Awake()
+    private void Start()
     {
         questId = questInfoForPoint.id;
+        //새로 시작할때마다 questManager에서 현 상태 받아오기
+        questManager = FindObjectOfType<QuestManager>();
+        currentQuestState = questManager.GetQuestById(questId).state;
     }
 
     private void OnEnable()
@@ -36,7 +40,7 @@ public class QuestPoint : MonoBehaviour
         if(quest.info.id.Equals(questId))
         {
             currentQuestState = quest.state;
-            Debug.Log(questId + currentQuestState);
+            Debug.Log("In QuestPoint : " + questId + currentQuestState);
         }
     }
     public void AcceptQuest()
