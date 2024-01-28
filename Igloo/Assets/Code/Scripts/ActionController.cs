@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class ActionController : MonoBehaviour
     public bool encountered = false;
     public bool changingScene;
     public string nextScene;
+
+    private void Start()
+    {
+    }
 
     void Update()
     {

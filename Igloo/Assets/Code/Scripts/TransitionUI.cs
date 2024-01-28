@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class UIManager : MonoBehaviour
+public class TransitionUI : MonoBehaviour
 {
-    public static UIManager instance;
+    [SerializeField]
     private ActionController actionController;
     private PlayerMovement player;
-
+    [SerializeField]
     private Canvas canvas;
 
     //이동확인 UI
@@ -20,17 +20,8 @@ public class UIManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            actionController = FindObjectOfType<ActionController>();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        InitializeUI();
+
     }
 
     void Update()
@@ -48,20 +39,11 @@ public class UIManager : MonoBehaviour
 
     void InitializeUI()
     {
-        canvas = FindObjectOfType<Canvas>();
         // 프리팹으로부터 인스턴스 생성
         moveConfirmationUIInstance = Instantiate(moveConfirmationUIPrefab, canvas.transform);
         //questUIInstance = Instantiate(questUIPrefab, canvas.transform);
         // 초기 설정
         moveConfirmationUIInstance.SetActive(false);
-
-        actionController = FindObjectOfType<ActionController>();
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // 새로운 씬이 로드될 때 초기화 코드 실행
-        InitializeUI();
     }
 
     public void ShowMoveConfirmationUI()

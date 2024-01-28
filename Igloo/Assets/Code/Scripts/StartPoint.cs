@@ -1,29 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartPoint : MonoBehaviour
 {
+    [SerializeField]
     private ActionController actionController;
     [SerializeField]
-    [Tooltip("씬 이름과 동일해야함")]
-    private string startPoint;
+    [Tooltip("이전 씬 이름 + 시작 위치 설정한 오브젝트를 넣으세요")]
+    private GameObject[] startPoints;
+    private string previousScene;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        actionController = FindObjectOfType<ActionController>();
-        if(actionController.nextScene == startPoint)
-        {
-            actionController.GetComponent<CharacterController>().enabled = false;
-            actionController.transform.position = this.transform.position;
-            actionController.GetComponent<CharacterController>().enabled = true;
-        }
+        SetPlayerPos();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetPlayerPos()
     {
-        
+        previousScene = SceneMgr.instance.previousScene;
+        for (int i = 0; i < startPoints.Length; i++)
+        {
+            if (previousScene.Equals(startPoints[i].name))
+            {
+                actionController.GetComponent<CharacterController>().enabled = false;
+                actionController.transform.position = startPoints[i].transform.position;
+                actionController.transform.forward = startPoints[i].transform.forward;
+                actionController.GetComponent<CharacterController>().enabled = true;
+                return;
+            }
+        }
+        Debug.Log("일치하는 시작 위치 없음");
     }
 }
