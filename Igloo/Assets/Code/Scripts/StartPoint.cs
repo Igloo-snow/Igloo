@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartPoint : MonoBehaviour
 {
+    [SerializeField]
     private ActionController actionController;
     [SerializeField]
     [Tooltip("이전 씬 이름 + 시작 위치 설정한 오브젝트를 넣으세요")]
@@ -13,35 +14,23 @@ public class StartPoint : MonoBehaviour
 
     private void Start()
     {
-        
-        actionController = FindObjectOfType<ActionController>();
         SetPlayerPos();
     }
 
-    public void SetPlayerPos()
+    private void SetPlayerPos()
     {
         previousScene = SceneMgr.instance.previousScene;
-        //Debug.Log(previousScene + SceneManager.GetActiveScene().name + startPoints.Length + "  test1");
         for (int i = 0; i < startPoints.Length; i++)
         {
-            //Debug.Log(startPoints[i].gameObject.name + "startPoint test2" + previousScene);
-            if (previousScene == startPoints[i].name)
+            if (previousScene.Equals(startPoints[i].name))
             {
-                Debug.Log("startPoint test3");
-
-                
                 actionController.GetComponent<CharacterController>().enabled = false;
                 actionController.transform.position = startPoints[i].transform.position;
-                actionController.transform.rotation = startPoints[i].transform.rotation;
+                actionController.transform.forward = startPoints[i].transform.forward;
                 actionController.GetComponent<CharacterController>().enabled = true;
-                
-                //startPoints[i].SetActive(true);
-            }
-            else
-            {
-                startPoints[i].SetActive(false);
+                return;
             }
         }
-
+        Debug.Log("일치하는 시작 위치 없음");
     }
 }
