@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
@@ -9,7 +10,16 @@ public class ActionController : MonoBehaviour
 
     public bool encountered = false;
     public bool changingScene;
+    //public string previousScene;
     public string nextScene;
+
+    [SerializeField]
+    private GameObject[] startPoints;
+
+    private void Start()
+    {
+        //SetPlayerPos(SceneMgr.instance.previousScene) ;
+    }
 
     void Update()
     {
@@ -45,5 +55,24 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    public void SetPlayerPos(string previousScene)
+    {
+
+        Debug.Log(previousScene + SceneManager.GetActiveScene().name + startPoints.Length + "  test1");
+        for (int i = 0; i < startPoints.Length; i++)
+        {
+            Debug.Log("startPoint test2");
+            if (previousScene == startPoints[i].name)
+            {
+                Debug.Log("startPoint test3");
+
+                GetComponent<CharacterController>().enabled = false;
+                transform.position = startPoints[i].transform.position;
+                GetComponent<CharacterController>().enabled = true;
+                break;
+            }
+        }
+
+    }
 
 }

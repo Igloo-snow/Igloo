@@ -8,8 +8,11 @@ public class SceneMgr : MonoBehaviour
     public static SceneMgr instance;
 
     private ActionController actionController;
+    private StartPoint startPoint;
 
     private string sceneName;
+    public string previousScene;
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,7 @@ public class SceneMgr : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
             actionController = FindObjectOfType<ActionController>();
+            startPoint = FindObjectOfType<StartPoint>();
         }
         else
         {
@@ -32,6 +36,7 @@ public class SceneMgr : MonoBehaviour
     {
         if(actionController.changingScene && actionController.nextScene != "")
         {
+            previousScene = SceneManager.GetActiveScene().name;
             StartCoroutine(LoadScene());
         }
     }
@@ -54,6 +59,7 @@ public class SceneMgr : MonoBehaviour
                 //변수 초기화
                 actionController.encountered = false;
                 asyncOperation.allowSceneActivation = true;
+
             }
             yield return null;
         }
@@ -63,5 +69,6 @@ public class SceneMgr : MonoBehaviour
     {
         // 새로운 씬이 로드될 때 초기화 코드 실행
         actionController = FindObjectOfType<ActionController>();
+        Debug.Log("씬 세팅");
     }
 }
