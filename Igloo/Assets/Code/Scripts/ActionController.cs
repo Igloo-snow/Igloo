@@ -13,8 +13,8 @@ public class ActionController : MonoBehaviour
     //public string previousScene;
     public string nextScene;
 
-    [SerializeField]
-    private GameObject[] startPoints;
+    //[SerializeField]
+    //private GameObject[] startPoints;
 
     private void Start()
     {
@@ -55,6 +55,7 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    /*
     public void SetPlayerPos(string previousScene)
     {
 
@@ -74,5 +75,6 @@ public class ActionController : MonoBehaviour
         }
 
     }
+    */
 
 }

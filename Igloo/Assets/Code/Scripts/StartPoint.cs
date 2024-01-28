@@ -13,6 +13,7 @@ public class StartPoint : MonoBehaviour
 
     private void Start()
     {
+        
         actionController = FindObjectOfType<ActionController>();
         SetPlayerPos();
     }
@@ -28,10 +29,17 @@ public class StartPoint : MonoBehaviour
             {
                 Debug.Log("startPoint test3");
 
+                
                 actionController.GetComponent<CharacterController>().enabled = false;
                 actionController.transform.position = startPoints[i].transform.position;
+                actionController.transform.rotation = startPoints[i].transform.rotation;
                 actionController.GetComponent<CharacterController>().enabled = true;
-                break;
+                
+                //startPoints[i].SetActive(true);
+            }
+            else
+            {
+                startPoints[i].SetActive(false);
             }
         }
 
