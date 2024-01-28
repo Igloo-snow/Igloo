@@ -137,11 +137,22 @@ public class QuestUI : MonoBehaviour
 
     private void CreateSimpleQuestUI(Quest quest)
     {
-        Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
-        simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
-        simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
-        simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
-        simpleQuestMap.Add(quest.info.id, simpleQuestUI);
+            Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
+            simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
+            if(quest.state.Equals(QuestState.CAN_FINISH))
+
+            {
+                simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex - 1].GetComponent<QuestStep>().stepDescription;
+                simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.yellow;
+            }
+            else
+            {
+                simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
+                simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
+                
+            }
+            simpleQuestMap.Add(quest.info.id, simpleQuestUI);
+
     }
 
     private void UpdateSimpleQuestUI(string id)
