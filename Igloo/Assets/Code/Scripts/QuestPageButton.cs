@@ -6,27 +6,33 @@ using TMPro;
 
 public class QuestPageButton : MonoBehaviour
 {
+    private QuestUI questUI;
+
     private bool isActive = false;
 
-    public GameObject parent;
-    public GameObject page;
-
-    private QuestUI ui;
     //public GameObject page;
 
     private void Start()
     {
-        ui = FindObjectOfType<QuestUI>();
+        questUI = FindObjectOfType<QuestUI>();
     }
     private void Update()
     {
         //작동 안함
-        if (!ui.isCheckingQuest)
-            isActive = false;
+
     }
     public void PressButton()
     {
-        isActive = !isActive;
-        this.gameObject.SetActive(isActive);
+        if(isActive == false)
+        {
+            isActive = true;
+            Debug.Log("isActive");
+            questUI.OpenQuestPage();
+        }
+        else
+        {
+            isActive = false;
+            questUI.CloseQuestPage();
+        }
     }
 }

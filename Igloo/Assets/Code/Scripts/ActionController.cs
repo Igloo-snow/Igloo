@@ -5,9 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
-    //퀘스트 시스템 확인을 위한 임시 변수
-    public int coins = 0;
-
     public bool encountered = false;
     public bool changingScene;
     public string nextScene;
@@ -25,11 +22,6 @@ public class ActionController : MonoBehaviour
         else
         {
             changingScene = false;
-        }
-
-        if(Input.GetKeyDown(KeyCode.S))
-        {
-            coins++;
         }
     }
 

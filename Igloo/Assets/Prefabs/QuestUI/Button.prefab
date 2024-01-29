@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 4820236843341513658}
   - component: {fileID: 5278906692745238163}
   - component: {fileID: 7664201491551021700}
+  - component: {fileID: 1441642853077099304}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -332,7 +333,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1250977110454187963, guid: f23e62feee94fc045a27cf6a0040f753, type: 3}
+      - m_Target: {fileID: 1441642853077099304}
         m_TargetAssemblyTypeName: QuestPageButton, Assembly-CSharp
         m_MethodName: PressButton
         m_Mode: 1
@@ -344,6 +345,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1441642853077099304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5147697066920410413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4052020934f896c46bb66b1f1d4edd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8156403338461091085
 GameObject:
   m_ObjectHideFlags: 0
