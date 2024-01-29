@@ -154,6 +154,7 @@ public class QuestManager : MonoBehaviour
     {
         Debug.Log(quest.info.id + " 퀘스트에 대한 보상 지급");
     }
+
     private Dictionary<string, Quest> CreateQuestMap()
     {
         QuestInfoSO[] allQuests = Resources.LoadAll<QuestInfoSO>("Quests");
