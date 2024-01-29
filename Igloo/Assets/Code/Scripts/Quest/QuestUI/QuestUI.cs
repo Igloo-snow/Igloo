@@ -6,30 +6,35 @@ using TMPro;
 using System.Text;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class QuestUI : MonoBehaviour
 {
+    public static bool isCheckingQuest = false;
     private QuestManager questManager;
 
     [Header("Quest UI")]
     public GameObject questsBoard;
-    public GameObject questPage;
+    public Dictionary<string, GameObject> pages;
 
     [Header("Quests Board")]
     public Transform questButtonGroup;  //content transform
     private Dictionary<string, Button> buttons;
     [SerializeField] private Button btnPrefab;
 
+    [Header("Quest Page")]
+    public Transform questPage;
+    [SerializeField] private GameObject pagePrefab;
+
     [Header("SimpleQuset")]
     public Image simpleQuest;
     public Transform parent;
     private Dictionary<string, Image> simpleQuestMap;
 
-    public bool isCheckingQuest = false;
-
     private void Awake()
     {
         buttons = new Dictionary<string, Button>();
+        pages = new Dictionary<string, GameObject>();
         simpleQuestMap = new Dictionary<string, Image>();
         questManager = FindObjectOfType<QuestManager>();
     }
@@ -89,12 +94,21 @@ public class QuestUI : MonoBehaviour
 
                 }
             }
+            for (int i = 0; i < questManager.startedQuests.Count; i++)
+            {
+                Quest questTemp = questManager.GetQuestById(questManager.startedQuests[i]);
+                if (questTemp.state.Equals(QuestState.FINISHED))
+                {
+                    buttons[questTemp.info.id].transform.SetAsLastSibling();
+                }
+            }
         }
     }
 
     private void StartQuest(string id)
     {
-        if(buttons.ContainsKey(id)) {
+        if (buttons.ContainsKey(id))
+        {
             Debug.Log("this quest is already accepted");
             return;
         }
@@ -112,9 +126,10 @@ public class QuestUI : MonoBehaviour
     private void FinishQuest(string id)
     {
         //버튼 관리
-        if ( buttons.ContainsKey(id))
+        if (buttons.ContainsKey(id))
         {
-            buttons[id].image.color = Color.gray; 
+            buttons[id].image.color = Color.gray;
+            buttons[id].transform.SetAsLastSibling();
         }
 
         //simpleQuest 관리
@@ -124,34 +139,50 @@ public class QuestUI : MonoBehaviour
     private void ButtonSetting(Quest questTemp)
     {
         Button tempbtn = Instantiate(btnPrefab, questButtonGroup.transform);
+        
+
         tempbtn.transform.Find("Title").GetComponent<TMP_Text>().text = questTemp.info.id;
+        
         StringBuilder stepDescriptions = new StringBuilder("");
         for (int i = 0; i < questTemp.info.questStepPrefabs.Length; i++)
         {
-            stepDescriptions.Append("Step " + (i+1) + ": " + questTemp.info.questStepPrefabs[i].GetComponent<QuestStep>().stepDescription + "\n");
+            stepDescriptions.Append("Step " + (i + 1) + ": " + questTemp.info.questStepPrefabs[i].GetComponent<QuestStep>().stepDescription + "\n");
         }
         //stepDescriptions += questTemp.info.questStepPrefabs[questTemp.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
         tempbtn.transform.Find("Detail").GetComponent<TMP_Text>().text = stepDescriptions.ToString();
+        
         buttons.Add(questTemp.info.id, tempbtn);
+        PageSetting(questTemp, stepDescriptions.ToString());
+    }
+
+    private void PageSetting(Quest questTemp, string detail)
+    {
+        GameObject image = Instantiate(pagePrefab, questPage);
+        image.transform.Find("title").GetComponent<TMP_Text>().text = "Re: [" + questTemp.info.displayName + "] 진행 상황";
+        image.transform.Find("From").GetComponent<TMP_Text>().text = "보낸 사람 : ";
+        image.transform.Find("Detail1").GetComponent<TMP_Text>().text = questTemp.info.id;
+        image.transform.Find("Detail2").GetComponent<TMP_Text>().text = detail;
+        pages.Add(questTemp.info.id, image);
+        pages[questTemp.info.id].gameObject.SetActive(false);
     }
 
     private void CreateSimpleQuestUI(Quest quest)
     {
-            Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
-            simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
-            if(quest.state.Equals(QuestState.CAN_FINISH))
+        Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
+        simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
+        if (quest.state.Equals(QuestState.CAN_FINISH))
 
-            {
-                simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex - 1].GetComponent<QuestStep>().stepDescription;
-                simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.yellow;
-            }
-            else
-            {
-                simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
-                simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
-                
-            }
-            simpleQuestMap.Add(quest.info.id, simpleQuestUI);
+        {
+            simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex - 1].GetComponent<QuestStep>().stepDescription;
+            simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.yellow;
+        }
+        else
+        {
+            simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
+            simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
+
+        }
+        simpleQuestMap.Add(quest.info.id, simpleQuestUI);
 
     }
 
@@ -159,11 +190,12 @@ public class QuestUI : MonoBehaviour
     {
         //만약 다음 스텝이 있으면 그걸로 상세내용 바꾸기
         //없으면 체크 색 변경
-        if(simpleQuestMap.ContainsKey(id))
+        if (simpleQuestMap.ContainsKey(id))
         {
             Quest tempQuest = questManager.GetQuestById(id);
-            
-            if (tempQuest.state.Equals(QuestState.CAN_FINISH)){
+
+            if (tempQuest.state.Equals(QuestState.CAN_FINISH))
+            {
                 simpleQuestMap[id].transform.Find("Check").GetComponent<Image>().color = Color.yellow;
             }
             else
@@ -188,6 +220,64 @@ public class QuestUI : MonoBehaviour
         isCheckingQuest = !isCheckingQuest;
         parent.gameObject.SetActive(!isCheckingQuest);
         questsBoard.SetActive(isCheckingQuest);
+        if (!isCheckingQuest)
+        {
+            AllPageClose();
+        }
     }
-    
+
+    private void AllPageClose()
+    {
+        foreach (GameObject page in pages.Values)
+        {
+            page.SetActive(false);
+            QuestPageButton.pageActive = false;
+        }
+    }
+
+    public void PressPageButton()
+    {
+        Button ClickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+        string targetString = FindQuestIdByButton(ClickedButton);
+
+        if (QuestPageButton.pageActive == false)
+        {
+            //바로 켜기
+            if (pages.ContainsKey(targetString))
+            {
+                pages[targetString].gameObject.SetActive(true);
+                QuestPageButton.pageActive = true;
+            }
+        }
+        else
+        {
+            if (pages[targetString].gameObject.activeSelf == true)
+            {
+                //닫기
+                pages[targetString].gameObject.SetActive(false);
+                QuestPageButton.pageActive = false;
+            }
+            else
+            {
+                // 다른 거 닫고 이거 열기
+                AllPageClose();
+                pages[targetString].gameObject.SetActive(true);
+                QuestPageButton.pageActive = true;
+
+            }
+        }
+    }
+
+    private string FindQuestIdByButton(Button btn)
+    {
+        foreach (KeyValuePair<string, Button> pair in buttons)
+        {
+            if (EqualityComparer<Button>.Default.Equals(pair.Value, btn))
+            {
+                return pair.Key;
+            }
+        }
+        return null;
+    }
+
 }

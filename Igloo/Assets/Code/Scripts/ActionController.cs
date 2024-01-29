@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
-    //퀘스트 시스템 확인을 위한 임시 변수
-    public int coins = 0;
+    private CinemachineFreeLook freeLook;
 
     public bool encountered = false;
     public bool changingScene;
@@ -14,10 +14,22 @@ public class ActionController : MonoBehaviour
 
     private void Start()
     {
+        freeLook = FindObjectOfType<CinemachineFreeLook>(); 
     }
 
     void Update()
     {
+        if (QuestUI.isCheckingQuest)
+        {
+            freeLook.enabled = false;
+            GetComponent<CharacterController>().enabled = false;
+        }
+        else
+        {
+            freeLook.enabled = true;
+            GetComponent<CharacterController>().enabled = true;
+        }
+
         if(encountered == true && Input.GetKeyDown(KeyCode.E))
         {
             changingScene = true;
@@ -27,9 +39,9 @@ public class ActionController : MonoBehaviour
             changingScene = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            coins++;
+
         }
     }
 
@@ -48,6 +60,19 @@ public class ActionController : MonoBehaviour
         {
             encountered = false;
         }
+    }
+
+    public TransitionPoint GetInteractableObject()
+    {
+        float interactRange = 2f;
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
+        foreach(Collider collider in colliderArray)
+        {
+            if(collider.TryGetComponent(out TransitionPoint transitionInteractable)){
+                return transitionInteractable;
+            }
+        }
+        return null;
     }
 
 
