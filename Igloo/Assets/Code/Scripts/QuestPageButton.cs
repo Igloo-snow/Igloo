@@ -26,7 +26,6 @@ public class QuestPageButton : MonoBehaviour
         if(isActive == false)
         {
             isActive = true;
-            Debug.Log("isActive");
             questUI.OpenQuestPage();
         }
         else

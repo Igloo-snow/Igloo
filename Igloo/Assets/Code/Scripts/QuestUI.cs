@@ -217,7 +217,6 @@ public class QuestUI : MonoBehaviour
 
     public void OpenQuestPage()
     {
-        Debug.Log("여기가 문제?1");
         Button ClickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         string targetString = FindQuestIdByButton(ClickedButton);
         if (pages.ContainsKey(targetString))

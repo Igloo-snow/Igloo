@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class StartPoint : MonoBehaviour
 {
+    [SerializeField]
+    private CinemachineFreeLook[] freelooks;
     [SerializeField]
     private ActionController actionController;
     [SerializeField]
@@ -27,10 +30,14 @@ public class StartPoint : MonoBehaviour
                 actionController.GetComponent<CharacterController>().enabled = false;
                 actionController.transform.position = startPoints[i].transform.position;
                 actionController.transform.forward = startPoints[i].transform.forward;
+                freelooks[i].LookAt = actionController.transform;
+                freelooks[i].Follow = actionController.transform;
+                freelooks[i].Priority++;
+
+
                 actionController.GetComponent<CharacterController>().enabled = true;
                 return;
             }
         }
-        Debug.Log("일치하는 시작 위치 없음");
     }
 }
