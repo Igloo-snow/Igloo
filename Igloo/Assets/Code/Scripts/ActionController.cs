@@ -19,7 +19,7 @@ public class ActionController : MonoBehaviour
 
     void Update()
     {
-        if (QuestUI.isCheckingQuest)
+        if (QuestUI.isCheckingQuest || DialogueManager.GetInstance().isPlaying)
         {
             freeLook.enabled = false;
             GetComponent<CharacterController>().enabled = false;
