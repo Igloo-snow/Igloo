@@ -10,19 +10,35 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
     public Animator animator;
     private Queue<string> sentences;
+    public bool isPlaying { get; private set; }
+    private static DialogueManager instance;
+
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("Found more than one Dialogue Manager in the scene");
+        }
+        instance = this;
+    }
 
     void Start()
     {
+        isPlaying = false;
         sentences = new Queue<string>();
     }
 
     void Update()
     {
-
+        if (!isPlaying)
+        {
+            return;
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
     {
+        isPlaying = true;
         animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
         sentences.Clear();
@@ -45,8 +61,9 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSentence(sentence));
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
+        isPlaying = false;
         animator.SetBool("IsOpen", false);
     }
 
@@ -58,5 +75,10 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter;
             yield return null;
         }
+    }
+
+    public static DialogueManager GetInstance()
+    {
+        return instance;
     }
 }

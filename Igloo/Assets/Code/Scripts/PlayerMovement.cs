@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
         float veritcalInput = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
 
+        if (DialogueManager.GetInstance().isPlaying)
+        {
+            return;
+        }
+
         if (direction.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;

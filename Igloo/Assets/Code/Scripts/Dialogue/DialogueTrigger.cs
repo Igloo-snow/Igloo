@@ -31,37 +31,25 @@ public class DialogueTrigger : MonoBehaviour
         if (isPlayerInRange)
         {
             visualCue.SetActive(true);
-        }
-        else
-        {
-            visualCue.SetActive(false);
-        }
-
-        if (isPlayerInRange)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (!DialogueManager.GetInstance().isPlaying)
             {
-                if (isFirst && isQuestRelated)
+                if (Input.GetKeyDown(KeyCode.E))
                 {
-                    TriggerDialogue();
-                    questPoint.AcceptQuest();
-                    isFirst = false;
-                }
-                else if (isFirst && !isQuestRelated)
-                {
-                    TriggerDialogue();
-                    isFirst = false;
-                }
-                else if (!isFirst && isQuestRelated)
-                {
+                    if (isFirst && isQuestRelated)
+                    {
+                        TriggerDialogue();
+                    }
                     questPoint.ClearQuest();
                 }
-
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 FindObjectOfType<DialogueManager>().DisplayNextSentence();
             }
+        }
+        else
+        {
+            visualCue.SetActive(false);
         }
     }
 
@@ -72,14 +60,6 @@ public class DialogueTrigger : MonoBehaviour
             isPlayerInRange = true;
         }
     }
-
-   /* private void OnTriggerStay(Collider collider)
-    {
-        if  (collider.CompareTag("Player"))
-        {
-            
-        }
-    }*/
 
     private void OnTriggerExit(Collider collider)
     {
@@ -93,5 +73,9 @@ public class DialogueTrigger : MonoBehaviour
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
-
+    
+    public void setIsFirstFalse()
+    {
+        isFirst = false;
+    }
 }
