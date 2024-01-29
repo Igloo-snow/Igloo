@@ -233,7 +233,6 @@ public class QuestUI : MonoBehaviour
     
     public void CloseQuestPage()
     {
-        Debug.Log("여기가 문제?2");
         Button ClickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         string targetString = FindQuestIdByButton(ClickedButton);
         if (pages.ContainsKey(targetString))
