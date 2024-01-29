@@ -61,7 +61,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(TypeSentence(sentence));
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         isPlaying = false;
         animator.SetBool("IsOpen", false);

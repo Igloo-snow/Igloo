@@ -38,19 +38,8 @@ public class DialogueTrigger : MonoBehaviour
                     if (isFirst && isQuestRelated)
                     {
                         TriggerDialogue();
-                        questPoint.AcceptQuest();
-                        isFirst = false;
                     }
-                    else if (isFirst && !isQuestRelated)
-                    {
-                        TriggerDialogue();
-                        isFirst = false;
-                    }
-                    else if (!isFirst && isQuestRelated)
-                    {
-                        questPoint.ClearQuest();
-                    }
-
+                    questPoint.ClearQuest();
                 }
             }
             if (Input.GetKeyDown(KeyCode.Space))
@@ -84,5 +73,9 @@ public class DialogueTrigger : MonoBehaviour
     {
         FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
-
+    
+    public void setIsFirstFalse()
+    {
+        isFirst = false;
+    }
 }
