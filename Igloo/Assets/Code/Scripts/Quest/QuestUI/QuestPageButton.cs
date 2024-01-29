@@ -8,7 +8,7 @@ public class QuestPageButton : MonoBehaviour
 {
     private QuestUI questUI;
 
-    private bool isActive = false;
+    public static bool pageActive = false;
 
     //public GameObject page;
 
@@ -23,15 +23,6 @@ public class QuestPageButton : MonoBehaviour
     }
     public void PressButton()
     {
-        if(isActive == false)
-        {
-            isActive = true;
-            questUI.OpenQuestPage();
-        }
-        else
-        {
-            isActive = false;
-            questUI.CloseQuestPage();
-        }
+        questUI.PressPageButton();
     }
 }

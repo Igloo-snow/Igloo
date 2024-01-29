@@ -15,7 +15,7 @@ public class StartPoint : MonoBehaviour
     private GameObject[] startPoints;
     private string previousScene;
 
-    private void Start()
+    private void Awake()
     {
         SetPlayerPos();
     }
@@ -37,6 +37,10 @@ public class StartPoint : MonoBehaviour
 
                 actionController.GetComponent<CharacterController>().enabled = true;
                 return;
+            }
+            else
+            {
+                freelooks[i].gameObject.SetActive(false);
             }
         }
     }

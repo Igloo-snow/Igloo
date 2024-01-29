@@ -10,6 +10,7 @@ using UnityEngine.EventSystems;
 
 public class QuestUI : MonoBehaviour
 {
+    public static bool isCheckingQuest = false;
     private QuestManager questManager;
 
     [Header("Quest UI")]
@@ -18,17 +19,17 @@ public class QuestUI : MonoBehaviour
 
     [Header("Quests Board")]
     public Transform questButtonGroup;  //content transform
-    public Transform questPage;
     private Dictionary<string, Button> buttons;
     [SerializeField] private Button btnPrefab;
+
+    [Header("Quest Page")]
+    public Transform questPage;
     [SerializeField] private GameObject pagePrefab;
 
     [Header("SimpleQuset")]
     public Image simpleQuest;
     public Transform parent;
     private Dictionary<string, Image> simpleQuestMap;
-
-    public bool isCheckingQuest = false;
 
     private void Awake()
     {
@@ -138,12 +139,10 @@ public class QuestUI : MonoBehaviour
     private void ButtonSetting(Quest questTemp)
     {
         Button tempbtn = Instantiate(btnPrefab, questButtonGroup.transform);
-        GameObject image = Instantiate(pagePrefab, questPage);
+        
 
         tempbtn.transform.Find("Title").GetComponent<TMP_Text>().text = questTemp.info.id;
-        image.transform.Find("title").GetComponent<TMP_Text>().text = "Re: [" + questTemp.info.displayName + "] 진행 상황";
-        image.transform.Find("From").GetComponent<TMP_Text>().text = "보낸 사람 : ";
-        image.transform.Find("Detail1").GetComponent<TMP_Text>().text = questTemp.info.id;
+        
         StringBuilder stepDescriptions = new StringBuilder("");
         for (int i = 0; i < questTemp.info.questStepPrefabs.Length; i++)
         {
@@ -151,12 +150,20 @@ public class QuestUI : MonoBehaviour
         }
         //stepDescriptions += questTemp.info.questStepPrefabs[questTemp.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
         tempbtn.transform.Find("Detail").GetComponent<TMP_Text>().text = stepDescriptions.ToString();
-        image.transform.Find("Detail2").GetComponent<TMP_Text>().text = stepDescriptions.ToString();
+        
         buttons.Add(questTemp.info.id, tempbtn);
+        PageSetting(questTemp, stepDescriptions.ToString());
+    }
+
+    private void PageSetting(Quest questTemp, string detail)
+    {
+        GameObject image = Instantiate(pagePrefab, questPage);
+        image.transform.Find("title").GetComponent<TMP_Text>().text = "Re: [" + questTemp.info.displayName + "] 진행 상황";
+        image.transform.Find("From").GetComponent<TMP_Text>().text = "보낸 사람 : ";
+        image.transform.Find("Detail1").GetComponent<TMP_Text>().text = questTemp.info.id;
+        image.transform.Find("Detail2").GetComponent<TMP_Text>().text = detail;
         pages.Add(questTemp.info.id, image);
         pages[questTemp.info.id].gameObject.SetActive(false);
-
-
     }
 
     private void CreateSimpleQuestUI(Quest quest)
@@ -213,34 +220,51 @@ public class QuestUI : MonoBehaviour
         isCheckingQuest = !isCheckingQuest;
         parent.gameObject.SetActive(!isCheckingQuest);
         questsBoard.SetActive(isCheckingQuest);
+        if (!isCheckingQuest)
+        {
+            AllPageClose();
+        }
     }
 
-    public void OpenQuestPage()
+    private void AllPageClose()
+    {
+        foreach (GameObject page in pages.Values)
+        {
+            page.SetActive(false);
+            QuestPageButton.pageActive = false;
+        }
+    }
+
+    public void PressPageButton()
     {
         Button ClickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         string targetString = FindQuestIdByButton(ClickedButton);
-        if (pages.ContainsKey(targetString))
-        {
-            pages[targetString].gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("해당하는 page가 생성되지 않았습니다");
-        }
 
-    }
-    
-    public void CloseQuestPage()
-    {
-        Button ClickedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-        string targetString = FindQuestIdByButton(ClickedButton);
-        if (pages.ContainsKey(targetString))
+        if (QuestPageButton.pageActive == false)
         {
-            pages[targetString].gameObject.SetActive(false);
+            //바로 켜기
+            if (pages.ContainsKey(targetString))
+            {
+                pages[targetString].gameObject.SetActive(true);
+                QuestPageButton.pageActive = true;
+            }
         }
         else
         {
-            Debug.Log("해당하는 page가 생성되지 않았습니다");
+            if (pages[targetString].gameObject.activeSelf == true)
+            {
+                //닫기
+                pages[targetString].gameObject.SetActive(false);
+                QuestPageButton.pageActive = false;
+            }
+            else
+            {
+                // 다른 거 닫고 이거 열기
+                AllPageClose();
+                pages[targetString].gameObject.SetActive(true);
+                QuestPageButton.pageActive = true;
+
+            }
         }
     }
 
