@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class TestLever : Interactable
 {
-    bool leverValue = false;
+    public bool leverValue = false;
     private Animator animator;
+    [SerializeField]
+    private TestDoor testDoor;
 
     void Start()
     {
         promptMessage = "False";
         animator = GetComponent<Animator>();
+        testDoor = FindObjectOfType<TestDoor>();
     }
 
     void Update()
@@ -35,9 +38,11 @@ public class TestLever : Interactable
             //GetComponent<Animator>().Play("PullDown");
             animator.SetTrigger("down");
         }
+        testDoor.SetLevers(leverValue, 0);
+        testDoor.CheckLevers();
     }
 
-    public bool getLeverValue()
+    public bool GetLeverValue()
     {
         return leverValue;
     }
