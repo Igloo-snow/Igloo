@@ -12,22 +12,26 @@ public class ActionController : MonoBehaviour
     public bool changingScene;
     public string nextScene;
 
+    public int health = 3;
+
     private void Start()
     {
-        freeLook = FindObjectOfType<CinemachineFreeLook>(); 
+        freeLook = FindObjectOfType<CinemachineFreeLook>();
     }
 
     void Update()
     {
         if (QuestUI.isCheckingQuest || DialogueManager.GetInstance().isPlaying)
         {
-            freeLook.enabled = false;
-            GetComponent<CharacterController>().enabled = false;
+            //freeLook.enabled = false;
+            //GetComponent<CharacterController>().enabled = false;
+            Time.timeScale = 0f;
         }
         else
         {
-            freeLook.enabled = true;
-            GetComponent<CharacterController>().enabled = true;
+            //freeLook.enabled = true;
+            //GetComponent<CharacterController>().enabled = true;
+            Time.timeScale = 1.0f;
         }
 
         if(encountered == true && Input.GetKeyDown(KeyCode.E))
@@ -37,11 +41,6 @@ public class ActionController : MonoBehaviour
         else
         {
             changingScene = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-
         }
     }
 
@@ -75,5 +74,28 @@ public class ActionController : MonoBehaviour
         return null;
     }
 
+    public void Reposition(Vector3 pos)
+    {
+        GetComponent<CharacterController>().enabled = false;
+        transform.position = pos;
+        GetComponent<CharacterController>().enabled = true;
+    }
 
+    public void HealthDown()
+    {
+        if(health - 1 <= 0)
+        {
+            PlayerDie();
+        }
+        else
+        {
+            health--;
+        }
+    }
+
+    public void PlayerDie()
+    {
+        GameEventsManager.instance.playerEvents.PlayerDie();
+        // 죽는 효과 추가
+    }
 }
