@@ -8,8 +8,12 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     [SerializeField]
     private float speed = 6f;
+    [SerializeField]
+    private float jumpSpeed = 1f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+
+    Vector3 direction;
 
     void Start()
     {
@@ -19,23 +23,35 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float veritcalInput = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
-
         if (DialogueManager.GetInstance().isPlaying)
         {
             return;
         }
 
-        if (direction.magnitude >= 0.1f)
+        if (cc.isGrounded)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float veritcalInput = Input.GetAxisRaw("Vertical");
+            direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
 
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            cc.Move(moveDirection.normalized * speed * Time.deltaTime);
+            if(direction.magnitude >= 0.1f)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+
+                direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                direction.y = jumpSpeed;
+            }
+
         }
+
+        direction.y += Physics.gravity.y * Time.deltaTime;
+        cc.Move(direction.normalized * speed * Time.deltaTime);
+
     }
 }
