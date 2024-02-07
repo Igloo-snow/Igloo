@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed = 6f;
     [SerializeField]
-    private float jumpSpeed = 1f;
+    private float jumpSpeed = 4f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
 
