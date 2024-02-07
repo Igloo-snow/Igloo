@@ -7,10 +7,12 @@ public class NodeLight : MonoBehaviour
     private Light nodeLight;
     private bool isTouched;
     [SerializeField] GameObject shadowPanel;
+    private Color originColor;
 
     void Start()
     {
         nodeLight = GetComponent<Light>();
+        originColor = nodeLight.color;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,6 +23,11 @@ public class NodeLight : MonoBehaviour
             nodeLight.color = Color.gray;
             shadowPanel.GetComponent<ShadowControl>().GetBrighter();
         }
+    }
+
+    public void SetColor()
+    {
+        nodeLight.color = originColor;
     }
 
 }

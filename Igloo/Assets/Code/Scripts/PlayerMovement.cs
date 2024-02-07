@@ -7,10 +7,13 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController cc;
     public Transform cameraTransform;
     [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float jumpSpeed = 7.5f;
     [SerializeField] private float fallingSpeed = 10f; 
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
     float currentVelocityY;
+
+    Vector3 direction;
 
     void Start()
     {
@@ -20,30 +23,34 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        float veritcalInput = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
+
 
         if (DialogueManager.GetInstance().isPlaying)
         {
             return;
         }
-
-        if (direction.magnitude >= 0.1f)
+        
+        if (cc.isGrounded)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float veritcalInput = Input.GetAxisRaw("Vertical");
+            direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
 
-            currentVelocityY += Time.deltaTime * Physics.gravity.y;
+            if(direction != Vector3.zero)
+            {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+                float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
+                direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            }
 
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            if(Input.GetKeyDown(KeyCode.Space)) {
+                direction.y = jumpSpeed;
+            }
 
-            var velocity = moveDirection * walkSpeed + Vector3.up * currentVelocityY * fallingSpeed;
-
-            cc.Move(velocity * Time.deltaTime);
-
-            if (cc.isGrounded) currentVelocityY = 0;
         }
+        direction.y += Physics.gravity.y * Time.deltaTime;
+        cc.Move(direction * Time.deltaTime * walkSpeed);
+
     }
 }

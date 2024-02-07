@@ -1,88 +1,150 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using TMPro;
+using DG.Tweening;
+using UnityEngine.UI;
 
-public class StageManager : MonoBehaviour
+public class GM : MonoBehaviour
 {
-    struct myGraph
+    [SerializeField] private StageGraph[] stages;
+    [SerializeField] GameObject gatePrefab;
+
+    [SerializeField] private ActionController player;
+    [SerializeField] private ShadowControl shadowControl;
+    [SerializeField] private GameObject RetryPanel;
+
+    public int currentStage;
+    private bool isPause, isDead;
+
+    private void OnEnable()
     {
-        public int numV;
-        public int numE;
-        public List<int>[] vArray;
-    }
-    static myGraph graph = new myGraph();
-
-    private Stage stage;
-
-    private int level = 1;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        stage = GetComponent<Stage>();
-
-        GraphInit(stage.nodes.Length, stage.edges.Length);
-        //AddEdge
-
-        
-        
-
+        GameEventsManager.instance.playerEvents.onPlayerDie += PlayerDie;
+        GameEventsManager.instance.playerEvents.onStageFinish += StageFinish;
+        GameEventsManager.instance.playerEvents.onNextStage += NextStage;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        GameEventsManager.instance.playerEvents.onPlayerDie -= PlayerDie;
+        GameEventsManager.instance.playerEvents.onStageFinish -= StageFinish;
+        GameEventsManager.instance.playerEvents.onNextStage -= NextStage;
     }
 
-    /*
-    private  KeyValuePair<int, int> MakeRandom()
+    private void Start()
     {
-        int a = Random.Range(0, graph.numV);
-        int b = Random.Range(0, graph.numV);
-        while (a == b) { b = Random.Range(0, graph.numV); }
 
-        
-        KeyValuePair<int, int> intPair = new KeyValuePair<int, int>(Mathf.Min(a, b), Mathf.Max(a, b));
-
-        while((graph.vArray[Mathf.Min(a, b)].Contains(Mathf.Max(a, b))))
+    }
+    private void Update()
+    {
+        if (!isDead)
         {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (isPause)
+                {
+                    isPause = false;
+                    OffRetryUI();
+                }
+                else
+                {
+                    isPause = true;
+                    string str = "다시\n시도하시겠습니까?";
+                    SetRetryUI(str);
+                }
 
+            }
         }
-        return intPair;
-    }*/
+        if(Input.GetKeyDown(KeyCode.G))
+            CreateGate();
 
-    public void GraphInit(int numV, int numE)
+
+    }
+
+    public void ReStartLevel()
     {
-        graph = new myGraph();
-        graph.numV = numV;
-        graph.numE = numE;
-        graph.vArray = new List<int>[numV];
-        for (int i = 0; i < numV; i++)
+        // 맵 재설정
+        shadowControl.Restart();
+        Debug.Log(currentStage);
+        stages[currentStage].ResetFallingObj();
+        stages[currentStage].ResetColor();
+        stages[currentStage].previousNode = -1;
+
+        
+        // 플레이어 위치 재설정
+        player.Reposition(stages[currentStage].startPos); // rotaion도 재설정해줘야될거같으넫....? 
+        Debug.Log(stages[currentStage].startPos);
+
+        //UI 재설정
+        RetryPanel.SetActive(false);
+        shadowControl.gameObject.SetActive(true);
+
+        Time.timeScale = 1.0f;
+        isDead = false;
+    }
+
+    private void PlayerDie()
+    {
+        isDead = true;
+        //retry ui 설정
+        string str = ".\n.\n.\n\n죽었습니다.";
+        SetRetryUI(str);
+    }
+
+    private void SetRetryUI(string str)
+    {
+        RetryPanel.GetComponentInChildren<Text>().text = "";
+        RetryPanel.GetComponentInChildren<Text>().DOText(str, 1f).SetUpdate(true);
+
+        RetryPanel.SetActive(true);
+        shadowControl.gameObject.SetActive(false);
+        Time.timeScale = 0f;
+
+    }
+
+    private void OffRetryUI()
+    {
+        RetryPanel.SetActive(false);
+        shadowControl.gameObject.SetActive(true);
+        Time.timeScale = 1f;
+    }
+
+
+    private void StageFinish()
+    {
+        if(currentStage+1 >= stages.Length)
         {
-            graph.vArray[i] = new List<int>();
+            Debug.Log("컴수 던전 클리어");
+        }
+        else
+        {
+            CreateGate();
+
+            //stages[currentStage++].gameObject.SetActive(false);
+            //stages[currentStage].gameObject.SetActive(true);
+
+            //ui 세팅
+            //shadowControl.InitUI();
+            //player.Reposition(stages[currentStage].startPos);
         }
     }
 
-    public bool AddEdge(int fromV, int toV)
+    private void CreateGate()
     {
-        if (!graph.vArray[fromV].Contains(toV))
-        {
-            graph.numE++;
-            graph.vArray[fromV].Add(toV);
-            graph.vArray[toV].Add(fromV);
+        Vector3 pos = player.transform.position + player.transform.forward * 4.0f + Vector3.up * -2f;
+        var gate = Instantiate(gatePrefab, pos, player.transform.rotation);
 
-            stage.ConnectNodes(fromV, toV);
-            return true;
-        }
-        else { return false; }
+        Vector3 rotationDirection = (pos - player.transform.position);
+        gate.transform.forward = rotationDirection;
     }
 
-    private bool isEulerian()
+    public void NextStage()
     {
+        stages[currentStage++].gameObject.SetActive(false);
+        stages[currentStage].gameObject.SetActive(true);
 
-        return false;
+        //ui 세팅
+        shadowControl.InitUI();
+        player.Reposition(stages[currentStage].startPos);
     }
 }

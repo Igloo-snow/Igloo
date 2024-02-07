@@ -8,6 +8,7 @@ public class ActionController : MonoBehaviour
 {
     private CinemachineFreeLook freeLook;
 
+    public bool stopMoving;
     public bool encountered = false;
     public bool changingScene;
     public string nextScene;
@@ -19,20 +20,26 @@ public class ActionController : MonoBehaviour
         freeLook = FindObjectOfType<CinemachineFreeLook>();
     }
 
+    private void OnEnable()
+    {
+        GameEventsManager.instance.playerEvents.onPlayerStop += PlayerStop;
+        GameEventsManager.instance.playerEvents.onPlayerStart += PlayerStart;
+    }
+
     void Update()
     {
+        /*
         if (QuestUI.isCheckingQuest || DialogueManager.GetInstance().isPlaying)
         {
-            //freeLook.enabled = false;
-            //GetComponent<CharacterController>().enabled = false;
-            Time.timeScale = 0f;
+            freeLook.enabled = false;
+            GetComponent<CharacterController>().enabled = false;
         }
         else
         {
-            //freeLook.enabled = true;
-            //GetComponent<CharacterController>().enabled = true;
-            Time.timeScale = 1.0f;
+            freeLook.enabled = true;
+            GetComponent<CharacterController>().enabled = true;
         }
+        */
 
         if(encountered == true && Input.GetKeyDown(KeyCode.E))
         {
@@ -44,12 +51,28 @@ public class ActionController : MonoBehaviour
         }
     }
 
+    private void PlayerStop()
+    {
+        stopMoving = true;
+        Time.timeScale = 0f;
+    }
+
+    private void PlayerStart()
+    {
+        stopMoving = false;
+        Time.timeScale = 1f;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.CompareTag("TransitionPoint"))
         {
             encountered = true;
             nextScene = other.gameObject.GetComponent<TransitionPoint>().nextScene;
+        }
+        else if (other.transform.CompareTag("Melee"))
+        {
+            Debug.Log("플레이어가 공격당했습니다");
         }
     }
 
@@ -78,6 +101,7 @@ public class ActionController : MonoBehaviour
     {
         GetComponent<CharacterController>().enabled = false;
         transform.position = pos;
+        Debug.Log(" in actionc" + pos);
         GetComponent<CharacterController>().enabled = true;
     }
 

@@ -25,7 +25,6 @@ public class FallingObject : MonoBehaviour
         {
             if (hit[i].CompareTag("Player"))
             {
-                Debug.Log("o");
                 StartCoroutine(fallCoroutine());
             }
         }
@@ -51,6 +50,7 @@ public class FallingObject : MonoBehaviour
 
     public void Rearrange()
     {
+        StopAllCoroutines();
         gameObject.SetActive(true);
         rigid.isKinematic = true;
         transform.position = originPos;

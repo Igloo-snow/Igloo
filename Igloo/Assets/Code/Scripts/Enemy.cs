@@ -8,34 +8,50 @@ public class Enemy : MonoBehaviour
 {
     public int maxHealth;
     public int currentHealth;
-    public Transform target;
+
+    // 공격
+    public float timeBetweenAttacks;
+    private bool isAttacking;
 
     //데미지 값 임시 변수
     public int damage;
 
-    private bool isChase = true;
+    // 상태
+    private bool playerInSightRange, playerAttackRange;
+    private bool isMoving = true;
+    public float patrolRange ,sightRange, attackRange;
 
+
+    public LayerMask isPlayer;
     Vector3 reactVec;
 
     private Rigidbody rigid;
     CapsuleCollider capsuleCollider;
     Animator anim;
-    NavMeshAgent nav;
+    NavMeshAgent agent;
+    ActionController player;
+    SphereCollider meleeArea;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
-        nav = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        player = FindObjectOfType<ActionController>();
+        meleeArea = GetComponentInChildren<SphereCollider>();
+        Debug.Log(meleeArea.gameObject.name);
     }
 
     private void Update()
     {
-        if(isChase)
-        {
-            nav.SetDestination(target.position);
-        }
+        
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);
+        playerAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
+
+        if (!playerInSightRange && !playerAttackRange) Patroling();
+        if (playerInSightRange && !playerAttackRange) ChasePlayer();
+        if (playerInSightRange && playerAttackRange) TryAttack();
 
     }
 
@@ -47,7 +63,7 @@ public class Enemy : MonoBehaviour
     
     private void FreezeVelocity()
     {
-        if(isChase)
+        if(isMoving)
         {
             //물리가 navAgent에 방해가 되지 않도록
             rigid.velocity = Vector3.zero;
@@ -55,19 +71,86 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
+    private void Patroling()
+    {
+        if(agent.remainingDistance <= agent.stoppingDistance)
+        {
+            Vector3 point;
+            if(RandomPoint(transform.position, patrolRange, out point))
+            {
+                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                agent.SetDestination(point);
+            }
+        }
+    }
+
+    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) 
+        {
+            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
+            //or add a for loop like in the documentation
+            result = hit.position;
+            return true;
+        }
+
+        result = Vector3.zero;
+        return false;
+    }
+
+    private void ChasePlayer()
+    {
+        agent.SetDestination(player.transform.position);
+    }
+
+    private void TryAttack()
+    {
+        if (!isAttacking)
+        {
+            StartCoroutine(AttackPlayer());
+        }
+    }
+
+    IEnumerator AttackPlayer()
+    {
+        isAttacking = true;
+        agent.SetDestination(transform.position);
+        transform.LookAt(player.transform);
+
+        // 공격 코드
+        anim.SetTrigger("IsAttacking");
+        yield return new WaitForSeconds(0.3f);
+
+        meleeArea.enabled = true;
+        yield return new WaitForSeconds(3f);
+
+        meleeArea.enabled = false;
+        isAttacking = false;
+        
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player")) // player가 아니라 player 무기로 수정필요
         {
             currentHealth -= damage;
             reactVec = transform.position - collision.transform.position;
-            StartCoroutine(OnDamager());
+            StartCoroutine(OnDamage());
         }
 
     }
 
-    IEnumerator OnDamager()
+    IEnumerator OnDamage()
     {
         yield return new WaitForSeconds(0.1f);
 
@@ -76,11 +159,11 @@ public class Enemy : MonoBehaviour
             anim.SetBool("IsDead", true);
             gameObject.layer = LayerMask.NameToLayer("EnemyDead");
 
-            isChase = false;
+            isMoving = false;
 
             reactVec = reactVec.normalized;
             rigid.AddForce(reactVec * 8, ForceMode.Impulse);
-            nav.enabled = false;
+            agent.enabled = false;
             Destroy(gameObject, 4f);
         }
         else

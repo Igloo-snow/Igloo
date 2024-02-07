@@ -13,6 +13,16 @@ public class ShadowControl : MonoBehaviour
     {
         img = panel.GetComponent<Image>();
         StartCoroutine(ShadeCoroutine());
+        InitUI();
+    }
+
+    public void InitUI()
+    {
+        Color color = img.color;
+        float a = 0f;
+        color.a = a;
+        img.color = color;
+
     }
 
     IEnumerator ShadeCoroutine()
@@ -20,10 +30,10 @@ public class ShadowControl : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Color color = img.color;
         float a = color.a;
-        a += 0.1f;
-        if( a >= 0.9f)
+        a += 0.07f;
+        if( a >= 0.8f)
         {
-            a = 0.9f;
+            a = 0.8f;
         }
         color.a = a;
         img.color = color;
