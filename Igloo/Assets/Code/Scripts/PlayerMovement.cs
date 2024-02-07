@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController cc;
+    private Animator anim;
     public Transform cameraTransform;
     [SerializeField]
     private float speed = 6f;
@@ -18,11 +19,13 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
 
     void Update()
     {
+
         if (DialogueManager.GetInstance().isPlaying)
         {
             return;
@@ -34,20 +37,25 @@ public class PlayerMovement : MonoBehaviour
             float veritcalInput = Input.GetAxisRaw("Vertical");
             direction = new Vector3(horizontalInput, 0f, veritcalInput).normalized;
 
-            if(direction.magnitude >= 0.1f)
+            if(direction != Vector3.zero)
             {
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
                 float smoothAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
                 direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                anim.SetBool("IsRunning", true);
+            }
+            else
+            {
+                anim.SetBool("IsRunning", false);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 direction.y = jumpSpeed;
+                anim.SetTrigger("IsJumping");
             }
-
         }
 
         direction.y += Physics.gravity.y * Time.deltaTime;
