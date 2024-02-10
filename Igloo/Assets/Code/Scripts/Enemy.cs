@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
 
     // 상태
     private bool playerInSightRange, playerAttackRange;
-    private bool isMoving = true;
+    private bool isMoving = true, isDead = false;
     public float patrolRange ,sightRange, attackRange;
 
 
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     Vector3 reactVec;
 
     private Rigidbody rigid;
-    CapsuleCollider capsuleCollider;
+    //CapsuleCollider capsuleCollider;
     Animator anim;
     NavMeshAgent agent;
     ActionController player;
@@ -35,12 +35,11 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        capsuleCollider = GetComponent<CapsuleCollider>();
+        //capsuleCollider = GetComponent<CapsuleCollider>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<ActionController>();
         meleeArea = GetComponentInChildren<SphereCollider>();
-        Debug.Log(meleeArea.gameObject.name);
     }
 
     private void Update()
@@ -49,9 +48,13 @@ public class Enemy : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);
         playerAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
 
-        if (!playerInSightRange && !playerAttackRange) Patroling();
-        if (playerInSightRange && !playerAttackRange) ChasePlayer();
-        if (playerInSightRange && playerAttackRange) TryAttack();
+        if (!isDead)
+        {
+            if (!playerInSightRange && !playerAttackRange) Patroling();
+            if (playerInSightRange && !playerAttackRange) ChasePlayer();
+            if (playerInSightRange && playerAttackRange) TryAttack();
+        }
+
 
     }
 
@@ -60,7 +63,6 @@ public class Enemy : MonoBehaviour
         FreezeVelocity();
     }
 
-    
     private void FreezeVelocity()
     {
         if(isMoving)
@@ -78,7 +80,7 @@ public class Enemy : MonoBehaviour
             Vector3 point;
             if(RandomPoint(transform.position, patrolRange, out point))
             {
-                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
+                Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f);
                 agent.SetDestination(point);
             }
         }
@@ -86,12 +88,10 @@ public class Enemy : MonoBehaviour
 
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
-        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        Vector3 randomPoint = center + Random.insideUnitSphere * range;
         NavMeshHit hit;
         if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) 
         {
-            //the 1.0f is the max distance from the random point to a point on the navmesh, might want to increase if range is big
-            //or add a for loop like in the documentation
             result = hit.position;
             return true;
         }
@@ -102,6 +102,8 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
+        Debug.Log("Chase");
+
         agent.SetDestination(player.transform.position);
     }
 
@@ -124,7 +126,7 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         meleeArea.enabled = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         meleeArea.enabled = false;
         isAttacking = false;
@@ -139,15 +141,14 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player")) // player가 아니라 player 무기로 수정필요
+        if (other.CompareTag("Melee"))
         {
             currentHealth -= damage;
-            reactVec = transform.position - collision.transform.position;
+            reactVec = transform.position - other.transform.position;
             StartCoroutine(OnDamage());
         }
-
     }
 
     IEnumerator OnDamage()
@@ -168,6 +169,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            isDead = true;
             anim.SetBool("IsAttacked", true);
             reactVec = reactVec.normalized;
             rigid.AddForce(reactVec * 4, ForceMode.Impulse);

@@ -219,13 +219,15 @@ public class QuestUI : MonoBehaviour
     {
         isCheckingQuest = !isCheckingQuest;
 
+        /*
         if (isCheckingQuest)
             GameEventsManager.instance.playerEvents.PlayerStop();
         else
             GameEventsManager.instance.playerEvents.PlayerStart();
-
+        */
         parent.gameObject.SetActive(!isCheckingQuest);
         questsBoard.SetActive(isCheckingQuest);
+        GameManager.isOpenQuestUI = isCheckingQuest;
         if (!isCheckingQuest)
         {
             AllPageClose();

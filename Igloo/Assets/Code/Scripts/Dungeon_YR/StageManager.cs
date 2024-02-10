@@ -52,7 +52,6 @@ public class GM : MonoBehaviour
                     string str = "다시\n시도하시겠습니까?";
                     SetRetryUI(str);
                 }
-
             }
         }
         if(Input.GetKeyDown(KeyCode.G))
@@ -70,14 +69,13 @@ public class GM : MonoBehaviour
         stages[currentStage].ResetColor();
         stages[currentStage].previousNode = -1;
 
-        
+
         // 플레이어 위치 재설정
         player.Reposition(stages[currentStage].startPos); // rotaion도 재설정해줘야될거같으넫....? 
         Debug.Log(stages[currentStage].startPos);
 
         //UI 재설정
-        RetryPanel.SetActive(false);
-        shadowControl.gameObject.SetActive(true);
+        OffRetryUI();
 
         Time.timeScale = 1.0f;
         isDead = false;
@@ -93,20 +91,19 @@ public class GM : MonoBehaviour
 
     private void SetRetryUI(string str)
     {
+        GameManager.isOpenRestartUI = true;
         RetryPanel.GetComponentInChildren<Text>().text = "";
         RetryPanel.GetComponentInChildren<Text>().DOText(str, 1f).SetUpdate(true);
 
         RetryPanel.SetActive(true);
         shadowControl.gameObject.SetActive(false);
-        Time.timeScale = 0f;
-
     }
 
     private void OffRetryUI()
     {
+        GameManager.isOpenRestartUI = false;
         RetryPanel.SetActive(false);
         shadowControl.gameObject.SetActive(true);
-        Time.timeScale = 1f;
     }
 
 

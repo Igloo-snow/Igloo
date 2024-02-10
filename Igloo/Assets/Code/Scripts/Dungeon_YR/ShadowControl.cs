@@ -30,7 +30,7 @@ public class ShadowControl : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Color color = img.color;
         float a = color.a;
-        a += 0.07f;
+        a += 0.08f;
         if( a >= 0.8f)
         {
             a = 0.8f;

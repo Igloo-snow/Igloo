@@ -6,24 +6,41 @@ using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
+    private CharacterController characterController;
     private CinemachineFreeLook freeLook;
+    private Animator anim;
+    private Weapon weapon;
 
-    public bool stopMoving;
+    public bool stopMoving = false;
     public bool encountered = false;
     public bool changingScene;
     public string nextScene;
 
-    public int health = 3;
+    public int maxHealth = 3;
+    public int currentHealth = 3;
+    private float attackDelay;
+
+    private bool isAttackReady = true;
 
     private void Start()
     {
+        characterController = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
         freeLook = FindObjectOfType<CinemachineFreeLook>();
+
+        weapon = GetComponentInChildren<Weapon>();
     }
 
     private void OnEnable()
     {
         GameEventsManager.instance.playerEvents.onPlayerStop += PlayerStop;
         GameEventsManager.instance.playerEvents.onPlayerStart += PlayerStart;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.playerEvents.onPlayerStop -= PlayerStop;
+        GameEventsManager.instance.playerEvents.onPlayerStart -= PlayerStart;
     }
 
     void Update()
@@ -49,6 +66,24 @@ public class ActionController : MonoBehaviour
         {
             changingScene = false;
         }
+        
+        Attack();
+    }
+
+    void Attack()
+    {
+        attackDelay += Time.deltaTime;
+        if (Input.GetMouseButtonDown(0) && !stopMoving && weapon)
+        {
+            isAttackReady = weapon.rate < attackDelay;
+
+            if (isAttackReady)
+            {
+                weapon.Use();
+                anim.SetTrigger("Attack");
+                attackDelay = 0;
+            }
+        }
     }
 
     private void PlayerStop()
@@ -70,10 +105,26 @@ public class ActionController : MonoBehaviour
             encountered = true;
             nextScene = other.gameObject.GetComponent<TransitionPoint>().nextScene;
         }
-        else if (other.transform.CompareTag("Melee"))
+        else if (other.transform.CompareTag("Enemy"))
         {
             Debug.Log("플레이어가 공격당했습니다");
+            currentHealth--;
+            if(currentHealth < 0)
+            {
+                StartCoroutine(OnDie());
+            }
+            
         }
+    }
+
+    IEnumerator OnDie()
+    {
+        characterController.enabled = false;
+        Debug.Log("플레이어가 사망하였습니다");
+        yield return new WaitForSeconds(0.1f);
+        anim.SetTrigger("Die");
+        yield return new WaitForSeconds(3f);
+        GameEventsManager.instance.playerEvents.PlayerDie();
     }
 
     private void OnTriggerExit(Collider other)
@@ -99,27 +150,10 @@ public class ActionController : MonoBehaviour
 
     public void Reposition(Vector3 pos)
     {
+        anim.Play("Idle");
         GetComponent<CharacterController>().enabled = false;
         transform.position = pos;
         Debug.Log(" in actionc" + pos);
         GetComponent<CharacterController>().enabled = true;
-    }
-
-    public void HealthDown()
-    {
-        if(health - 1 <= 0)
-        {
-            PlayerDie();
-        }
-        else
-        {
-            health--;
-        }
-    }
-
-    public void PlayerDie()
-    {
-        GameEventsManager.instance.playerEvents.PlayerDie();
-        // 죽는 효과 추가
     }
 }

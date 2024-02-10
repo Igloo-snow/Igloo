@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController cc;
-    private Animator anim;
     public Transform cameraTransform;
+    private Animator anim;
     [SerializeField]
     private float speed = 6f;
     [SerializeField]
@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         cc = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        anim = GetComponentInChildren<Animator>();
     }
 
     void Update()
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 direction.y = jumpSpeed;
-                anim.SetTrigger("IsJumping");
+                anim.SetTrigger("Jump");
             }
         }
 
