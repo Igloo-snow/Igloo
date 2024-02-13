@@ -7,13 +7,19 @@ public class TestLever : Interactable
     public bool leverValue = false;
     private Animator animator;
     [SerializeField]
-    private TestDoor testDoor;
+    private Door Door;
+    [SerializeField]
+    private int leverIndex;
 
     void Start()
     {
         promptMessage = "False";
         animator = GetComponent<Animator>();
-        testDoor = FindObjectOfType<TestDoor>();
+        //Door = FindObjectOfType<Door>();
+
+        string name = gameObject.name.Substring(13, 1);
+        leverIndex = int.Parse(name);
+        Debug.Log(leverIndex);
     }
 
     void Update()
@@ -27,23 +33,15 @@ public class TestLever : Interactable
         if (leverValue)
         {
             promptMessage = "True";
-            Debug.Log("now true");
-            //GetComponent<Animator>().Play("PullUp");
             animator.SetTrigger("up");
         }
         else
         {
             promptMessage = "False";
-            Debug.Log("now false");
-            //GetComponent<Animator>().Play("PullDown");
             animator.SetTrigger("down");
         }
-        testDoor.SetLevers(leverValue, 0);
-        testDoor.CheckLevers();
+        Door.SetLevers(leverValue, leverIndex);
+        Door.CheckLevers();
     }
 
-    public bool GetLeverValue()
-    {
-        return leverValue;
-    }
 }
