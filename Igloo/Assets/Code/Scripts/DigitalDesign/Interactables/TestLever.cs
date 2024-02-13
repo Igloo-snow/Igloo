@@ -19,7 +19,6 @@ public class TestLever : Interactable
 
         string name = gameObject.name.Substring(13, 1);
         leverIndex = int.Parse(name);
-        Debug.Log(leverIndex);
     }
 
     void Update()

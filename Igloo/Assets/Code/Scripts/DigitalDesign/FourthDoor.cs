@@ -13,6 +13,5 @@ public class FourthDoor : Door
     public override void CheckLevers()
     {
         isOpen = !(!levers[0] || levers[1]) && levers[2];
-        Debug.Log("isOpen = " + isOpen);
     }
 }

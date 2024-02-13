@@ -13,6 +13,5 @@ public class SecondDoor : Door
     public override void CheckLevers()
     {
         isOpen = levers[0] || levers[1];
-        Debug.Log("isOpen = " + isOpen);
     }
 }

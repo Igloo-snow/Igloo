@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class TestDoor : Door
 {
-   /* public bool[] levers;
-    private Animator animator;
-    private bool isOpen;*/
-
     void Start()
     {
         levers = new bool[1];
@@ -24,6 +20,6 @@ public class TestDoor : Door
         }
 
         isOpen = result;
-        Debug.Log("isOpen = " + isOpen);
+        //Debug.Log("isOpen = " + isOpen);
     }
 }

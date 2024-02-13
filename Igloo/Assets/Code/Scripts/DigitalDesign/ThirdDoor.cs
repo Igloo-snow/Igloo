@@ -13,7 +13,5 @@ public class ThirdDoor : Door
     public override void CheckLevers()
     {
         isOpen = levers[0] && levers[1];
-        Debug.Log(levers[0] + " " + levers[1]);
-        Debug.Log("isOpen = " + isOpen);
     }
 }
