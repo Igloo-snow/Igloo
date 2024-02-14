@@ -12,8 +12,8 @@ public class ShadowControl : MonoBehaviour
     void Start()
     {
         img = panel.GetComponent<Image>();
-        StartCoroutine(ShadeCoroutine());
         InitUI();
+        StartCoroutine(ShadeCoroutine());
     }
 
     public void InitUI()

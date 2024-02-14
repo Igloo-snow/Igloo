@@ -5,7 +5,6 @@ using UnityEngine;
 public class NodeLight : MonoBehaviour
 {
     private Light nodeLight;
-    private bool isTouched;
     [SerializeField] GameObject shadowPanel;
     private Color originColor;
 
@@ -19,7 +18,6 @@ public class NodeLight : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            isTouched = true;
             nodeLight.color = Color.gray;
             shadowPanel.GetComponent<ShadowControl>().GetBrighter();
         }

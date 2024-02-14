@@ -28,7 +28,7 @@ public class QuestUI : MonoBehaviour
 
     [Header("SimpleQuset")]
     public Image simpleQuest;
-    public Transform parent;
+    public Transform simplequestParent;
     private Dictionary<string, Image> simpleQuestMap;
 
     private void Awake()
@@ -168,7 +168,7 @@ public class QuestUI : MonoBehaviour
 
     private void CreateSimpleQuestUI(Quest quest)
     {
-        Image simpleQuestUI = Instantiate<Image>(simpleQuest, parent);
+        Image simpleQuestUI = Instantiate<Image>(simpleQuest, simplequestParent);
         simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
         if (quest.state.Equals(QuestState.CAN_FINISH))
 
@@ -219,13 +219,7 @@ public class QuestUI : MonoBehaviour
     {
         isCheckingQuest = !isCheckingQuest;
 
-        /*
-        if (isCheckingQuest)
-            GameEventsManager.instance.playerEvents.PlayerStop();
-        else
-            GameEventsManager.instance.playerEvents.PlayerStart();
-        */
-        parent.gameObject.SetActive(!isCheckingQuest);
+        simplequestParent.gameObject.SetActive(!isCheckingQuest);
         questsBoard.SetActive(isCheckingQuest);
         GameManager.isOpenQuestUI = isCheckingQuest;
         if (!isCheckingQuest)
