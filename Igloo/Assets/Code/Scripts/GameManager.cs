@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //public static bool isPlay;
     //UI 관련 상태 
     public static bool isOpenQuestUI = false;
     public static bool isOpenDialogue = false;
     public static bool isOpenRestartUI = false;
+    public static bool isOpenInfoUI = false; 
 
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isOpenRestartUI || isOpenQuestUI)
+        if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
         {
             GameEventsManager.instance.playerEvents.PlayerStop();
             Cursor.lockState = CursorLockMode.None;

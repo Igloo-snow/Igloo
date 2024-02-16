@@ -8,12 +8,13 @@ public class StageGraph : MonoBehaviour
     [Header("Graph")]
     [SerializeField] private Node[] nodes;
     [SerializeField] private Edge[] edges;
-    public int previousNode = -1;
+    private int previousNode = -1;
 
     [Header("Stage")]
     [SerializeField] private Transform fallingObjparent;
     private GameObject[] fallingObjs;
     public Vector3 startPos;
+    public float shadowTime = 2f;
 
     private void OnEnable()
     {
@@ -27,6 +28,7 @@ public class StageGraph : MonoBehaviour
     void Awake()
     {
         startPos = transform.position;
+
         fallingObjs = new GameObject[fallingObjparent.childCount];
         for (int i = 0; i < fallingObjparent.childCount; i++)
         {
@@ -46,7 +48,7 @@ public class StageGraph : MonoBehaviour
         }
         else
         {
-            //previoudNode 랑 i랑 가지고 edge를 확인해야해
+            //previoudNode 랑 i랑 가지고 edge 확인
             for(int j =  0; j < edges.Length; j++)
             {
                 if (edges[j].CheckEdge(Mathf.Min(previousNode, i), Mathf.Max(previousNode, i)))
@@ -68,12 +70,23 @@ public class StageGraph : MonoBehaviour
                 return false;
             }
         }
-        //도어 instantiate
+
         GameEventsManager.instance.playerEvents.StageFinish();
         return true;
     }
 
-    public void ResetFallingObj()
+    public void Restart()
+    {
+        ResetFallingObj();
+        ResetColor();
+        previousNode = -1;
+        foreach(Edge edge in edges)
+        {
+            edge.isPassed = false;
+        }
+    }
+
+    private void ResetFallingObj()
     {
         //fallin obj 재설정 관리
         for (int i = 0; i < fallingObjs.Length; i++)
@@ -84,7 +97,7 @@ public class StageGraph : MonoBehaviour
         }
     }
 
-    public void ResetColor()
+    private void ResetColor()
     {
         for(int i = 0; i < edges.Length; i++)
         {

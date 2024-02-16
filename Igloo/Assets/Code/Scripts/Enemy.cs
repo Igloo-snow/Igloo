@@ -26,11 +26,12 @@ public class Enemy : MonoBehaviour
     Vector3 reactVec;
 
     private Rigidbody rigid;
-    //CapsuleCollider capsuleCollider;
     Animator anim;
     NavMeshAgent agent;
     ActionController player;
     SphereCollider meleeArea;
+
+    [SerializeField] private GameObject obstruction;
 
     private void Awake()
     {
@@ -165,6 +166,8 @@ public class Enemy : MonoBehaviour
             reactVec = reactVec.normalized;
             rigid.AddForce(reactVec * 8, ForceMode.Impulse);
             agent.enabled = false;
+            if (obstruction != null)
+                PathOpen();
             Destroy(gameObject, 4f);
         }
         else
@@ -180,5 +183,10 @@ public class Enemy : MonoBehaviour
             rigid.mass = originalMass;
             
         }
+    }
+
+    private void PathOpen()
+    {
+        Destroy(obstruction);
     }
 }

@@ -7,11 +7,18 @@ public class ShadowControl : MonoBehaviour
 {
     [SerializeField] private GameObject panel;
     private Image img;
+    public float time = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
         img = panel.GetComponent<Image>();
+        
+    }
+
+    public void LevelTime(float f)
+    {
+        time = f;
         InitUI();
         StartCoroutine(ShadeCoroutine());
     }
@@ -27,14 +34,19 @@ public class ShadowControl : MonoBehaviour
 
     IEnumerator ShadeCoroutine()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(time);
         Color color = img.color;
         float a = color.a;
-        a += 0.08f;
-        if( a >= 0.8f)
+
+        if( a >= 0.8f )
         {
             a = 0.8f;
         }
+        else
+        {
+            a += 0.08f;
+        }
+        
         color.a = a;
         img.color = color;
         StartCoroutine(ShadeCoroutine());
@@ -53,14 +65,11 @@ public class ShadowControl : MonoBehaviour
 
     public void Restart()
     {
-        // 변하고 잠시 기다리도록 코드 수정 필요
         Color color = img.color;
         float a = color.a;
         a = 0f;
         color.a = a;
         img.color = color;
-
     }
-    //종료시 코루틴 멈추기 추가
 
 }

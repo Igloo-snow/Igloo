@@ -8,8 +8,6 @@ public class Node : MonoBehaviour
     public int[] adjNodes;
     public bool isStepped = false;
     public NodeLight nodeLight;
-    public bool isTutorialNode = false;
-    public string str;
 
     private void Start()
     {

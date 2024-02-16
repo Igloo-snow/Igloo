@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class FloatingItem : MonoBehaviour
 {
-    [SerializeField] private Text text;
+    [SerializeField] private GameObject uIImg;
+    private Text text;
+    private Button btn;
     [SerializeField] private float height = 2f;
     [SerializeField] private string str;
     [SerializeField] private Transform itemMesh;
     [SerializeField] private GameObject particle;
 
     private int count = 1;
+
+    private void Start()
+    {
+        text = uIImg.gameObject.GetComponentInChildren<Text>();
+        btn = uIImg.gameObject.GetComponentInChildren<Button>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -37,20 +46,30 @@ public class FloatingItem : MonoBehaviour
 
     private void ItemAppear()
     {
+        
         Sequence itemSequence = DOTween.Sequence();
-        itemSequence.Append(itemMesh.DOMoveY(itemMesh.position.y + height, 1.5f));
+        itemSequence.Append(itemMesh.DOMoveY(itemMesh.position.y + height, 1f).SetUpdate(true));
         Vector3 rot = new Vector3(-30, itemMesh.eulerAngles.y, itemMesh.eulerAngles.z);
-        itemSequence.Append(itemMesh.DORotate(rot, 0.8f));
-        itemSequence.AppendCallback(TextAppear);
+        itemSequence.Append(itemMesh.DORotate(rot, 0.5f).SetUpdate(true));
+        itemSequence.AppendCallback(ImgAppear).SetUpdate(true);
 
         //itemSequence.Play();
+        GameManager.isOpenInfoUI = true;
     }
 
     private void TextAppear()
     {
         text.gameObject.SetActive(true);
         text.text = null;
-        text.DOText(str, 1f);
+        text.DOText(str, 1f).SetUpdate(true);
+    }
+
+    private void ImgAppear()
+    {
+        uIImg.gameObject.SetActive(true);
+        btn.gameObject.SetActive(true);
+
+        TextAppear();
     }
 
 

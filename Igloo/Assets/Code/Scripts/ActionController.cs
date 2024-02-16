@@ -109,9 +109,14 @@ public class ActionController : MonoBehaviour
         {
             Debug.Log("플레이어가 공격당했습니다");
             currentHealth--;
-            if(currentHealth < 0)
+
+            if (currentHealth <= 0)
             {
                 StartCoroutine(OnDie());
+            }
+            else
+            {
+                FindObjectOfType<BasePanel>().UpdateLifeUI(currentHealth);
             }
             
         }
@@ -153,7 +158,6 @@ public class ActionController : MonoBehaviour
         anim.Play("Idle");
         GetComponent<CharacterController>().enabled = false;
         transform.position = pos;
-        Debug.Log(" in actionc" + pos);
         GetComponent<CharacterController>().enabled = true;
     }
 }
