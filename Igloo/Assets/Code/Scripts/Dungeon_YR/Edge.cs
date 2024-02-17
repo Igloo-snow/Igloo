@@ -10,24 +10,21 @@ public class Edge : MonoBehaviour
     public bool isPassed = false;
     [SerializeField] private bool isCrossed;
     [SerializeField] private GameObject crossEdge;
+    [SerializeField] private GameObject[] obstructions;
     public GameObject colorLine;
+    [SerializeField] private bool isPassing;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player") && isCrossed)
+        isPassing = startNode.isStepped || endNode.isStepped;
+        if (other.transform.CompareTag("Player") && isCrossed && isPassing)
         {
             Debug.Log("플레이어 인식");
-            crossEdge.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.CompareTag("Player") && isCrossed)
-        {
-            Debug.Log("플레이어 아웃 인식");
-            crossEdge.gameObject.SetActive(true);
+            for(int i = 0; i < obstructions.Length; i++)
+            {
+                obstructions[i].SetActive(true);
+            }
         }
     }
 
@@ -40,6 +37,10 @@ public class Edge : MonoBehaviour
             isPassed = true;
             Debug.Log(this.gameObject.name + " passed");
             colorLine.GetComponent<MeshRenderer>().material.color = Color.gray;
+            for (int i = 0; i < obstructions.Length; i++)
+            {
+                obstructions[i].SetActive(false);
+            }
             return isPassed;
         }
         return false;
