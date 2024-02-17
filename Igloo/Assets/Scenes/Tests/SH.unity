@@ -471,19 +471,19 @@ PrefabInstance:
       objectReference: {fileID: 635622739}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016968263
+      value: 0.000000016968274
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000002852621
+      value: -0.0000000028526226
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000019025837
+      value: -0.000000019025839
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000028446405
+      value: 0.0000000028446407
       objectReference: {fileID: 0}
     - target: {fileID: 3340692996179612504, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -531,11 +531,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000008456786
+      value: -0.0000000084567855
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000015803971
+      value: 0.0000000015803969
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -594,7 +594,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: TempPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3755366040990305316, guid: fd48d0ea037ec824cbe05d8f15bd454d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -724,7 +725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749342048}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16220927, y: -0.000000019572592, z: 0.0000000032174667, w: 0.98675644}
+  m_LocalRotation: {x: 0.16220927, y: 0.000000019572596, z: -0.0000000032174672, w: 0.98675644}
   m_LocalPosition: {x: 0, y: 4.487257, z: -9.185143}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1888,7 +1889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Items: []
   ItemContent: {fileID: 1135515445}
-  InventoryItem: {fileID: 5100315148153876140, guid: daf720b73f96e974090a771926b60cb4, type: 3}
+  InventoryItemPrefab: {fileID: 5100315148153876140, guid: daf720b73f96e974090a771926b60cb4, type: 3}
 --- !u!4 &2032803962
 Transform:
   m_ObjectHideFlags: 0
