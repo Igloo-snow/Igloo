@@ -37,9 +37,13 @@ public class DialogueTrigger : MonoBehaviour
                 {
                     if (isFirst && isQuestRelated)
                     {
-                        TriggerDialogue();
+                        if (isFirst)
+                        {
+                            TriggerDialogue();
+                            questPoint.AcceptQuest();
+                        }
+                        questPoint.ClearQuest();
                     }
-                    //questPoint.ClearQuest();
                 }
             }
             if (Input.GetKeyDown(KeyCode.Space))
