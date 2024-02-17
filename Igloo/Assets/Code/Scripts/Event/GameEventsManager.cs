@@ -8,6 +8,7 @@ public class GameEventsManager : MonoBehaviour
     public static GameEventsManager instance {  get; private set; }
 
     public QuestEvents questEvents;
+    public PlayerEvents playerEvents;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class GameEventsManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             questEvents = new QuestEvents();
+            playerEvents = new PlayerEvents();
         }
         else
         {
