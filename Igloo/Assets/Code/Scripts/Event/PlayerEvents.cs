@@ -1,7 +1,6 @@
 using System;
-using UnityEngine;
 
-public class PlayerEvents : MonoBehaviour
+public class PlayerEvents
 {
     public event Action onPlayerDie;
     public void PlayerDie()
