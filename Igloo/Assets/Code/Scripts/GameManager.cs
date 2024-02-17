@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public static bool isOpenInfoUI = false; 
 
 
-    // Start is called before the first frame update
+    /*// Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -37,5 +37,5 @@ public class GameManager : MonoBehaviour
 
             //isPlay = true;
         }
-    }
+    }*/
 }
