@@ -27,7 +27,7 @@ public class FallingObject : MonoBehaviour
 
     IEnumerator FallCoroutine()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
         rigid.isKinematic = false;
         yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);

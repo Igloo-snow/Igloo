@@ -24,7 +24,7 @@ public class BasePanel : MonoBehaviour
 
     public void UpdateLifeUI(int current)
     {
-        for(int i = lifeImg.Length - 1; i >= current-1; i--)
+        for(int i = lifeImg.Length - 1; i >= current; i--)
         {
             lifeImg[i].color = new Color(1, 1, 1, 0.1f);
         }

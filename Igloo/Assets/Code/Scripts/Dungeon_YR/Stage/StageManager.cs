@@ -32,10 +32,12 @@ public class GM : MonoBehaviour
         GameEventsManager.instance.playerEvents.onStageFinish -= StageFinish;
         GameEventsManager.instance.playerEvents.onNextStage -= NextStage;
     }
+
     private void Start()
     {
         shadowControl.LevelTime(stages[currentStage].shadowTime);
     }
+
     private void Update()
     {
         if (!isDead)
@@ -55,10 +57,6 @@ public class GM : MonoBehaviour
                 }
             }
         }
-
-        //Gate Test 코드
-        if(Input.GetKeyDown(KeyCode.G))
-            CreateGate();
     }
 
 
@@ -78,7 +76,6 @@ public class GM : MonoBehaviour
         //UI 재설정
         OffRetryUI();
 
-        Time.timeScale = 1.0f;
         isDead = false;
     }
 

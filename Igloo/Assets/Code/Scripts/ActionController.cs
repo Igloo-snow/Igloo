@@ -29,6 +29,7 @@ public class ActionController : MonoBehaviour
         freeLook = FindObjectOfType<CinemachineFreeLook>();
 
         weapon = GetComponentInChildren<Weapon>();
+        weapon.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -73,6 +74,9 @@ public class ActionController : MonoBehaviour
     void Attack()
     {
         attackDelay += Time.deltaTime;
+        if (!weapon.isActiveAndEnabled)
+            return;
+
         if (Input.GetMouseButtonDown(0) && !stopMoving && weapon)
         {
             isAttackReady = weapon.rate < attackDelay;
@@ -84,6 +88,11 @@ public class ActionController : MonoBehaviour
                 attackDelay = 0;
             }
         }
+    }
+
+    public void WeaponOn()
+    {
+        weapon.gameObject.SetActive(true);
     }
 
     private void PlayerStop()
@@ -109,14 +118,11 @@ public class ActionController : MonoBehaviour
         {
             Debug.Log("플레이어가 공격당했습니다");
             currentHealth--;
+            FindObjectOfType<BasePanel>().UpdateLifeUI(currentHealth);
 
             if (currentHealth <= 0)
             {
                 StartCoroutine(OnDie());
-            }
-            else
-            {
-                FindObjectOfType<BasePanel>().UpdateLifeUI(currentHealth);
             }
             
         }

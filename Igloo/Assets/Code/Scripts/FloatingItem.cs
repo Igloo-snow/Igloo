@@ -14,6 +14,7 @@ public class FloatingItem : MonoBehaviour
     [SerializeField] private string str;
     [SerializeField] private Transform itemMesh;
     [SerializeField] private GameObject particle;
+    [SerializeField] private float tweeningTime = 0.5f;
 
     private int count = 1;
 
@@ -48,9 +49,9 @@ public class FloatingItem : MonoBehaviour
     {
         
         Sequence itemSequence = DOTween.Sequence();
-        itemSequence.Append(itemMesh.DOMoveY(itemMesh.position.y + height, 1f).SetUpdate(true));
+        itemSequence.Append(itemMesh.DOMoveY(itemMesh.position.y + height, tweeningTime).SetUpdate(true));
         Vector3 rot = new Vector3(-30, itemMesh.eulerAngles.y, itemMesh.eulerAngles.z);
-        itemSequence.Append(itemMesh.DORotate(rot, 0.5f).SetUpdate(true));
+        itemSequence.Append(itemMesh.DORotate(rot, tweeningTime).SetUpdate(true));
         itemSequence.AppendCallback(ImgAppear).SetUpdate(true);
 
         //itemSequence.Play();

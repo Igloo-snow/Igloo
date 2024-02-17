@@ -8,7 +8,7 @@ public class StageGraph : MonoBehaviour
     [Header("Graph")]
     [SerializeField] private Node[] nodes;
     [SerializeField] private Edge[] edges;
-    private int previousNode = -1;
+    public int previousNode = -1;
 
     [Header("Stage")]
     [SerializeField] private Transform fallingObjparent;

@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 1960115487031393662}
   m_Layer: 13
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -390,6 +390,7 @@ MonoBehaviour:
   isPlayer:
     serializedVersion: 2
     m_Bits: 8
+  obstruction: {fileID: 0}
 --- !u!195 &898317172521869747
 NavMeshAgent:
   m_ObjectHideFlags: 0
