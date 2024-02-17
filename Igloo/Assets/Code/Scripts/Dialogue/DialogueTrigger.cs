@@ -39,7 +39,7 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         TriggerDialogue();
                     }
-                    //questPoint.ClearQuest();
+                    questPoint.ClearQuest();
                 }
             }
             if (Input.GetKeyDown(KeyCode.Space))

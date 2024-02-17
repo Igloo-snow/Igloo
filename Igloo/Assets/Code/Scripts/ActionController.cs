@@ -6,47 +6,19 @@ using UnityEngine.SceneManagement;
 
 public class ActionController : MonoBehaviour
 {
-    private CharacterController characterController;
     private CinemachineFreeLook freeLook;
-    private Animator anim;
-    private Weapon weapon;
 
-    public bool stopMoving = false;
     public bool encountered = false;
     public bool changingScene;
     public string nextScene;
 
-    public int maxHealth = 3;
-    public int currentHealth = 3;
-    private float attackDelay;
-
-    private bool isAttackReady = true;
-
     private void Start()
     {
-        characterController = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
-        freeLook = FindObjectOfType<CinemachineFreeLook>();
-
-        weapon = GetComponentInChildren<Weapon>();
-        weapon.gameObject.SetActive(false);
-    }
-
-    private void OnEnable()
-    {
-        GameEventsManager.instance.playerEvents.onPlayerStop += PlayerStop;
-        GameEventsManager.instance.playerEvents.onPlayerStart += PlayerStart;
-    }
-
-    private void OnDisable()
-    {
-        GameEventsManager.instance.playerEvents.onPlayerStop -= PlayerStop;
-        GameEventsManager.instance.playerEvents.onPlayerStart -= PlayerStart;
+        freeLook = FindObjectOfType<CinemachineFreeLook>(); 
     }
 
     void Update()
     {
-        /*
         if (QuestUI.isCheckingQuest || DialogueManager.GetInstance().isPlaying)
         {
             freeLook.enabled = false;
@@ -57,7 +29,6 @@ public class ActionController : MonoBehaviour
             freeLook.enabled = true;
             GetComponent<CharacterController>().enabled = true;
         }
-        */
 
         if(encountered == true && Input.GetKeyDown(KeyCode.E))
         {
@@ -67,44 +38,11 @@ public class ActionController : MonoBehaviour
         {
             changingScene = false;
         }
-        
-        Attack();
-    }
 
-    void Attack()
-    {
-        attackDelay += Time.deltaTime;
-        if (!weapon.isActiveAndEnabled)
-            return;
-
-        if (Input.GetMouseButtonDown(0) && !stopMoving && weapon)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            isAttackReady = weapon.rate < attackDelay;
 
-            if (isAttackReady)
-            {
-                weapon.Use();
-                anim.SetTrigger("Attack");
-                attackDelay = 0;
-            }
         }
-    }
-
-    public void WeaponOn()
-    {
-        weapon.gameObject.SetActive(true);
-    }
-
-    private void PlayerStop()
-    {
-        stopMoving = true;
-        Time.timeScale = 0f;
-    }
-
-    private void PlayerStart()
-    {
-        stopMoving = false;
-        Time.timeScale = 1f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -114,28 +52,6 @@ public class ActionController : MonoBehaviour
             encountered = true;
             nextScene = other.gameObject.GetComponent<TransitionPoint>().nextScene;
         }
-        else if (other.transform.CompareTag("Enemy"))
-        {
-            Debug.Log("플레이어가 공격당했습니다");
-            currentHealth--;
-            FindObjectOfType<BasePanel>().UpdateLifeUI(currentHealth);
-
-            if (currentHealth <= 0)
-            {
-                StartCoroutine(OnDie());
-            }
-            
-        }
-    }
-
-    IEnumerator OnDie()
-    {
-        characterController.enabled = false;
-        Debug.Log("플레이어가 사망하였습니다");
-        yield return new WaitForSeconds(0.1f);
-        anim.SetTrigger("Die");
-        yield return new WaitForSeconds(3f);
-        GameEventsManager.instance.playerEvents.PlayerDie();
     }
 
     private void OnTriggerExit(Collider other)
@@ -159,11 +75,5 @@ public class ActionController : MonoBehaviour
         return null;
     }
 
-    public void Reposition(Vector3 pos)
-    {
-        anim.Play("Idle");
-        GetComponent<CharacterController>().enabled = false;
-        transform.position = pos;
-        GetComponent<CharacterController>().enabled = true;
-    }
+
 }
