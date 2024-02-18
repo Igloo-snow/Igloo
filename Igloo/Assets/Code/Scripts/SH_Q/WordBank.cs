@@ -37,8 +37,6 @@ public class WordBank : MonoBehaviour
         }
         else
         {
-            // 모든 단어를 출력한 경우에 대한 처리
-            // 여기에서는 UI를 비활성화
             if (uiContainer != null)
                 uiContainer.SetActive(false);
         }
