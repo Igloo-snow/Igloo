@@ -110,6 +110,7 @@ public class GM : MonoBehaviour
         if(currentStage+1 >= stages.Length)
         {
             Debug.Log("컴수 던전 클리어");
+            GameEventsManager.instance.playerEvents.FinishDungeon("DiscreteMath");
             shadowControl.gameObject.SetActive(false);
         }
         else

@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public static bool isOpenRestartUI = false;
     public static bool isOpenInfoUI = false; 
 
-
     // Start is called before the first frame update
     void Start()
     {
