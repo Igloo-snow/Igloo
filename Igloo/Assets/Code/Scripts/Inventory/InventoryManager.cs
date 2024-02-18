@@ -57,4 +57,14 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+
+    public bool CheckInventory(int id)
+    {
+        foreach(Item item in Items)
+        {
+            if (item.id == id)
+                return true;
+        }
+        return false;
+    }
 }
