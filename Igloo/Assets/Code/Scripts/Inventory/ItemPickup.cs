@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemPickup : MonoBehaviour
 {
     public Item Item;
+    private bool canPickup = false;
 
     void Pickup()
     {
@@ -12,8 +13,27 @@ public class ItemPickup : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnMouseDown()
+    void Update()
     {
-        Pickup();
+        if (canPickup && Input.GetKeyDown(KeyCode.E))
+        {
+            Pickup();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canPickup = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canPickup = false;
+        }
     }
 }
