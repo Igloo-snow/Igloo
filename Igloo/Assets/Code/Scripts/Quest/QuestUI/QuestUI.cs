@@ -69,6 +69,7 @@ public class QuestUI : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("text for checking SceneLoad in questUI" + scene.name + questManager.startedQuests.Count);
         //진행중인 퀘스트 확인 후 UI 세팅
         if (questManager.startedQuests.Count > 0)
         {

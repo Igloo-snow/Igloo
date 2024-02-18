@@ -47,7 +47,7 @@ public class SceneMgr : MonoBehaviour
         sceneName = actionController.nextScene;
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneName);
         asyncOperation.allowSceneActivation = false;
-        Debug.Log("Pro :" + asyncOperation.progress);
+        //Debug.Log("Pro :" + asyncOperation.progress);
         
         
         while(!asyncOperation.isDone)
@@ -55,7 +55,7 @@ public class SceneMgr : MonoBehaviour
             //m_Text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%"; 
             if (asyncOperation.progress >= 0.9f)
             {
-                Debug.Log("Pro :" + asyncOperation.progress);
+                //Debug.Log("Pro :" + asyncOperation.progress);
                 //변수 초기화
                 actionController.encountered = false;
                 asyncOperation.allowSceneActivation = true;

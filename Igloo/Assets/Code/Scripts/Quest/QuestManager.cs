@@ -68,6 +68,10 @@ public class QuestManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StepSetActive(scene.name);
+        foreach(string str in startedQuests)
+        {
+            Debug.Log(str + " " + scene.name);
+        }
     }
 
     private void StepSetActive(string sceneName) {

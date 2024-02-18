@@ -11,7 +11,6 @@ public abstract class QuestStep : MonoBehaviour
 
     public void InitializeQuestStep(string questId)
     {
-
         //나중에 쓰일 일이 있어서 바로 public 변수로 안만들고 이렇게 함수 만들어서
         this.questId = questId;
     }
