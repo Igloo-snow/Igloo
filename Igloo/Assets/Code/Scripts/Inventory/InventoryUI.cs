@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-    private Canvas inventoryCanvas;
-    private bool isInventoryOpen = false;
+    private GameObject inventoryUI; // 인벤토리 UI 오브젝트
 
     void Start()
     {
-        inventoryCanvas = GetComponent<Canvas>();
-        inventoryCanvas.enabled = false;
+        // 부모 오브젝트의 자식 오브젝트 중에서 "InventoryUI"를 찾음
+        inventoryUI = transform.Find("InventoryUI").gameObject;
+        inventoryUI.SetActive(false); // 시작 시 비활성화
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            isInventoryOpen = !isInventoryOpen;
-            inventoryCanvas.enabled = isInventoryOpen;
+            // 인벤토리 UI의 활성화/비활성화 토글
+            inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
     }
 }
