@@ -12,10 +12,14 @@ public class QuestPoint : MonoBehaviour
     [SerializeField] private bool startPoint = true;
     [SerializeField] private bool finishPoint = true;
 
+    [Header("Dialogue")]
+    [SerializeField] private DialogueTrigger dialogue;
 
     private string questId;
     private QuestState currentQuestState;
     private QuestManager questManager;
+
+    private bool plyaerIsNear = false;
 
     private void Start()
     {
@@ -28,11 +32,39 @@ public class QuestPoint : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
+        GameEventsManager.instance.dialogueEvents.onFinishDialogue += FinishDialogue;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
+        GameEventsManager.instance.dialogueEvents.onFinishDialogue -= FinishDialogue;
+    }
+
+    private void FinishDialogue(string name)
+    {
+        if (dialogue.dialogue.name.Equals(name))
+        {
+            AcceptQuest();
+            ClearQuest();
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            plyaerIsNear = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            plyaerIsNear = false;
+        }
     }
 
     private void QuestStateChange(Quest quest)

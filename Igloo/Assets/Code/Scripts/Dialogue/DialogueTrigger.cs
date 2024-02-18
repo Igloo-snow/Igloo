@@ -23,7 +23,7 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Start()
     {
-        questPoint = GetComponent<QuestPoint>(); // caution
+        //questPoint = GetComponent<QuestPoint>(); // caution
     }
 
     private void Update()
@@ -40,9 +40,9 @@ public class DialogueTrigger : MonoBehaviour
                         if (isFirst)
                         {
                             TriggerDialogue();
-                            questPoint.AcceptQuest();
+                            //questPoint.AcceptQuest();
                         }
-                        questPoint.ClearQuest();
+                        //questPoint.ClearQuest();
                     }
                 }
             }

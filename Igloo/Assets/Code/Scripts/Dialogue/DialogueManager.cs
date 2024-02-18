@@ -10,6 +10,8 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
     public Animator animator;
     private Queue<string> sentences;
+
+    private string currentDialogue;
     public bool isPlaying { get; private set; }
     private static DialogueManager instance;
 
@@ -46,6 +48,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
+        currentDialogue = dialogue.name;
         DisplayNextSentence();
     }
 
@@ -63,6 +66,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogue);
         isPlaying = false;
         animator.SetBool("IsOpen", false);
     }
