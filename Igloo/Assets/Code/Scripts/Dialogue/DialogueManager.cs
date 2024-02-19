@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     public Animator animator;
     private Queue<string> sentences;
 
-    private string currentDialogue;
+    private int currentDialogueId;
     public bool isPlaying { get; private set; }
     private static DialogueManager instance;
 
@@ -48,7 +48,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(sentence);
         }
-        currentDialogue = dialogue.name;
+        currentDialogueId = dialogue.dialogueId;
         DisplayNextSentence();
     }
 
@@ -66,7 +66,8 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogue);
+        Debug.Log("in dialogueManager" + currentDialogueId);
+        GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogueId);
         isPlaying = false;
         animator.SetBool("IsOpen", false);
     }

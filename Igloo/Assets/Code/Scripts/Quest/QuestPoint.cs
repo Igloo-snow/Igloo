@@ -14,7 +14,7 @@ public class QuestPoint : MonoBehaviour
     [SerializeField] private bool finishPoint;
 
     [Header("Dialogue")]
-    [SerializeField] private DialogueTrigger dialogue;
+    [SerializeField] private DialogueTrigger dialogueTrigger;
 
     public string questId;
     private QuestState currentQuestState;
@@ -42,11 +42,13 @@ public class QuestPoint : MonoBehaviour
         GameEventsManager.instance.dialogueEvents.onFinishDialogue -= FinishDialogue;
     }
 
-    private void FinishDialogue(string name)
+    private void FinishDialogue(int id)
     {
-        if (dialogue.dialogue.name.Equals(name) && playerIsNear)
+       
+        if (dialogueTrigger.dialogue.dialogueId.Equals(id) && playerIsNear)
         {
-            Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
+            //Debug.Log(id + dialogueTrigger.dialogue.dialogueId);
+            //Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
             if(startPoint)
             {
                 AcceptQuest();
