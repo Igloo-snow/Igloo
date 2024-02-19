@@ -22,7 +22,7 @@ public class ActionController : MonoBehaviour
 
     private bool isAttackReady = true;
 
-    private void Start()
+    private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
@@ -159,11 +159,12 @@ public class ActionController : MonoBehaviour
         return null;
     }
 
-    public void Reposition(Vector3 pos)
+    public void Reposition(GameObject pos)
     {
         anim.Play("Idle");
         GetComponent<CharacterController>().enabled = false;
-        transform.position = pos;
+        transform.position = pos.transform.position;
+        transform.rotation = pos.transform .rotation;
         GetComponent<CharacterController>().enabled = true;
     }
 }

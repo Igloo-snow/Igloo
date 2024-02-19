@@ -13,7 +13,7 @@ public class StageGraph : MonoBehaviour
     [Header("Stage")]
     [SerializeField] private Transform fallingObjparent;
     private GameObject[] fallingObjs;
-    public Vector3 startPos;
+    public GameObject startPos;
     public float shadowTime = 2f;
 
     private void OnEnable()
@@ -27,8 +27,6 @@ public class StageGraph : MonoBehaviour
 
     void Awake()
     {
-        startPos = transform.position;
-
         fallingObjs = new GameObject[fallingObjparent.childCount];
         for (int i = 0; i < fallingObjparent.childCount; i++)
         {

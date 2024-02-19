@@ -9,7 +9,7 @@ public class TransitionUI : MonoBehaviour
 {
     [SerializeField]
     private ActionController actionController;
-    private PlayerMovement player;
+    //private PlayerMovement player;
     [SerializeField]
     private Canvas canvas;
 
