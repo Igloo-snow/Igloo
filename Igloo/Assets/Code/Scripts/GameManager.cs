@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,32 +11,44 @@ public class GameManager : MonoBehaviour
     public static bool isOpenRestartUI = false;
     public static bool isOpenInfoUI = false; 
 
-
-    /*// Start is called before the first frame update
+    // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
+        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
         {
-            GameEventsManager.instance.playerEvents.PlayerStop();
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
+            {
+                GameEventsManager.instance.playerEvents.PlayerStop();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
 
-            //isPlay = false;
-        }
-        else
-        {
-            GameEventsManager.instance.playerEvents.PlayerStart();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+                //isPlay = false;
+            }
+            else
+            {
+                GameEventsManager.instance.playerEvents.PlayerStart();
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
 
-            //isPlay = true;
+                //isPlay = true;
+            }
         }
-    }*/
+
+    }
 }

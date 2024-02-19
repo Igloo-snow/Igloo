@@ -45,6 +45,8 @@ public class QuestUI : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onStartQuest += StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest += AdvanceQuest;
+        GameEventsManager.instance.questEvents.onUpdateQuestUI += UpdateQuestUI;
+
         GameEventsManager.instance.questEvents.onFinishQuest += FinishQuest;
 
 
@@ -56,6 +58,8 @@ public class QuestUI : MonoBehaviour
 
         GameEventsManager.instance.questEvents.onStartQuest -= StartQuest;
         GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvanceQuest;
+        GameEventsManager.instance.questEvents.onUpdateQuestUI -= UpdateQuestUI;
+
         GameEventsManager.instance.questEvents.onFinishQuest -= FinishQuest;
     }
 
@@ -69,7 +73,6 @@ public class QuestUI : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("text for checking SceneLoad in questUI" + scene.name + questManager.startedQuests.Count);
         //진행중인 퀘스트 확인 후 UI 세팅
         if (questManager.startedQuests.Count > 0)
         {
@@ -121,6 +124,11 @@ public class QuestUI : MonoBehaviour
 
     private void AdvanceQuest(string id)
     {
+        
+    }
+
+    private void UpdateQuestUI(string id)
+    {
         UpdateSimpleQuestUI(id);
     }
 
@@ -170,40 +178,17 @@ public class QuestUI : MonoBehaviour
     private void CreateSimpleQuestUI(Quest quest)
     {
         Image simpleQuestUI = Instantiate<Image>(simpleQuest, simplequestParent);
-        simpleQuestUI.transform.Find("Title").GetComponent<TMP_Text>().text = quest.info.id;
-        if (quest.state.Equals(QuestState.CAN_FINISH))
-
-        {
-            simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex - 1].GetComponent<QuestStep>().stepDescription;
-            simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.yellow;
-        }
-        else
-        {
-            simpleQuestUI.transform.Find("Detail").GetComponent<TMP_Text>().text = quest.info.questStepPrefabs[quest.currentQuestStepIndex].GetComponent<QuestStep>().stepDescription;
-            simpleQuestUI.transform.Find("Check").GetComponent<Image>().color = Color.white;
-
-        }
+        simpleQuestUI.GetComponent<SimpleQuestUI>().CreateSimpleQuestUI(quest.info.id);
         simpleQuestMap.Add(quest.info.id, simpleQuestUI);
 
     }
 
     private void UpdateSimpleQuestUI(string id)
     {
-        //만약 다음 스텝이 있으면 그걸로 상세내용 바꾸기
-        //없으면 체크 색 변경
+
         if (simpleQuestMap.ContainsKey(id))
         {
-            Quest tempQuest = questManager.GetQuestById(id);
-
-            if (tempQuest.state.Equals(QuestState.CAN_FINISH))
-            {
-                simpleQuestMap[id].transform.Find("Check").GetComponent<Image>().color = Color.yellow;
-            }
-            else
-            {
-                QuestStep questStep = tempQuest.info.questStepPrefabs[tempQuest.currentQuestStepIndex].GetComponent<QuestStep>();
-                simpleQuestMap[id].transform.Find("Detail").GetComponent<TMP_Text>().text = questStep.stepDescription;
-            }
+            simpleQuestMap[id].GetComponent<SimpleQuestUI>().UpdateSimpleQusetUI(id);
         }
     }
 

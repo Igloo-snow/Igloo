@@ -20,6 +20,15 @@ public class QuestEvents
         }
     }
 
+    public event Action<string> onUpdateQuestUI;
+    public void UpdateQuestUI(string id)
+    {
+        if (onUpdateQuestUI != null)
+        {
+            onUpdateQuestUI(id);
+        }
+    }
+
     public event Action<string> onFinishQuest;
     public void FinishQuest(string id)
     {

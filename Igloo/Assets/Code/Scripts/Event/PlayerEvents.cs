@@ -55,4 +55,13 @@ public class PlayerEvents
             onNextStage();
         }
     }
+
+    public event Action<string> onFinishDungeon;
+    public void FinishDungeon(string str)
+    {
+        if (onFinishDungeon != null)
+        {
+            onFinishDungeon(str);
+        }
+    }
 }

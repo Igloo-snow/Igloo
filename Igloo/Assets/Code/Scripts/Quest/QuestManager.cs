@@ -136,6 +136,8 @@ public class QuestManager : MonoBehaviour
         {
             ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
         }
+
+        GameEventsManager.instance.questEvents.UpdateQuestUI(id);
     }
 
     private void FinishQuest(string id)

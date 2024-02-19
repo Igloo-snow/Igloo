@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class QuestPoint : MonoBehaviour
@@ -9,13 +10,17 @@ public class QuestPoint : MonoBehaviour
     private QuestInfoSO questInfoForPoint;
 
     [Header("Type")]
-    [SerializeField] private bool startPoint = true;
-    [SerializeField] private bool finishPoint = true;
+    [SerializeField] private bool startPoint;
+    [SerializeField] private bool finishPoint;
 
+    [Header("Dialogue")]
+    [SerializeField] private DialogueTrigger dialogueTrigger;
 
-    private string questId;
+    public string questId;
     private QuestState currentQuestState;
     private QuestManager questManager;
+
+    private bool playerIsNear = false;
 
     private void Start()
     {
@@ -28,11 +33,49 @@ public class QuestPoint : MonoBehaviour
     private void OnEnable()
     {
         GameEventsManager.instance.questEvents.onQuestStateChange += QuestStateChange;
+        GameEventsManager.instance.dialogueEvents.onFinishDialogue += FinishDialogue;
     }
 
     private void OnDisable()
     {
         GameEventsManager.instance.questEvents.onQuestStateChange -= QuestStateChange;
+        GameEventsManager.instance.dialogueEvents.onFinishDialogue -= FinishDialogue;
+    }
+
+    private void FinishDialogue(int id)
+    {
+       
+        if (dialogueTrigger.dialogue.dialogueId.Equals(id) && playerIsNear)
+        {
+            //Debug.Log(id + dialogueTrigger.dialogue.dialogueId);
+            //Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
+            if(startPoint)
+            {
+                AcceptQuest();
+            }
+            if (finishPoint)
+            {
+                ClearQuest();
+            }
+
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerIsNear = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerIsNear = false;
+        }
     }
 
     private void QuestStateChange(Quest quest)
