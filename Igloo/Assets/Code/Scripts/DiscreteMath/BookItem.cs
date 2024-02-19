@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class BookItem : Interactable
+public class BookItem : MonoBehaviour
 {
     [SerializeField] private Transform[] pages;
     [SerializeField] private Transform book;
