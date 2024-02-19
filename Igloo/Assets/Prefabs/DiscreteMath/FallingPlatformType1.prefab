@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5932383000320048393}
   - component: {fileID: 2819780665343741562}
   - component: {fileID: 7417093548960212296}
+  - component: {fileID: 3879129602719048036}
   m_Layer: 0
   m_Name: FallingPlatformType1
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7784006113556107450}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.23509689, z: -0, w: 0.9719719}
+  m_LocalRotation: {x: 0, y: 0.23509972, z: 0, w: 0.9719713}
   m_LocalPosition: {x: 5.079998, y: -0.10999966, z: -3.0600014}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -104,7 +105,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -169,3 +170,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2.466874
   m_Center: {x: 0, y: 0.07569888, z: 0}
+--- !u!65 &3879129602719048036
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784006113556107450}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.933748, y: 0.4045211, z: 3.5934675}
+  m_Center: {x: -0.0000019073486, y: 0.07569888, z: -0.0000076293945}

@@ -32,11 +32,9 @@ public class ItemSynthesis : Interactable
 
         foreach(ItemRecipeSO recipe in recipeList)
         {
-            Debug.Log(recipe.id);
             bool achived = true;
             foreach(Item item in recipe.requirements)
             {
-                Debug.Log(item.id);
                 if (!InventoryManager.Instance.CheckInventory(item.id))
                 {
                     achived = false;
