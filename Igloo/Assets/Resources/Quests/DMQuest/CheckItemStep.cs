@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class CheckItemStep : QuestStep
 {
-    [SerializeField] private int targetItem;
+    [SerializeField] private int[] targetItem;
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Player"))
+        for (int i = 0; i < targetItem.Length; i++)
         {
-            if (FindObjectOfType<InventoryManager>().CheckInventory(targetItem))
-            {
-                Debug.Log(targetItem + " 확인 완료");
-                FinishQuestStep();
-            }
-
+            if (!FindObjectOfType<InventoryManager>().CheckInventory(targetItem[i]))
+                return;
         }
+        FinishQuestStep();
     }
 }

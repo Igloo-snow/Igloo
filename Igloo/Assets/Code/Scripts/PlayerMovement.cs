@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
                 anim.SetBool("IsRunning", false);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.R))
             {
                 direction.y = jumpSpeed;
                 anim.SetTrigger("Jump");
