@@ -4,31 +4,40 @@ using UnityEngine;
 
 public class Typerinteract : MonoBehaviour
 {
-    public GameObject canvasUI;
-    public float interactionDistance = 3f;
+    public GameObject specificUI;
 
-    void Start()
+    private bool isPlayerInRange;
+
+    private void Awake()
     {
-        canvasUI.SetActive(false);
+        isPlayerInRange = false;
+        specificUI.SetActive(false);
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isPlayerInRange)
         {
-            TryInteract();
+            if (Input.GetKeyDown(KeyCode.E) && !specificUI.activeSelf)
+            {
+                specificUI.SetActive(true);
+            }
         }
     }
 
-    void TryInteract()
+    private void OnTriggerEnter(Collider collider)
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, interactionDistance))
+        if (collider.CompareTag("Player"))
         {
-            if (hit.collider.CompareTag("Interactable"))
-            {
-                canvasUI.SetActive(true);
-            }
+            isPlayerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            isPlayerInRange = false;
         }
     }
 }
