@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
+    public bool doublePoint = true;
     [SerializeField] private GameObject beforeNpc;
     [SerializeField] private GameObject afterNpc;
 
@@ -12,12 +13,12 @@ public class NPC : MonoBehaviour
 
     private void OnEnable()
     {
-        GameEventsManager.instance.questEvents.onAdvanceQuest += AdvancdQuest;
+        GameEventsManager.instance.questEvents.onUpdateQuestUI += UpdateQuest;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.questEvents.onAdvanceQuest -= AdvancdQuest;
+        GameEventsManager.instance.questEvents.onUpdateQuestUI -= UpdateQuest;
     }
 
     private void Start()
@@ -25,14 +26,18 @@ public class NPC : MonoBehaviour
         questPoint = GetComponentInChildren<QuestPoint>();
     }
 
-    private void AdvancdQuest(string questName)
+    private void UpdateQuest(string questName)
     {
-        if(questPoint.questId.Equals(questName))
+        if (doublePoint)
         {
-            //다이어로그 변경용으로는 되는데 퀘스트랑 연동이 안되는데?
-            beforeNpc.SetActive(false);
-            afterNpc.SetActive(true);
+            bool canFinish = !(QuestManager.instance.GetQuestById(questName).CurrentStepExists());
+            if (questPoint.questId.Equals(questName) && canFinish)
+            {
+                beforeNpc.SetActive(false);
+                afterNpc.SetActive(true);
+            }
         }
+
     }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class QuestPoint : MonoBehaviour
@@ -9,8 +10,8 @@ public class QuestPoint : MonoBehaviour
     private QuestInfoSO questInfoForPoint;
 
     [Header("Type")]
-    [SerializeField] private bool startPoint = true;
-    [SerializeField] private bool finishPoint = true;
+    [SerializeField] private bool startPoint;
+    [SerializeField] private bool finishPoint;
 
     [Header("Dialogue")]
     [SerializeField] private DialogueTrigger dialogue;
@@ -19,7 +20,7 @@ public class QuestPoint : MonoBehaviour
     private QuestState currentQuestState;
     private QuestManager questManager;
 
-    private bool plyaerIsNear = false;
+    private bool playerIsNear = false;
 
     private void Start()
     {
@@ -43,10 +44,18 @@ public class QuestPoint : MonoBehaviour
 
     private void FinishDialogue(string name)
     {
-        if (dialogue.dialogue.name.Equals(name))
+        if (dialogue.dialogue.name.Equals(name) && playerIsNear)
         {
-            AcceptQuest();
-            ClearQuest();
+            Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
+            if(startPoint)
+            {
+                AcceptQuest();
+            }
+            else if (finishPoint)
+            {
+                ClearQuest();
+            }
+
         }
 
     }
@@ -55,7 +64,7 @@ public class QuestPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            plyaerIsNear = true;
+            playerIsNear = true;
         }
     }
 
@@ -63,7 +72,7 @@ public class QuestPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            plyaerIsNear = false;
+            playerIsNear = false;
         }
     }
 
