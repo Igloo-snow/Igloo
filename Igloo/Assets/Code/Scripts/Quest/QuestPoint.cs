@@ -53,7 +53,7 @@ public class QuestPoint : MonoBehaviour
             {
                 AcceptQuest();
             }
-            else if (finishPoint)
+            if (finishPoint)
             {
                 ClearQuest();
             }

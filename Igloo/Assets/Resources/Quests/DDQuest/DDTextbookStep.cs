@@ -9,7 +9,7 @@ public class DDTextbookStep : QuestStep
         if (other.gameObject.CompareTag("Player"))
         {
             FinishQuestStep();
-            GetComponent<QuestPoint>().ClearQuest();
+            //GetComponent<QuestPoint>().ClearQuest();
         }
     }
 }
