@@ -16,7 +16,7 @@ public class Note : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            img.gameObject.SetActive(true);
+            //img.gameObject.SetActive(true);
         }
     }
 
@@ -24,7 +24,7 @@ public class Note : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            img.gameObject.SetActive(false);
+            //img.gameObject.SetActive(false);
         }
     }
 }

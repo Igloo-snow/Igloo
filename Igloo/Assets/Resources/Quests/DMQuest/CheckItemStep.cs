@@ -11,7 +11,11 @@ public class CheckItemStep : QuestStep
         if (other.gameObject.CompareTag("Player"))
         {
             if (FindObjectOfType<InventoryManager>().CheckInventory(targetItem))
+            {
+                Debug.Log(targetItem + " 확인 완료");
                 FinishQuestStep();
+            }
+
         }
     }
 }

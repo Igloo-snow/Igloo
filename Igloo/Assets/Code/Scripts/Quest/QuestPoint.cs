@@ -15,7 +15,7 @@ public class QuestPoint : MonoBehaviour
     [Header("Dialogue")]
     [SerializeField] private DialogueTrigger dialogue;
 
-    private string questId;
+    public string questId;
     private QuestState currentQuestState;
     private QuestManager questManager;
 
