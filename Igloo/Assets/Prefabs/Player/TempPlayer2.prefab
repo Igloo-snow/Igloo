@@ -1733,6 +1733,8 @@ GameObject:
   - component: {fileID: 2060313849170757612}
   - component: {fileID: 8972583257077290026}
   - component: {fileID: 6532247334330160008}
+  - component: {fileID: 3464913928501362353}
+  - component: {fileID: 1017929255675949974}
   m_Layer: 3
   m_Name: TempPlayer2
   m_TagString: Player
@@ -1839,6 +1841,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3464913928501362353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065231994566705333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68dac6e9b84753946a185a448cfc6623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1017929255675949974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6065231994566705333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67c76ee38ae95524cab6d9fcb6ccf976, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  promptText: {fileID: 0}
 --- !u!1 &6345620538507112824
 GameObject:
   m_ObjectHideFlags: 0
