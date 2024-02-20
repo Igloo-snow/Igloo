@@ -20,22 +20,19 @@ public class SceneName : MonoBehaviour
         switch ((int)name)
         {
             case 0:
-                return "���� �޴�";
+                return "메인 메뉴";
             case 1:
-                return "��";
+                return "집";
             case 2:
-                return "�����";
+                return "월드맵";
             case 3:
-                return "�б�";
+                return "학교";
             case 4:
+                return "던전";
             case 5:
-                return "";
+                return "디지털 논리회로 던전";
             case 6:
-                return "����";
-            case 7:
-                return "��� ����";
-            case 8:
-                return "�ļ� ����";
+                return "컴퓨터 수학 던전";
             default:
                 return "";
         }
