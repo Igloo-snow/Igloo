@@ -2,42 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Typerinteract : MonoBehaviour
+public class Typerinteract : Interactable
 {
     public GameObject specificUI;
 
-    private bool isPlayerInRange;
-
     private void Awake()
     {
-        isPlayerInRange = false;
         specificUI.SetActive(false);
+        promptMessage = "E키로 말 걸기";
     }
 
     private void Update()
     {
-        if (isPlayerInRange)
-        {
-            if (Input.GetKeyDown(KeyCode.E) && !specificUI.activeSelf)
+
+    }
+
+    protected override void Interact()
+    {
+        Debug.Log("enter");
+        if (!specificUI.activeSelf)
             {
                 specificUI.SetActive(true);
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.CompareTag("Player"))
-        {
-            isPlayerInRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.CompareTag("Player"))
-        {
-            isPlayerInRange = false;
-        }
     }
 }
