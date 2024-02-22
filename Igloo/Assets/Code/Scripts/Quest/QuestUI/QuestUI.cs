@@ -7,6 +7,7 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting.FullSerializer;
 
 public class QuestUI : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class QuestUI : MonoBehaviour
     public Image simpleQuest;
     public Transform simplequestParent;
     private Dictionary<string, Image> simpleQuestMap;
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip audioClip;
 
     private void Awake()
     {
@@ -68,6 +72,11 @@ public class QuestUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             QuestCheking();
+            if(SoundManager.instance != null)
+            {
+                SoundManager.instance.Play(audioClip, Sound.Effect);
+            }
+
         }
     }
 
