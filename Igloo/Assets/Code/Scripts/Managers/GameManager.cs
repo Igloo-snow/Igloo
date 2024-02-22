@@ -30,24 +30,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
+        if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
         {
-            if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
-            {
-                GameEventsManager.instance.playerEvents.PlayerStop();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+            GameEventsManager.instance.playerEvents.PlayerStop();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 
-                //isPlay = false;
-            }
-            else
-            {
-                GameEventsManager.instance.playerEvents.PlayerStart();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+            //isPlay = false;
+        }
+        else
+        {
+            GameEventsManager.instance.playerEvents.PlayerStart();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
 
-                //isPlay = true;
-            }
+            //isPlay = true;
         }
 
     }
