@@ -12,11 +12,11 @@ public class TutorialFadeEffect : TutorialBase
     {
         if (isFadeIn == true)
         {
-            fadeEffect.FadeIn(OnStayHold);
+            fadeEffect.FadeIn(OnAfterFadeEffect);
         }
         else
         {
-            fadeEffect.FadeOut(OnStayHold);
+            fadeEffect.FadeOut(OnAfterFadeEffect);
         }
     }
 

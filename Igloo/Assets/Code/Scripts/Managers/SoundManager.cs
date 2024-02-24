@@ -85,4 +85,19 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void RepeatPlayEffect(AudioClip audioClip)
+    {
+        audioSources[(int)Sound.Effect].loop = true;
+        AudioSource audioSource = audioSources[(int)Sound.Effect];
+        audioSource.pitch = 1.0f;
+        audioSource.clip = audioClip;
+        audioSource.Play();
+    }
+
+    public void StopRepeatingEffect()
+    {
+        audioSources[(int)Sound.Effect].loop = false;
+        audioSources[(int)Sound.Effect].Stop();
+    }
+
 }
