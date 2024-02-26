@@ -11,4 +11,9 @@ public class Brochure : Interactable
     {
         img.gameObject.SetActive(true);
     }
+
+    public void Finish()
+    {
+
+    }
 }

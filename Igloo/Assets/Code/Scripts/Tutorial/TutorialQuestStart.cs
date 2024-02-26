@@ -8,8 +8,9 @@ public class TutorialQuestStart : TutorialBase
     [SerializeField] private BlinkingObject effectPrefab;
     private BlinkingObject effect;
     [SerializeField] private QuestInfoSO relatedQuest;
+    [SerializeField] private GameObject questInfoPrefab;
+    private GameObject questInfo;
     private bool isCompleted = false;
-
 
     private void OnEnable()
     {
@@ -22,12 +23,24 @@ public class TutorialQuestStart : TutorialBase
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            isCompleted = true;
+            if(questInfo != null)
+            {
+                Destroy(questInfo);
+            }
+        }
+    }
+
     private void StartQuest(string id)
     {
         if (relatedQuest.id.Equals(id))
         {
-            isCompleted = true;
-            Debug.Log("iscomplete true");
+            questInfo = Instantiate(questInfoPrefab, FindAnyObjectByType<Canvas>().transform);
+
         }
     }
 
@@ -48,6 +61,7 @@ public class TutorialQuestStart : TutorialBase
 
     public override void Exit()
     {
+        Destroy(questInfo);
 
     }
 }
