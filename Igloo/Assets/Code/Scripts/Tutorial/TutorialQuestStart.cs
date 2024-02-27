@@ -9,6 +9,7 @@ public class TutorialQuestStart : TutorialBase
     private BlinkingObject effect;
     [SerializeField] private QuestInfoSO relatedQuest;
     [SerializeField] private GameObject questInfoPrefab;
+    [SerializeField] private GameObject transitionPoint;
     private GameObject questInfo;
     private bool isCompleted = false;
 
@@ -27,9 +28,9 @@ public class TutorialQuestStart : TutorialBase
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            isCompleted = true;
             if(questInfo != null)
             {
+                isCompleted = true;
                 Destroy(questInfo);
             }
         }
@@ -62,6 +63,7 @@ public class TutorialQuestStart : TutorialBase
     public override void Exit()
     {
         Destroy(questInfo);
+        transitionPoint.SetActive(true);
 
     }
 }

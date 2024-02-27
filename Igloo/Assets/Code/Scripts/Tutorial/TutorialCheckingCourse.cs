@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class TutorialCheckingCourse : TutorialBase
 {
     [SerializeField] private GameObject brochure;
-    [SerializeField] private Image brochureUi;
+    [SerializeField] private GameObject brochureOnDisplay;
     [SerializeField] private TMP_Text infoUi; 
     private bool isCompleted = false;
 
     public override void Enter()
     {
-        Invoke("DropBrochure", 3f);
+        Invoke("DropBrochure", 1f);
     }
 
     private void DropBrochure()
@@ -32,13 +32,15 @@ public class TutorialCheckingCourse : TutorialBase
 
     public override void Exit()
     {
+        infoUi.text = "";
+        brochureOnDisplay.SetActive(true);
     }
 
     public void CloseBrochure()
     {
-        brochure.SetActive(false);
-        infoUi.text = "";
-        //isCompleted = true;
+        GameManager.isOpenUI = false;
+
+        isCompleted = true;
 
     }
 

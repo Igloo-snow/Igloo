@@ -10,10 +10,6 @@ public class Brochure : Interactable
     protected override void Interact()
     {
         img.gameObject.SetActive(true);
-    }
-
-    public void Finish()
-    {
-
+        GameManager.isOpenUI = true;
     }
 }
