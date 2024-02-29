@@ -29,6 +29,7 @@ public class ActionController : MonoBehaviour
         freeLook = FindObjectOfType<CinemachineFreeLook>();
 
         weapon = GetComponentInChildren<Weapon>();
+        if(weapon != null )
         weapon.gameObject.SetActive(false);
     }
 
@@ -74,7 +75,7 @@ public class ActionController : MonoBehaviour
     void Attack()
     {
         attackDelay += Time.deltaTime;
-        if (!weapon.isActiveAndEnabled)
+        if (!weapon || !weapon.isActiveAndEnabled)
             return;
 
         if (Input.GetMouseButtonDown(0) && !stopMoving && weapon)
