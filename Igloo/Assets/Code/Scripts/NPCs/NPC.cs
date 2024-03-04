@@ -6,9 +6,9 @@ public class Npc : MonoBehaviour
 {
     private Animator anim;
     private int dialogueCount = 0;
-    [SerializeField] private int maxCount = 1;
+    //[SerializeField] private int maxCount = 1;
     [SerializeField] private DialogueTrigger dialogueTrigger;
-    private bool playerIsNear = false;
+    //private bool playerIsNear = false;
 
     private void OnEnable()
     {
@@ -41,7 +41,7 @@ public class Npc : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             anim.SetTrigger("Interact");
-            playerIsNear = true;
+            //playerIsNear = true;
         }
     }
 
@@ -49,7 +49,7 @@ public class Npc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            playerIsNear = false;
+            //playerIsNear = false;
         }
     }
 }

@@ -13,7 +13,8 @@ public enum SceneNames
     DiscreteMath,
     CutsceneDD,
     TutorialHome,
-    TutorialWorldMap
+    TutorialWorldMap,
+    CutsceneDM
 }
 
 public class SceneName : MonoBehaviour
@@ -40,8 +41,10 @@ public class SceneName : MonoBehaviour
                 return "디지털 논리회로 던전";
             case 8:
                 return "집";
-                case 9:
+            case 9:
                 return "월드맵";
+            case 10:
+                return "컴퓨터 수학 던전";
             default:
                 return "";
         }

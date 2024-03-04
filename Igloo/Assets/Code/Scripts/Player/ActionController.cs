@@ -69,7 +69,7 @@ public class ActionController : MonoBehaviour
             changingScene = false;
         }
         
-        Attack();
+        //Attack();
     }
 
     void Attack()
@@ -110,16 +110,10 @@ public class ActionController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /* if (other.transform.CompareTag("TransitionPoint"))
-        {
-            encountered = true;
-            nextScene = other.gameObject.GetComponent<TransitionPoint>().nextScene;
-        } */
         if (other.transform.CompareTag("Enemy"))
         {
-            Debug.Log("�÷��̾ ���ݴ��߽��ϴ�");
-            currentHealth--;
-            FindObjectOfType<BasePanel>().UpdateLifeUI(currentHealth);
+            // 퀴즈 UI 
+            FindObjectOfType<Quiz>().ShowQuiz(other.GetComponentInParent<Enemy>());
 
             if (currentHealth <= 0)
             {
@@ -132,33 +126,11 @@ public class ActionController : MonoBehaviour
     IEnumerator OnDie()
     {
         characterController.enabled = false;
-        Debug.Log("�÷��̾ ����Ͽ����ϴ�");
         yield return new WaitForSeconds(0.1f);
         anim.SetTrigger("Die");
         yield return new WaitForSeconds(3f);
         GameEventsManager.instance.playerEvents.PlayerDie();
     }
-
-    /* private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.CompareTag("TransitionPoint"))
-        {
-            encountered = false;
-        }
-    } */
-
-    /* public TransitionPoint GetInteractableObject()
-    {
-        float interactRange = 2f;
-        Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
-        foreach(Collider collider in colliderArray)
-        {
-            if(collider.TryGetComponent(out TransitionPoint transitionInteractable)){
-                return transitionInteractable;
-            }
-        }
-        return null;
-    } */
 
     public void Reposition(GameObject pos)
     {
