@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
+    public List<Dialogue> dialogues;
+    public int index;
     public GameObject visualCue;
     public bool isFirst;
 
@@ -23,6 +24,7 @@ public class DialogueTrigger : MonoBehaviour
         isFirst = true;
         //visualCue.SetActive(false);
         cueImage.enabled = false;
+        dialogues = new List<Dialogue> ();
     }
 
     private void Start()
@@ -83,7 +85,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogues[index]);
     }
     
     public void setIsFirstFalse()

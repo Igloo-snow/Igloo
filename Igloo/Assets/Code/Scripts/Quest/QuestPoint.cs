@@ -45,7 +45,7 @@ public class QuestPoint : MonoBehaviour
     private void FinishDialogue(int id)
     {
        
-        if (dialogueTrigger.dialogue.dialogueId.Equals(id) && playerIsNear)
+        if (dialogueTrigger.dialogues[dialogueTrigger.index].dialogueId.Equals(id) && playerIsNear)
         {
             //Debug.Log(id + dialogueTrigger.dialogue.dialogueId);
             //Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
