@@ -8,15 +8,63 @@ public class DoorController : MonoBehaviour
 {
     public Dictionary<string, GameObject> doorDictionary = new Dictionary<string, GameObject>();
     public TMP_InputField inputField;
+    public TextMeshProUGUI outputText;
     public GameObject player;
+    private Animator animator;
+    private Vector3 previousPosition;
+
+    public Dictionary<string, string> textDictionary = new Dictionary<string, string>();
+
+    public GameObject DoorA;
+    public GameObject DoorB;
+    public GameObject DoorC;
+    public GameObject DoorD;
+    public GameObject DoorE;
+    public GameObject DoorF;
+    public GameObject Door1;
+    public GameObject Door2;
+    public GameObject Door3;
+    public GameObject copynoonsong;
+
+    private bool isTyping;
+    private Queue<string> textQueue = new Queue<string>();
 
     void Start()
     {
+        copynoonsong.SetActive(false);
+
+        previousPosition = player.transform.position;
+        animator = GetComponent<Animator>();
+
         inputField.onEndEdit.AddListener(delegate { CheckPassword(); });
 
-        AddDoor("cd A", GameObject.Find("DoorA"));
-        AddDoor("cd B", GameObject.Find("DoorB"));
-        AddDoor("cd C", GameObject.Find("DoorC"));
+        AddDoor("cd A", DoorA);
+        AddDoor("cd B", DoorB);
+        AddDoor("cd C", DoorC);
+
+        AddDoor("mv noonsong D", DoorD);
+        AddDoor("mv noonsong E", DoorE);
+        AddDoor("mv noonsong F", DoorF);
+
+        AddDoor("cd next", Door1);
+        AddDoor("mv noonsong next", Door2);
+        AddDoor("cp noonsong next", Door3);
+
+
+        textDictionary.Add("start", "리눅스 던전에 어서 와!몸이 갑자기 움직이지 않아서 놀랐지? 여기선 다른 방식으로 움직일 수 있어. cd A를 쳐서 A 방으로 들어가보자!");
+
+        textDictionary.Add("cd A", "잘했어! cd next로 다음 방으로 넘어가보자!");
+        textDictionary.Add("cd B", "이런, 막혀있네. cd .. 으로 다시 뒤로 돌아가보자.");
+        textDictionary.Add("cd C", "이런, 막혀있네. cd .. 으로 다시 뒤로 돌아가보자.");
+
+        textDictionary.Add("mv noonsong E", "잘했어! mv noonsong next로 다음 방으로 넘어가보자!");
+        textDictionary.Add("mv noonsong D", "이런, 막혀있네. cd .. 으로 다시 뒤로 돌아가보자.");
+        textDictionary.Add("mv noonsong F", "이런, 막혀있네. cd .. 으로 다시 뒤로 돌아가보자.");
+
+        textDictionary.Add("cd next", "이번에는 mv noonsong 명령어로 이동해보자. 눈송이라는 파일을 지정해 이동시키는 명령어야!");
+        textDictionary.Add("mv noonsong next", "이번에는 cp noonsong next로 이동해보자. 이건 파일을 해당 위치로 복사하는 명령어야.");
+        textDictionary.Add("cp noonsong next", "오, 뒤를 돌아봐! 복사 명령어를 사용했더니 눈송이가 한 명 더 있잖아! rm noonsong으로 삭제하자.");
+        textDictionary.Add("rm noonsong", "그런데 이 방은... 위험해 보여. 여기에 교재가 있을 것 같지 않아.. 뒤로 돌아가자.");
     }
 
     public void AddDoor(string password, GameObject doorObject)
@@ -31,13 +79,67 @@ public class DoorController : MonoBehaviour
     {
         string inputText = inputField.text;
 
+        if (textDictionary.ContainsKey(inputText))
+        {
+            outputText.text = textDictionary[inputText];
+        }
+
+        if (inputText == "cd ..")
+        {
+            player.transform.position = previousPosition;
+            inputField.text = "";
+            return;
+        }
+
         if (doorDictionary.ContainsKey(inputText))
         {
             GameObject doorToOpen = doorDictionary[inputText];
             if (doorToOpen != null)
             {
-                doorToOpen.SetActive(false);
-                StartCoroutine(MovePlayer());
+                Animator doorAnimator = doorToOpen.GetComponent<Animator>();
+                doorAnimator.SetTrigger("open");
+
+                if (inputText == "cd A")
+                {
+                    StartCoroutine(MovePlayer1());
+                }
+                else if (inputText == "cd B")
+                {
+                    StartCoroutine(MovePlayer2());
+                }
+                else if (inputText == "cd C")
+                {
+                    StartCoroutine(MovePlayer3());
+                }
+                else if (inputText == "cd next")
+                {
+                    StartCoroutine(MovePlayer2());
+                }
+                else if (inputText == "mv noonsong D")
+                {
+                    StartCoroutine(MovePlayer1());
+                }
+                else if (inputText == "mv noonsong E")
+                {
+                    StartCoroutine(MovePlayer2());
+                }
+                else if (inputText == "mv noonsong F")
+                {
+                    StartCoroutine(MovePlayer3());
+                }
+                else if (inputText == "mv noonsong next")
+                {
+                    StartCoroutine(MovePlayer4());
+                }
+                else if (inputText == "cp noonsong next")
+                {
+                    StartCoroutine(MovePlayer5());
+                    copynoonsong.SetActive(true);
+                }
+                else if (inputText == "mv noonsong")
+                {
+                    copynoonsong.SetActive(false);
+                }
             }
             else
             {
@@ -51,9 +153,49 @@ public class DoorController : MonoBehaviour
         inputField.text = "";
     }
 
-    IEnumerator MovePlayer()
+    IEnumerator MovePlayer1()
     {
+        previousPosition = player.transform.position;
         yield return new WaitForSeconds(2f);
-        player.transform.position = new Vector3(0, 1, 10);
+        Vector3 currentPosition = player.transform.position;
+        Vector3 targetPosition = currentPosition + new Vector3(10, 0, -20);
+        player.transform.position = targetPosition;
+    }
+
+    IEnumerator MovePlayer2()
+    {
+        previousPosition = player.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector3 currentPosition = player.transform.position;
+        Vector3 targetPosition = currentPosition + new Vector3(0, 0, -20);
+        player.transform.position = targetPosition;
+    }
+
+    IEnumerator MovePlayer3()
+    {
+        previousPosition = player.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector3 currentPosition = player.transform.position;
+        Vector3 targetPosition = currentPosition + new Vector3(-10, 0, -20);
+        player.transform.position = targetPosition;
+    }
+
+    IEnumerator MovePlayer4()
+    {
+        previousPosition = player.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector3 currentPosition = player.transform.position;
+        Vector3 targetPosition = currentPosition + new Vector3(0, 0, -16);
+        player.transform.position = targetPosition;
+    }
+
+    IEnumerator MovePlayer5()
+    {
+        previousPosition = player.transform.position;
+        yield return new WaitForSeconds(2f);
+        Vector3 currentPosition = player.transform.position;
+        Vector3 targetPosition = currentPosition + new Vector3(0, 0, -20);
+        player.transform.position = targetPosition;
+        yield return new WaitForSeconds(2f);
     }
 }
