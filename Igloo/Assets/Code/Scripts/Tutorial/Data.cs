@@ -38,6 +38,10 @@ public class Data : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InventoryManager.Instance.InitItemUi();
+        foreach (var item in items)
+        {
+            InventoryManager.Instance.Items.Add(item);
+        }
     }
 
 
