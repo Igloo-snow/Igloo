@@ -48,11 +48,11 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, smoothAngle, 0f);
 
                 direction = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                anim.SetBool("IsRunning", true);
+                anim.SetBool("IsWalking", true);
             }
             else
             {
-                anim.SetBool("IsRunning", false);
+                anim.SetBool("IsWalking", false);
             }
 
             if (Input.GetKeyDown(KeyCode.R))
@@ -63,10 +63,13 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
+                anim.SetBool("IsWalking", false);
+                anim.SetBool("IsRunning", true);
                 speed = runSpeed;
             }
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
+                anim.SetBool("IsRunning", false);
                 speed = walkSpeed;
             }
         }
