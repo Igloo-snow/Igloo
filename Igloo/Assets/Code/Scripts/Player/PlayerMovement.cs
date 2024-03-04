@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed = 6f;
     [SerializeField]
+    private float walkSpeed = 6f;
+    [SerializeField]
+    private float runSpeed = 10f;
+    [SerializeField]
     private float jumpSpeed = 4f;
     public float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -55,6 +59,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 direction.y = jumpSpeed;
                 anim.SetTrigger("Jump");
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = runSpeed;
+            }
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speed = walkSpeed;
             }
         }
 
