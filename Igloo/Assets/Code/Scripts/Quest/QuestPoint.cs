@@ -25,8 +25,9 @@ public class QuestPoint : MonoBehaviour
     private void Start()
     {
         questId = questInfoForPoint.id;
-        //»õ·Î ½ÃÀÛÇÒ¶§¸¶´Ù questManager¿¡¼­ Çö »óÅÂ ¹Þ¾Æ¿À±â
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ï¿½ï¿½ questManagerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½
         questManager = FindObjectOfType<QuestManager>();
+        dialogueTrigger = GetComponent<DialogueTrigger>();
         currentQuestState = questManager.GetQuestById(questId).state;
     }
 
@@ -44,7 +45,6 @@ public class QuestPoint : MonoBehaviour
 
     private void FinishDialogue(int id)
     {
-       
         if (dialogueTrigger.dialogues[dialogueTrigger.index].dialogueId.Equals(id) && playerIsNear)
         {
             //Debug.Log(id + dialogueTrigger.dialogue.dialogueId);
@@ -91,7 +91,7 @@ public class QuestPoint : MonoBehaviour
         if(currentQuestState.Equals(QuestState.CAN_START) && startPoint)
         {
             GameEventsManager.instance.questEvents.StartQuest(questId);
-            Debug.Log("[ " + questId + " ]" + " Äù½ºÆ®°¡ ½ÃÀÛµÇ¾ú½À´Ï´Ù");
+            Debug.Log("[ " + questId + " ]" + " ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ÛµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
         }
 
     }
@@ -101,7 +101,7 @@ public class QuestPoint : MonoBehaviour
         if(currentQuestState.Equals(QuestState.CAN_FINISH) && finishPoint)
         {
             GameEventsManager.instance.questEvents.FinishQuest(questId);
-            Debug.Log("[ " + questId + " ]" + " Äù½ºÆ®¸¦ ¿Ï¼öÇß½À´Ï´Ù");
+            Debug.Log("[ " + questId + " ]" + " ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ï¼ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
         }
     }
 }

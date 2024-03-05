@@ -24,7 +24,7 @@ public class DialogueTrigger : MonoBehaviour
         isFirst = true;
         //visualCue.SetActive(false);
         cueImage.enabled = false;
-        dialogues = new List<Dialogue> ();
+        index = 0;
     }
 
     private void Start()

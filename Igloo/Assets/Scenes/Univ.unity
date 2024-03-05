@@ -2638,11 +2638,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 8
+  dialogues:
+  - dialogueId: 1
     name: "\uC1A1\uC1A1\uC774"
     sentences:
-    - "\uC219\uBA85\uC5EC\uB300\uC5D0 \uC628 \uAC78 \uD658\uC601\uD574"
+    - "\uC218\uACE0\n"
+  index: 0
   visualCue: {fileID: 1006342369}
   isFirst: 0
   isQuestRelated: 1
@@ -3347,11 +3348,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 2
-    name: "\uB208\uC1A1\uC774"
+  dialogues:
+  - dialogueId: 0
+    name: dd
     sentences:
-    - "\uB514\uC9C0\uD138 \uB17C\uB9AC\uD68C\uB85C \uAD50\uC7AC\uB97C \uAD6C\uD574\uB2E4\uC918"
+    - ff
+  index: 0
   visualCue: {fileID: 1050939040}
   isFirst: 0
   isQuestRelated: 1
@@ -3527,7 +3529,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810123628}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0057154256, y: -0.00020602932, z: 0.0000011775646, w: 0.9999837}
+  m_LocalRotation: {x: 0.0057154256, y: -0.00020602933, z: 0.0000011775647, w: 0.9999837}
   m_LocalPosition: {x: 4.2020216, y: 1.270465, z: -12.736428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5636,12 +5638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 1
-    name: "\uB514\uB17C\uC1A1\uC774"
-    sentences:
-    - "\uB514\uC9C0\uD138\uB17C\uB9AC\uD68C\uB85C \uB358\uC804\uC5D0 \uAC00\uC11C
-      \uAD50\uC7AC \uC544\uC774\uD15C\uC744 \uAD6C\uD574\uC640\uC918\n"
+  dialogues: []
+  index: 0
   visualCue: {fileID: 390786657}
   isFirst: 1
   isQuestRelated: 1
@@ -7672,6 +7670,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 956805884}
     - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
+      propertyPath: dialogues.Array.data[0].name
+      value: bb
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
       propertyPath: dialogue.sentences.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7679,6 +7685,18 @@ PrefabInstance:
       propertyPath: dialogue.sentences.Array.data[0]
       value: "\uBAA8\uB450 \uAD50\uC7AC\uB97C \uCC59\uACA8\uC628 \uAC83 \uAC19\uC73C\uB2C8
         \uC218\uC5C5\uC744 \uC2DC\uC791\uD558\uACA0\uC2B5\uB2C8\uB2E4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
+      propertyPath: dialogues.Array.data[0].dialogueId
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954599896421965439, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[0]
+      value: bb
       objectReference: {fileID: 0}
     - target: {fileID: 9165916033329944701, guid: f69b6b2d844b46d4a98997d1e2dca14e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7901,11 +7919,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00020602361
+      value: -0.00020602364
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000019251304
+      value: 0.0000019251306
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7985,15 +8003,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.02753096
+      value: 0.027530953
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00020595772
+      value: -0.00020595666
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000056723634
+      value: 0.000005672332
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9165,13 +9183,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 3
-    name: "\uCEF4\uC218 \uAD50\uC218\uB2D8"
+  dialogues:
+  - dialogueId: 4
+    name: aa
     sentences:
-    - "\uC624\uB298\uC740 \uADF8\uB798\uD504\uC5D0 \uB300\uD574 \uBC30\uC6CC\uBCFC\uAC81\uB2C8\uB2E4."
-    - "\uC774\uC0B0 \uC218\uD559 \uAD50\uC7AC\uB97C \uAF2D \uCC59\uACA8\uC624\uB77C\uB294
-      \uACF5\uC9C0\uB294 \uBAA8\uB450 \uD655\uC778\uD588\uB098\uC694?"
+    - aa
+  - dialogueId: 4
+    name: aa
+    sentences:
+    - bb
+  index: 0
   visualCue: {fileID: 2125898883070720112}
   isFirst: 0
   isQuestRelated: 1
@@ -9625,11 +9646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 0
-    name: "\uB178\uD2B8\uBD81"
-    sentences:
-    - "\uC219\uBA85\uC5EC\uC790\uB300\uD559\uAD50\uC5D0 \uC628 \uAC78 \uD658\uC601\uD574!"
+  dialogues: []
+  index: 0
   visualCue: {fileID: 5082589216037322964}
   isFirst: 1
   isQuestRelated: 1
