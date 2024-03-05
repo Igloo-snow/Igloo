@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
@@ -13,12 +14,15 @@ public class DialogueTrigger : MonoBehaviour
     private bool isQuestRelated;
     private bool isPlayerInRange;
 
+    public Image cueImage;
+    public Transform target;
+
     private void Awake()
     {
         isPlayerInRange = false;
         isFirst = true;
-        visualCue.SetActive(false);
-
+        //visualCue.SetActive(false);
+        cueImage.enabled = false;
     }
 
     private void Start()
@@ -30,7 +34,8 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (isPlayerInRange)
         {
-            visualCue.SetActive(true);
+            //visualCue.SetActive(true);
+            cueImage.enabled = true;
             if (!DialogueManager.GetInstance().isPlaying)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -53,8 +58,11 @@ public class DialogueTrigger : MonoBehaviour
         }
         else
         {
-            visualCue.SetActive(false);
+            //visualCue.SetActive(false);
+            cueImage.enabled = false;
         }
+
+        cueImage.transform.position = Camera.main.WorldToScreenPoint(target.position);
     }
 
     private void OnTriggerEnter(Collider collider)

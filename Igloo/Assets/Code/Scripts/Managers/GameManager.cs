@@ -9,45 +9,41 @@ public class GameManager : MonoBehaviour
     public static bool isOpenQuestUI = false;
     public static bool isOpenDialogue = false;
     public static bool isOpenRestartUI = false;
-    public static bool isOpenInfoUI = false; 
+    public static bool isOpenInfoUI = false;
+    public static bool isOpenUI = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        //if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
+        //{
+        //    Cursor.lockState = CursorLockMode.Locked;
+        //    Cursor.visible = false;
+        //}
+        //else
+        //{
+        //    Cursor.lockState = CursorLockMode.None;
+        //    Cursor.visible = true;
+        //}
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
+        if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI || isOpenUI)
         {
-            if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
-            {
-                GameEventsManager.instance.playerEvents.PlayerStop();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-
-                //isPlay = false;
-            }
-            else
-            {
-                GameEventsManager.instance.playerEvents.PlayerStart();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                //isPlay = true;
-            }
+            GameEventsManager.instance.playerEvents.PlayerStop();
+            //Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
+            //isPlay = false;
+        }
+        else
+        {
+            GameEventsManager.instance.playerEvents.PlayerStart();
+            //Cursor.lockState = CursorLockMode.Locked;
+            // Cursor.visible = false;
+            //isPlay = true;
         }
 
     }

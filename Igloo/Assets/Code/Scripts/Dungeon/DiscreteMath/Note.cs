@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Note : MonoBehaviour
+public class Note : Interactable
 {
-    [SerializeField] private Image img;
-    // Start is called before the first frame update
+    [SerializeField] private Sprite img;
+    [SerializeField] private Image container;
+    
     void Start()
     {
-        
+        promptMessage = "E키를 눌러 확인해보자";    
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void Interact()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            img.gameObject.SetActive(true);
-        }
+        container.sprite = img;
+        container.gameObject.SetActive(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.transform.CompareTag("Player"))
         {
-            img.gameObject.SetActive(false);
+            container.gameObject.SetActive(false);
+
         }
     }
 }

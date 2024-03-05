@@ -14,6 +14,7 @@ public class GM : MonoBehaviour
     [SerializeField] private ShadowControl shadowControl;
     [SerializeField] private GameObject RetryPanel;
     [SerializeField] private BasePanel basePanel;
+    [SerializeField] private StartNode startNodeChoice;
 
     public int currentStage;
     private bool isPause, isDead;
@@ -56,6 +57,9 @@ public class GM : MonoBehaviour
                     SetRetryUI(str);
                 }
             }
+            if (Input.GetKeyDown(KeyCode.G))
+                CreateGate();
+
         }
     }
 
@@ -128,6 +132,8 @@ public class GM : MonoBehaviour
     public void NextStage()
     {
         Destroy(gate);
+        startNodeChoice.InitUi();
+
         stages[currentStage++].gameObject.SetActive(false);
         stages[currentStage].gameObject.SetActive(true);
         shadowControl.LevelTime(stages[currentStage].shadowTime);
@@ -135,6 +141,11 @@ public class GM : MonoBehaviour
         //ui ¼¼ÆÃ
         shadowControl.InitUI();
         player.Reposition(stages[currentStage].startPos);
+    }
+
+    public void SetStartPoint(int n)
+    {
+        stages[currentStage].SetStartNode(n);
     }
 
 }
