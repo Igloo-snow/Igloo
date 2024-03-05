@@ -66,7 +66,6 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        Debug.Log("in dialogueManager" + currentDialogueId);
         GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogueId);
         isPlaying = false;
         animator.SetBool("IsOpen", false);

@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class ItemSynthesis : Interactable
 {
+    private Animator anim;
+
     private List<ItemRecipeSO> recipeList = new List<ItemRecipeSO>();
     [SerializeField] private Transform spawnPoint;
     private bool done = false;
 
+
+
     private void Awake()
     {
         CreateRecipeList();
+        anim = GetComponent<Animator>();
     }
 
     private void CreateRecipeList()
@@ -29,6 +35,7 @@ public class ItemSynthesis : Interactable
 
     protected override void Interact()
     {
+        done = false;
 
         foreach(ItemRecipeSO recipe in recipeList)
         {
@@ -42,10 +49,12 @@ public class ItemSynthesis : Interactable
             }
             if(achived)
             {
-                Instantiate(recipe.resultItem, spawnPoint.position, Quaternion.identity );
+                anim.SetTrigger("ItemSpawn");
+                Instantiate(recipe.resultItem, spawnPoint.position, Quaternion.identity, spawnPoint.transform);
                 for(int i = 0; i < recipe.requirements.Length; i++)
                 {
                     InventoryManager.Instance.Remove(recipe.requirements[i]);
+                    
                 }
                 done = true;
             }

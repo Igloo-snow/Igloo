@@ -34,6 +34,11 @@ public class StageGraph : MonoBehaviour
         }
     }
 
+    public void SetStartNode(int n)
+    {
+        startPos = nodes[n - 1].gameObject;
+    }
+
     private void StepNode(int i)
     {
         if(previousNode == -1)
