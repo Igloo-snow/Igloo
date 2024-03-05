@@ -14,7 +14,9 @@ public enum SceneNames
     CutsceneDD,
     TutorialHome,
     TutorialWorldMap,
-    CutsceneDM
+    CutsceneDM,
+    CutsceneLx,
+    Linux
 }
 
 public class SceneName : MonoBehaviour
@@ -45,6 +47,10 @@ public class SceneName : MonoBehaviour
                 return "월드맵";
             case 10:
                 return "컴퓨터 수학 던전";
+            case 11:
+                return "리눅스 던전";
+            case 12:
+                return "리눅스 던전";
             default:
                 return "";
         }
