@@ -30,7 +30,7 @@ public class SceneName : MonoBehaviour
             case 2:
                 return "월드맵";
             case 3:
-                return "학교";
+                return "명신관";
             case 4:
                 return "던전";
             case 5:

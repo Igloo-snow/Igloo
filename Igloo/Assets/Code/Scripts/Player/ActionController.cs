@@ -134,7 +134,7 @@ public class ActionController : MonoBehaviour
 
     public void Reposition(GameObject pos)
     {
-        anim.Play("Idle");
+        //anim.Play("Idle");
         GetComponent<CharacterController>().enabled = false;
         transform.position = pos.transform.position;
         transform.rotation = pos.transform .rotation;
