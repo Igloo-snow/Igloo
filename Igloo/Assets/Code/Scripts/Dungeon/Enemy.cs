@@ -184,9 +184,9 @@ public class Enemy : MonoBehaviour
 
     IEnumerator Die()
     {
+        isDead = true;
         yield return new WaitForSeconds(0.3f);
         particle.Play();
-        isDead = true;
         anim.SetBool("IsAttacked", true);
         yield return new WaitForSeconds(0.5f);
         if(obstruction != null)
