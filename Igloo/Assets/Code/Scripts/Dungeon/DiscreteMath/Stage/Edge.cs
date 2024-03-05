@@ -30,6 +30,14 @@ public class Edge : MonoBehaviour
 
     public bool CheckEdge(int a, int b)
     {
+        if(isCrossed)
+        {
+            for (int i = 0; i < obstructions.Length; i++)
+            {
+                obstructions[i].SetActive(false);
+            }
+        }
+
         int min = Mathf.Min(startNode.nodeId, endNode.nodeId);
         int max = Mathf.Max(startNode.nodeId, endNode.nodeId);
         if(a == min && b == max)
@@ -39,10 +47,7 @@ public class Edge : MonoBehaviour
 
             colorLine.GetComponent<MeshRenderer>().material.color = Color.gray;
             
-            for (int i = 0; i < obstructions.Length; i++)
-            {
-                obstructions[i].SetActive(false);
-            }
+            
             return isPassed;
         }
         return false;

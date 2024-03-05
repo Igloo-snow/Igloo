@@ -185,6 +185,7 @@ public class Enemy : MonoBehaviour
     IEnumerator Die()
     {
         isDead = true;
+        meleeArea.enabled = false;
         yield return new WaitForSeconds(0.3f);
         particle.Play();
         anim.SetBool("IsAttacked", true);

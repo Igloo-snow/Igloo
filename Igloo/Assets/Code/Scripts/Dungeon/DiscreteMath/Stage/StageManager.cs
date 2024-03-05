@@ -9,6 +9,7 @@ public class GM : MonoBehaviour
 {
     [SerializeField] private StageGraph[] stages;
     [SerializeField] GameObject gatePrefab;
+    [SerializeField] GameObject finalGatePrefab;
 
     [SerializeField] private ActionController player;
     [SerializeField] private ShadowControl shadowControl;
@@ -57,8 +58,6 @@ public class GM : MonoBehaviour
                     SetRetryUI(str);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.G))
-                CreateGate();
 
         }
     }
@@ -116,14 +115,15 @@ public class GM : MonoBehaviour
             Debug.Log("컴수 던전 클리어");
             GameEventsManager.instance.playerEvents.FinishDungeon("DiscreteMath");
             shadowControl.gameObject.SetActive(false);
+            CreateGate(finalGatePrefab);
         }
         else
         {
-            CreateGate();
+            CreateGate(gatePrefab);
         }
     }
 
-    private void CreateGate()
+    private void CreateGate(GameObject gatePrefab)
     {
         Vector3 pos = player.transform.position + player.transform.forward * 4.5f + Vector3.up * -1f;
         gate = Instantiate(gatePrefab, pos, player.transform.rotation);
