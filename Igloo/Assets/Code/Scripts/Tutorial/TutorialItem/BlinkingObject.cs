@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class BlinkingObject : MonoBehaviour
 {
-    [SerializeField] private GameObject effect;
+    [SerializeField] private Animator anim;
+
     public void StartBlinking()
     {
-        StartCoroutine(ParticleCoroutine());
     }
 
-    IEnumerator ParticleCoroutine()
-    {
-        yield return new WaitForSeconds(0.5f);
-        effect.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        effect.SetActive(true);
+    //IEnumerator ParticleCoroutine()
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    effect.SetActive(false);
+    //    yield return new WaitForSeconds(0.5f);
+    //    effect.SetActive(true);
 
-        StartCoroutine(ParticleCoroutine());
+    //    StartCoroutine(ParticleCoroutine());
 
-    }
+    //}
 
     public void StopBlinking()
     {
