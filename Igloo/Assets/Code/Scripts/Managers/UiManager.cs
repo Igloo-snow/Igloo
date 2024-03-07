@@ -74,19 +74,19 @@ public class UiManager : MonoBehaviour
 
     private void TryOpenDubbleUi()
     {
-        //if (newUi.IsSingleUi || currentOpenUi.IsSingleUi)
-        //{
-        //    return;
-        //}
-        //else
-        //{
-        //    //currentOpenUi.CloseUi();
-        //    //newUi.OpenUi();
-        //    //PlaySfx();
-        //    //currentOpenUi = newUi;
-        //    //Debug.Log("2" + currentOpenUi.name);
+        if (newUi.IsSingleUi || currentOpenUi.IsSingleUi)
+        {
+            return;
+        }
+        else
+        {
+            currentOpenUi.CloseUi();
+            newUi.OpenUi();
+            PlaySfx();
+            currentOpenUi = newUi;
+            Debug.Log("2" + currentOpenUi.name);
 
-        //}
+        }
     }
 
     private void PlaySfx()

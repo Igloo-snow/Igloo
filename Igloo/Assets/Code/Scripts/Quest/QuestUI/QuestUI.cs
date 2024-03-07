@@ -76,6 +76,12 @@ public class QuestUI : MonoBehaviour
             QuestCheking();
 
         }
+
+        if (!questsBoard.isOpen)
+        {
+            simplequestParent.gameObject.SetActive(true);
+        }
+        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
