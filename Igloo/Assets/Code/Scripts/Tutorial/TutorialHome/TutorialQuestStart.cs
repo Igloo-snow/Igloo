@@ -5,6 +5,8 @@ using UnityEngine.VFX;
 
 public class TutorialQuestStart : TutorialBase
 {
+    public CapsuleCollider trigger;
+
     [SerializeField] private BlinkingObject effectPrefab;
     private BlinkingObject effect;
     [SerializeField] private QuestInfoSO relatedQuest;
@@ -47,6 +49,7 @@ public class TutorialQuestStart : TutorialBase
 
     public override void Enter()
     {
+        trigger.enabled = true;
         effect = Instantiate(effectPrefab, this.transform);
         effect.StartBlinking();
     }

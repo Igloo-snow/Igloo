@@ -37,11 +37,17 @@ public class Data : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        InventoryManager.Instance.InitItemUi();
-        foreach (var item in items)
+        InventoryManager inven = FindObjectOfType<InventoryManager>();
+        if(inven != null)
         {
-            InventoryManager.Instance.Items.Add(item);
+            foreach (var item in items)
+            {
+                inven.Items.Add(item);
+            }
+            inven.InitItemUi();
         }
+
+
     }
 
 

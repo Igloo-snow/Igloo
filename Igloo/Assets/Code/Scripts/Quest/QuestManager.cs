@@ -78,14 +78,19 @@ public class QuestManager : MonoBehaviour
         int stepCount = transform.childCount;
         for(int i = 0; i < stepCount; i++)
         {
-            if(transform.GetChild(i).GetComponent<QuestStep>().targetScene == sceneName)
+            if(transform.GetChild(i).GetComponent<QuestStep>().targetScene != "")
             {
-                transform.GetChild(i).gameObject.SetActive(true);
+                if (transform.GetChild(i).GetComponent<QuestStep>().targetScene == sceneName)
+                {
+                    transform.GetChild(i).gameObject.SetActive(true);
+                }
+                else
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
             else
-            {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
+                transform.GetChild(i).gameObject.SetActive(true);
         }
 
     }

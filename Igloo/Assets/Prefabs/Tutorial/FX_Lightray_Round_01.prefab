@@ -41,7 +41,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8973516213469534808}
-  - component: {fileID: 6259971216652698026}
+  - component: {fileID: 5635718389662306278}
+  - component: {fileID: 4863765597597829207}
   m_Layer: 0
   m_Name: FX_Lightray_Round_01
   m_TagString: Untagged
@@ -66,7 +67,7 @@ Transform:
   - {fileID: 5366055096444064464}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6259971216652698026
+--- !u!114 &5635718389662306278
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,7 +79,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02bb78f32dfe7ca429d2632089870c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effect: {fileID: 7967737418287167465}
+  anim: {fileID: 4863765597597829207}
+--- !u!95 &4863765597597829207
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3595761776129915351}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f7c4f8cae9bc4774889169d3e5dd49ff, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5643906287792644485
 GameObject:
   m_ObjectHideFlags: 0

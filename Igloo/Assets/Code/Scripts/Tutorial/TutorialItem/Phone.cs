@@ -27,7 +27,7 @@ public class Phone : Interactable
     public void StartVisualEffect()
     {
         visualEffect = Instantiate(visualEffectPrefab, this.transform);
-        visualEffect.StartBlinking();
+        //visualEffect.StartBlinking();
     }
     
     public void StopSound()
