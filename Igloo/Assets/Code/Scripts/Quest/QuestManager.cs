@@ -126,6 +126,8 @@ public class QuestManager : MonoBehaviour
         ChangeQuestState(quest.info.id, QuestState.IN_PROGRESS);
         startedQuests.Add(id);
         inProgressQuests.Add(id);
+
+        SoundManager.instance.Play("02_Heal_02");
     }
 
     private void AdvanceQuest(string id)

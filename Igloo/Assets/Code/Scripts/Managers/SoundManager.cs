@@ -86,6 +86,42 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f)
+    {
+        AudioClip audioClip = GetorAddAudioClip(path, type);
+        Play(audioClip, type, pitch);
+    }
+
+    AudioClip GetorAddAudioClip(string path, Sound type = Sound.Effect)
+    {
+        if (path.Contains("Sounds/") == false)
+        {
+            path = $"Sounds/{path}";
+        }
+
+
+        AudioClip audioClip = null;
+
+        if (type == Sound.Bgm)
+        {
+            audioClip = Resources.Load<AudioClip>(path);
+        }
+        else
+        {
+            if (audioClips.TryGetValue(path, out audioClip) == false)
+            {
+                audioClip = Resources.Load<AudioClip>(path);
+                audioClips.Add(path, audioClip);
+            }
+
+        }
+
+        if (audioClip == null)
+            Debug.Log($"AudioClip Missing ! {path}");
+
+        return audioClip;
+    }
+
     public void RepeatPlayEffect(AudioClip audioClip)
     {
         audioSources[(int)Sound.Effect].loop = true;

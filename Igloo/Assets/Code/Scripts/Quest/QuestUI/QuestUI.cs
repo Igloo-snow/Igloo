@@ -16,7 +16,7 @@ public class QuestUI : MonoBehaviour
     private UiManager uiManager;
 
     [Header("Quest UI")]
-    public UiBase questsBoard = new UiBase();
+    public UiBase questsBoard;
     public Dictionary<string, GameObject> pages;
 
     [Header("Quests Board")]

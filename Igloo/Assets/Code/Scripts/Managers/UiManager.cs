@@ -76,6 +76,7 @@ public class UiManager : MonoBehaviour
     {
         if (newUi.IsSingleUi || currentOpenUi.IsSingleUi)
         {
+            SoundManager.instance.Play("033_Denied_03");
             return;
         }
         else

@@ -24,6 +24,7 @@ public class SceneMgr : MonoBehaviour
             //m_Text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%"; 
             if (asyncOperation.progress >= 0.9f)
             {
+                SoundManager.instance.Play("88_Teleport_02");
                 //Debug.Log("Pro :" + asyncOperation.progress);
 
                 //변수 초기화
