@@ -13,9 +13,10 @@ public class QuestUI : MonoBehaviour
 {
     public static bool isCheckingQuest = false;
     private QuestManager questManager;
+    private UiManager uiManager;
 
     [Header("Quest UI")]
-    public GameObject questsBoard;
+    public UiBase questsBoard = new UiBase();
     public Dictionary<string, GameObject> pages;
 
     [Header("Quests Board")]
@@ -41,6 +42,7 @@ public class QuestUI : MonoBehaviour
         pages = new Dictionary<string, GameObject>();
         simpleQuestMap = new Dictionary<string, Image>();
         questManager = FindObjectOfType<QuestManager>();
+        uiManager = FindObjectOfType<UiManager>();
     }
 
     private void OnEnable()
@@ -72,10 +74,6 @@ public class QuestUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             QuestCheking();
-            if(SoundManager.instance != null)
-            {
-                SoundManager.instance.Play(audioClip, Sound.Effect);
-            }
 
         }
     }
@@ -215,9 +213,9 @@ public class QuestUI : MonoBehaviour
         isCheckingQuest = !isCheckingQuest;
 
         simplequestParent.gameObject.SetActive(!isCheckingQuest);
-        questsBoard.SetActive(isCheckingQuest);
-        GameManager.isOpenQuestUI = isCheckingQuest;
-        if (!isCheckingQuest)
+        if(uiManager != null)
+            uiManager.CheckUi(questsBoard);
+        if (isCheckingQuest)
         {
             AllPageClose();
         }

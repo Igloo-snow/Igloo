@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,13 @@ using UnityEngine.UI;
 
 public class BasePanel : MonoBehaviour
 {
+    [Header("Health")]
     [SerializeField] private Image[] lifeImg;
-    [SerializeField] private Button InfoOffButton;
+
+    [Header("InfoUi")]
+    public Image backgroundImg;
+    public Text text;
+    public Button InfoOffButton;
 
     private void Start()
     {
@@ -16,10 +22,23 @@ public class BasePanel : MonoBehaviour
         }
     }
 
-    private void InfoOff()
+    public void InfoOn(string str, float time)
     {
-        InfoOffButton.gameObject.SetActive(false);
-        GameManager.isOpenInfoUI = false;
+        Debug.Log(str);
+        GameManager.isStaticUiOpen = true;
+        text.text = null;
+        backgroundImg.gameObject.SetActive(true);
+        InfoOffButton.gameObject.SetActive(true);
+        
+        text.gameObject.SetActive(true);
+        
+        text.DOText(str, time).SetUpdate(true);
+    }
+
+    public void InfoOff()
+    {
+        backgroundImg.gameObject.SetActive(false);
+        GameManager.isStaticUiOpen = false;
     }
 
     public void UpdateLifeUI(int current)

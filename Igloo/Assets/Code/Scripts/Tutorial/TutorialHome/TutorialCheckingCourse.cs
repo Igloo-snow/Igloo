@@ -38,8 +38,6 @@ public class TutorialCheckingCourse : TutorialBase
 
     public void CloseBrochure()
     {
-        GameManager.isOpenUI = false;
-
         isCompleted = true;
 
     }

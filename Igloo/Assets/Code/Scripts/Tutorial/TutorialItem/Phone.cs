@@ -6,7 +6,7 @@ using UnityEngine.VFX;
 
 public class Phone : Interactable
 {
-    [SerializeField] private Image phoneUi;
+    public UiBase uiBase;
     [SerializeField] private AudioSource phoneAudioSource;
     [SerializeField] private BlinkingObject visualEffectPrefab;
     private BlinkingObject visualEffect;
@@ -14,8 +14,7 @@ public class Phone : Interactable
 
     protected override void Interact()
     {
-        phoneUi.gameObject.SetActive(true);
-        GameManager.isOpenUI = true;
+        UiManager.instance.CheckUi(uiBase);
     }
 
     public void PlaySound()
@@ -37,14 +36,13 @@ public class Phone : Interactable
 
     public void Again()
     {
-        phoneUi.gameObject.SetActive(false);
-        GameManager.isOpenUI = false;
+        UiManager.instance.CheckUi(uiBase);
+
     }
 
     public void Finish()
     {
-        phoneUi.gameObject.SetActive(false);
-        GameManager.isOpenUI = false;
+        UiManager.instance.CheckUi(uiBase);
         visualEffect.StopBlinking();
         StopSound();
         StopAllCoroutines();
