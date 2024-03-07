@@ -29,8 +29,7 @@ public class InventoryManager : MonoBehaviour
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
-
-            //itemUIObjects.Add(item, obj);
+            itemUIObjects.Add(item, obj);
         }
     }
 
