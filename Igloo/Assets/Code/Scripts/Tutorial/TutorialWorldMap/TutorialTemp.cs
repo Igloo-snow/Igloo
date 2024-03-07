@@ -5,6 +5,7 @@ using UnityEngine;
 public class TutorialTemp : TutorialBase
 {
     private bool isCompleted;
+    public GameObject beforeCutsceneNpc;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,6 +14,7 @@ public class TutorialTemp : TutorialBase
     }
     public override void Enter()
     {
+        beforeCutsceneNpc.SetActive(true);
     }
 
     public override void Execute(TutorialController controller)
@@ -26,6 +28,7 @@ public class TutorialTemp : TutorialBase
 
     public override void Exit()
     {
+        beforeCutsceneNpc.SetActive(false);
     }
 
 }

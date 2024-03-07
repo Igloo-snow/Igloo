@@ -6,12 +6,15 @@ using UnityEngine.Playables;
 public class WorldMapCutscene : TutorialBase
 {
     [SerializeField] private PlayableDirector playableDirector;
+    public GameObject knowSecretNpc;
     public float changeTime;
     public GameObject playerBubble;
+    public GameObject transitionToUniv;
 
     public override void Enter()
     {
         playableDirector.Play();
+        knowSecretNpc.SetActive(true);
     }
 
     public override void Execute(TutorialController controller)
@@ -20,6 +23,8 @@ public class WorldMapCutscene : TutorialBase
         if (changeTime <= 0)
         {
             Debug.Log("Á¾·á");
+            transitionToUniv.SetActive(true);
+
             //controller.SetNextTutorial();
         }
     }
@@ -27,5 +32,6 @@ public class WorldMapCutscene : TutorialBase
     public override void Exit()
     {
         //playerBubble.SetActive(false);
+        //transitionToUniv.SetActive(true);
     }
 }
