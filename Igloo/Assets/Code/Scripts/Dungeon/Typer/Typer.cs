@@ -8,9 +8,11 @@ public class Typer : MonoBehaviour
 {
     public WordBank wordBank = null;
     public TextMeshProUGUI wordOutput = null;
+    public GameObject[] boxes;
 
     private string remainingWord = string.Empty;
     private string currentWord = string.Empty;
+    private int disabledBoxIndex = 0;
 
     private void Start()
     {
@@ -21,12 +23,22 @@ public class Typer : MonoBehaviour
     {
         currentWord = wordBank.GetWord();
         SetRemainingWord(currentWord);
+        DisableBox();
     }
 
     private void SetRemainingWord(string newString)
     {
         remainingWord = newString;
         wordOutput.text = remainingWord;
+    }
+
+    private void DisableBox()
+    {
+        if (disabledBoxIndex < boxes.Length)
+        {
+            boxes[disabledBoxIndex].SetActive(false); // 다음 상자 비활성화
+            disabledBoxIndex++;
+        }
     }
 
     private void Update()

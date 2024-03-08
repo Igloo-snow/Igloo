@@ -7,7 +7,7 @@ public class WordBank : MonoBehaviour
 {
     private List<string> originalWords = new List<string>()
     {
-        "printf", "hello world"
+        "#include <stdio.h>", "int main(void)", "int a, b;", "int sum;", "a = 10;", "b = 20;", "sum = a + b;", "printf(\"sum = %d\\n\", sum);", "return 0;"
     };
 
     private List<string> workingWords = new List<string>();
