@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isStaticUiOpen)
-        {
-            GameEventsManager.instance.playerEvents.PlayerStop();
-        }
-        else
-        {
-            GameEventsManager.instance.playerEvents.PlayerStart();
-        }
+        //if (isStaticUiOpen)
+        //{
+        //    GameEventsManager.instance.playerEvents.PlayerStop();
+        //}
+        //else
+        //{
+        //    GameEventsManager.instance.playerEvents.PlayerStart();
+        //}
     }
 }
