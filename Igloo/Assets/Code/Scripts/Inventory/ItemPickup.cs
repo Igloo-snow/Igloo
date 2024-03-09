@@ -9,7 +9,7 @@ public class ItemPickup : MonoBehaviour
 
     void Pickup()
     {
-        SoundManager.instance.Play("02_Heal_02");
+        SoundManager.instance.Play("029_Decline_09");
         InventoryManager.Instance.Add(Item);
         Destroy(gameObject);
     }

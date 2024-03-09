@@ -10,13 +10,18 @@ public class Brochure : Interactable
 
     protected override void Interact()
     {
-        if (!uiBase.isOpen)
-        {
-            UiManager.instance.CheckUi(uiBase);
+        UiManager.instance.CheckUi(uiBase);
 
-            if (blinkingObject != null)
-                blinkingObject.StopBlinking();
-        }
+        if (blinkingObject != null)
+            blinkingObject.StopBlinking();
+
+        //if (!uiBase.isOpen)
+        //{
+        //    UiManager.instance.CheckUi(uiBase);
+
+        //    if (blinkingObject != null)
+        //        blinkingObject.StopBlinking();
+        //}
 
 
     }

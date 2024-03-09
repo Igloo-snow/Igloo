@@ -66,6 +66,7 @@ public class Typer : MonoBehaviour
             if (IsWordComplete())
                 SetCurrentWord();
         }
+
     }
 
     private bool IsCorrectLetter(string letter)

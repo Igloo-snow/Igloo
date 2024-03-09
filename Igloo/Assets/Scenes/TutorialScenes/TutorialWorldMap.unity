@@ -11115,12 +11115,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 7
+  m_Center: {x: 11.29, y: 0, z: 0}
 --- !u!114 &472554339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11128,7 +11128,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472554336}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63b8ba6572a357944b3b3e7d773274c1, type: 3}
   m_Name: 
@@ -24108,8 +24108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 1672036389}
 --- !u!114 &993218277
 MonoBehaviour:
@@ -28468,7 +28466,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStaticUi: 1
+  isCamaeraStop: 0
   isSingleUi: 0
+  isCloseByDoubleClick: 1
   audioClip: {fileID: 0}
 --- !u!4 &1203025985 stripped
 Transform:
@@ -31123,8 +31123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 1328115827}
 --- !u!114 &1322850495
 MonoBehaviour:
@@ -36864,8 +36862,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 1756114411}
 --- !u!4 &1547564686 stripped
 Transform:
@@ -44337,6 +44333,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8226667116399764143, guid: de9ff3822e9a92a4d9ab90ed68c4be86, type: 3}
+      propertyPath: isCloseByDoubleClick
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8226667116399764143, guid: de9ff3822e9a92a4d9ab90ed68c4be86, type: 3}
       propertyPath: <audioClip>k__BackingField
       value: 
       objectReference: {fileID: 8300000, guid: abdbbfd33a46f4549987385f85c536b5, type: 3}
@@ -46977,8 +46977,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 265752096}
 --- !u!114 &2001935824
 MonoBehaviour:
@@ -47986,7 +47984,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8, y: 1, z: 8}
+  m_Size: {x: 3, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &2027970273 stripped
 Transform:
@@ -48332,8 +48330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 1330283566}
 --- !u!1001 &2040280669
 PrefabInstance:
@@ -52261,8 +52257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c695aaca465a4094aa473ad9aaae843e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  sprite: {fileID: 0}
   target: {fileID: 285410723}
 --- !u!1 &4677361592432122782
 GameObject:

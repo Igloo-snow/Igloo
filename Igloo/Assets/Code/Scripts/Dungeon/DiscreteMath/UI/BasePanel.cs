@@ -24,7 +24,6 @@ public class BasePanel : MonoBehaviour
 
     public void InfoOn(string str, float time)
     {
-        Debug.Log(str);
         GameManager.isStaticUiOpen = true;
         text.text = null;
         backgroundImg.gameObject.SetActive(true);

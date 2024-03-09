@@ -11,6 +11,8 @@ public class UiManager : MonoBehaviour
     public static bool isStaticUiOpen = false;
     public static bool isDynamicUiOpen = false;
     public static bool isOpenUI = false;
+    public static bool CameraStop = false;
+    public static bool isDialogueOpen = false;
 
     private UiBase currentOpenUi = new UiBase();
     private UiBase newUi;
@@ -46,6 +48,11 @@ public class UiManager : MonoBehaviour
     {
         newUi = go;
 
+        if (CheckDialogue())
+        {
+            return;
+        }
+
         if (!currentOpenUi.isOpen)
         {
             newUi.OpenUi();
@@ -54,8 +61,11 @@ public class UiManager : MonoBehaviour
         }
         else if (currentOpenUi == newUi)
         {
-            currentOpenUi.CloseUi();
-            PlaySfx();
+            if (currentOpenUi.IsCloseByDoubleClick)
+            {
+                currentOpenUi.CloseUi();
+                PlaySfx();
+            }
         }
         else
         {
@@ -63,13 +73,50 @@ public class UiManager : MonoBehaviour
         }
 
         CheckStatic();
+        CheckMovement();
 
+    }
+
+    public void OffUi(UiBase go)
+    {
+        newUi = go;
+
+        if (CheckDialogue())
+        {
+            return;
+        }
+
+        if (currentOpenUi == newUi)
+        {
+            currentOpenUi.CloseUi();
+            PlaySfx();
+        }
+
+        CheckStatic();
+        CheckMovement();
+    }
+    
+    private bool CheckDialogue()
+    {
+        //dialogue 오픈 시 오류음 발생 후 종료
+        if (isDialogueOpen)
+        {
+            SoundManager.instance.Play("033_Denied_03");
+            return true;
+        }
+        else { return false; }
     }
 
     private void CheckStatic()
     {
         if (currentOpenUi.IsStaticUi)
             isStaticUiOpen = currentOpenUi.isOpen;
+    }
+
+    private void CheckMovement()
+    {
+        if (currentOpenUi.IsCameraStop)
+            CameraStop = currentOpenUi.isOpen; 
     }
 
     private void TryOpenDubbleUi()

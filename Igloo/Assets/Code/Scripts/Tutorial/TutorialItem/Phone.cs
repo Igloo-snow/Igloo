@@ -36,13 +36,13 @@ public class Phone : Interactable
 
     public void Again()
     {
-        UiManager.instance.CheckUi(uiBase);
+        UiManager.instance.OffUi(uiBase);
 
     }
 
     public void Finish()
     {
-        UiManager.instance.CheckUi(uiBase);
+        UiManager.instance.OffUi(uiBase);
         visualEffect.StopBlinking();
         StopSound();
         StopAllCoroutines();

@@ -13,6 +13,7 @@ public class SmithNoonsong : MonoBehaviour
 
     //
     private Animator anim;
+    public GameObject speechBubble;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,23 @@ public class SmithNoonsong : MonoBehaviour
     void Update()
     {
         ElapseTime();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            anim.SetTrigger("Interact");
+            speechBubble.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            speechBubble.SetActive(false);
+        }
     }
 
     private void ElapseTime()
