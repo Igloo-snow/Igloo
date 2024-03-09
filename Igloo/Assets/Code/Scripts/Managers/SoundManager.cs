@@ -46,7 +46,7 @@ public class SoundManager : MonoBehaviour
 
         audioSources[(int)Sound.Bgm].loop = true; // bgm 재생기는 무한 반복 재생
 
-        Play(bgmClip, Sound.Bgm, 1, 0.2f);
+        Play(bgmClip, Sound.Bgm, 1, 0.1f);
 
     }
 
