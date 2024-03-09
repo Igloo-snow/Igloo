@@ -18,7 +18,10 @@ public class InventoryUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             // 인벤토리 UI의 활성화/비활성화 토글
-            inventoryUI.SetActive(!inventoryUI.activeSelf);
+            if(UiManager.instance != null)
+                UiManager.instance.CheckUi(inventoryUI.GetComponent<UiBase>());
+            else
+                inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
     }
 }

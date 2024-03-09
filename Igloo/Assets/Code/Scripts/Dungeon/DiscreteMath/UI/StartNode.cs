@@ -46,7 +46,7 @@ public class StartNode : MonoBehaviour, IPointerClickHandler
             container.GetComponent<Image>().color = c;
             yield return null;
         }
-        GameManager.isOpenUI = true;
+        GameManager.isStaticUiOpen = true;
         title.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
         stages[stageManager.currentStage-1].gameObject.SetActive(true);
@@ -67,7 +67,7 @@ public class StartNode : MonoBehaviour, IPointerClickHandler
         container.SetActive(false);
         stages[stageManager.currentStage-1].SetActive(false);
         stageManager.RestartLevel();
-        GameManager.isOpenUI = false;
+        GameManager.isStaticUiOpen = false;
 
 
     }

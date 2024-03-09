@@ -5,13 +5,30 @@ using UnityEngine.UI;
 
 public class Brochure : Interactable
 {
-    [SerializeField] private Image img;
+    public UiBase uiBase;
     [SerializeField] private BlinkingObject blinkingObject;
 
     protected override void Interact()
     {
-        img.gameObject.SetActive(true);
-        GameManager.isOpenUI = true;
-        blinkingObject.StopBlinking();
+        UiManager.instance.CheckUi(uiBase);
+
+        if (blinkingObject != null)
+            blinkingObject.StopBlinking();
+
+        //if (!uiBase.isOpen)
+        //{
+        //    UiManager.instance.CheckUi(uiBase);
+
+        //    if (blinkingObject != null)
+        //        blinkingObject.StopBlinking();
+        //}
+
+
+    }
+
+    public void CloseUi()
+    {
+        UiManager.instance.CheckUi(uiBase);
+
     }
 }

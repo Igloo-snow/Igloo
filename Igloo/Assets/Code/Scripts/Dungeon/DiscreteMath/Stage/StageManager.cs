@@ -94,7 +94,7 @@ public class GM : MonoBehaviour
         shadowControl.gameObject.SetActive(false);
         basePanel.LifeUIOff();
 
-        GameManager.isOpenRestartUI = true;
+        GameManager.isStaticUiOpen = true;
         RetryPanel.SetActive(true);
         RetryPanel.GetComponentInChildren<Text>().text = "";
         RetryPanel.GetComponentInChildren<Text>().DOText(str, 1f).SetUpdate(true);
@@ -102,7 +102,7 @@ public class GM : MonoBehaviour
 
     private void OffRetryUI()
     {
-        GameManager.isOpenRestartUI = false;
+        GameManager.isStaticUiOpen = false;
         RetryPanel.SetActive(false);
         shadowControl.gameObject.SetActive(true);
         basePanel.LifeUIOn();

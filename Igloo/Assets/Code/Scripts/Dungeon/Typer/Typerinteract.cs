@@ -22,7 +22,12 @@ public class Typerinteract : Interactable
         Debug.Log("enter");
         if (!specificUI.activeSelf)
             {
-                specificUI.SetActive(true);
+            if (specificUI.GetComponent<UiBase>())
+            {
+                UiManager.instance.CheckUi(specificUI.GetComponent<UiBase>());
+            }
+            else
+               specificUI.SetActive(true);
             }
     }
 }

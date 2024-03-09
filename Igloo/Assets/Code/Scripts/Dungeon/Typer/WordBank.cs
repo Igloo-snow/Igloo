@@ -38,7 +38,10 @@ public class WordBank : MonoBehaviour
         else
         {
             if (uiContainer != null)
-                uiContainer.SetActive(false);
+            {
+                UiManager.instance.OffUi(uiContainer.GetComponent<UiBase>());
+                //uiContainer.SetActive(false);
+            }
         }
 
         return newWord;

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class DialogueBubble : MonoBehaviour
 {
-    public Image container;
-    public Sprite sprite;
+    //public Image container;
+    //public Sprite sprite;
     public Transform target;
 
     public void Update()

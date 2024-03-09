@@ -41,6 +41,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         isPlaying = true;
+        UiManager.isDialogueOpen = true;
         animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
         sentences.Clear();
@@ -68,6 +69,7 @@ public class DialogueManager : MonoBehaviour
     {
         GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogueId);
         isPlaying = false;
+        UiManager.isDialogueOpen = false;
         animator.SetBool("IsOpen", false);
     }
 

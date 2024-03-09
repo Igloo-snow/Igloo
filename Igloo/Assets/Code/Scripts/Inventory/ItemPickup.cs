@@ -9,6 +9,7 @@ public class ItemPickup : MonoBehaviour
 
     void Pickup()
     {
+        SoundManager.instance.Play("029_Decline_09");
         InventoryManager.Instance.Add(Item);
         Destroy(gameObject);
     }

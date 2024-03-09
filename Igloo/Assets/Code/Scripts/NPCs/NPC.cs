@@ -16,6 +16,7 @@ public class Npc : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            SoundManager.instance.Play("muffledtalkingShort", Sound.Effect, 1.4f);
             anim.SetTrigger("Interact");
         }
     }

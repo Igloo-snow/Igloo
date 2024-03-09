@@ -25,6 +25,7 @@ public class UnivDoor : Interactable
         if (isOpen)
         {
             animator.SetTrigger("open");
+            SoundManager.instance.Play("OpenWoodDoor3");
         }
         else
         {
