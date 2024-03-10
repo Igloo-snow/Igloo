@@ -28,13 +28,11 @@ public class StartNode : MonoBehaviour, IPointerClickHandler
 
     public void InitUi()
     {
-        Debug.Log("inside startnode");
         StartCoroutine(InitUiCoroutine());
     }
 
     public IEnumerator InitUiCoroutine()
     {
-        Debug.Log("inside coroutine");
 
         container.SetActive(true);
         title.text = "Stage " + (stageManager.currentStage + 1);
@@ -46,7 +44,7 @@ public class StartNode : MonoBehaviour, IPointerClickHandler
             container.GetComponent<Image>().color = c;
             yield return null;
         }
-        GameManager.isStaticUiOpen = true;
+        UiManager.isStaticUiOpen = true;
         title.gameObject.SetActive(true);
         text.gameObject.SetActive(true);
         stages[stageManager.currentStage-1].gameObject.SetActive(true);
@@ -67,7 +65,7 @@ public class StartNode : MonoBehaviour, IPointerClickHandler
         container.SetActive(false);
         stages[stageManager.currentStage-1].SetActive(false);
         stageManager.RestartLevel();
-        GameManager.isStaticUiOpen = false;
+        UiManager.isStaticUiOpen = false;
 
 
     }

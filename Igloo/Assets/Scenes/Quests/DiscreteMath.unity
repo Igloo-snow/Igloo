@@ -12111,6 +12111,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b6c6ec1b508eb84dabe0a22d85a8224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStaticUi: 0
+  isCamaeraStop: 0
+  isSingleUi: 0
+  isCloseByDoubleClick: 0
+  audioClip: {fileID: 8300000, guid: 3ce73329022685648b695262c1ae4953, type: 3}
   panel: {fileID: 401853237}
   time: 2
 --- !u!4 &402411401 stripped
@@ -20866,6 +20871,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890599244}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &890861071 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6527643855882998533, guid: 6ab096a2cbe711e4693402a0fde8c516, type: 3}
+  m_PrefabInstance: {fileID: 1032907407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3812112b1882456458f0e3a75d3e402f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &893042973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32085,7 +32101,7 @@ MonoBehaviour:
   previousNode: -1
   fallingObjparent: {fileID: 450928944}
   startPos: {fileID: 1444367533}
-  shadowTime: 4
+  shadowTime: 5
 --- !u!114 &1520552535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39366,6 +39382,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 458488, guid: b0fdd261cab4d884ea4d14190dfc171a, type: 3}
   m_PrefabInstance: {fileID: 1455606932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1942653224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1942653226}
+  - component: {fileID: 1942653225}
+  m_Layer: 0
+  m_Name: Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1942653225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942653224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84379ade7053b794e8e05d2d65f5099a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+--- !u!4 &1942653226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942653224}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -34.697002, y: -34.5536, z: 105.347374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1943193839
 GameObject:
   m_ObjectHideFlags: 0
@@ -42739,7 +42800,7 @@ MonoBehaviour:
   previousNode: -1
   fallingObjparent: {fileID: 2118159282}
   startPos: {fileID: 1436507988}
-  shadowTime: 10
+  shadowTime: 3
 --- !u!114 &2117191836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53278,6 +53339,7 @@ MonoBehaviour:
   gatePrefab: {fileID: 9213712392984355557, guid: 3c22f3247ef3490478aa6134d9f9306c, type: 3}
   finalGatePrefab: {fileID: 8096621818610897310, guid: b6f1b1dbd4a7786429be55be860a3d11, type: 3}
   player: {fileID: 1614887797}
+  uiManager: {fileID: 890861071}
   shadowControl: {fileID: 401853241}
   RetryPanel: {fileID: 1125113554}
   basePanel: {fileID: 1471513412}
@@ -73071,6 +73133,7 @@ SceneRoots:
   - {fileID: 88596157}
   - {fileID: 1124835325}
   - {fileID: 1075691073}
+  - {fileID: 1874324400}
   - {fileID: 2049210729}
   - {fileID: 2479793375594152710}
   - {fileID: 962411063}
@@ -73081,6 +73144,6 @@ SceneRoots:
   - {fileID: 990583952}
   - {fileID: 1032907407}
   - {fileID: 859833925}
-  - {fileID: 1874324400}
   - {fileID: 294463490670303897}
   - {fileID: 330979328}
+  - {fileID: 1942653226}
