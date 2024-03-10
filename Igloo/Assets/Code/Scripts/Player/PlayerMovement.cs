@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController cc;
     public Transform cameraTransform;
+    public CinemachineFreeLook freeLook;
     private Animator anim;
     [SerializeField]
     private float speed = 6f;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         cc = GetComponent<CharacterController>();
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         anim = GetComponentInChildren<Animator>();
+        freeLook = FindAnyObjectByType<CinemachineFreeLook>();
     }
 
     void Update()
@@ -33,6 +36,18 @@ public class PlayerMovement : MonoBehaviour
         if (DialogueManager.GetInstance().isPlaying)
         {
             return;
+        }
+
+        if (UiManager.CameraStop)
+        {
+            freeLook.m_XAxis.m_InputAxisName = "";
+            freeLook.m_YAxis.m_InputAxisName = "";
+            return;
+        }
+        else
+        {
+            freeLook.m_XAxis.m_InputAxisName = "Mouse X";
+            freeLook.m_YAxis.m_InputAxisName = "Mouse Y";
         }
 
         if (cc.isGrounded)

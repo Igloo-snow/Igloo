@@ -9,11 +9,16 @@ public class GM : MonoBehaviour
 {
     [SerializeField] private StageGraph[] stages;
     [SerializeField] GameObject gatePrefab;
+    [SerializeField] GameObject finalGatePrefab;
 
     [SerializeField] private ActionController player;
+
+    public UiManager uiManager;
+
     [SerializeField] private ShadowControl shadowControl;
     [SerializeField] private GameObject RetryPanel;
     [SerializeField] private BasePanel basePanel;
+    [SerializeField] private StartNode startNodeChoice;
 
     public int currentStage;
     private bool isPause, isDead;
@@ -56,6 +61,7 @@ public class GM : MonoBehaviour
                     SetRetryUI(str);
                 }
             }
+
         }
     }
 
@@ -91,7 +97,8 @@ public class GM : MonoBehaviour
         shadowControl.gameObject.SetActive(false);
         basePanel.LifeUIOff();
 
-        GameManager.isOpenRestartUI = true;
+        //GameManager.isStaticUiOpen = true;
+        UiManager.isStaticUiOpen = true;
         RetryPanel.SetActive(true);
         RetryPanel.GetComponentInChildren<Text>().text = "";
         RetryPanel.GetComponentInChildren<Text>().DOText(str, 1f).SetUpdate(true);
@@ -99,9 +106,12 @@ public class GM : MonoBehaviour
 
     private void OffRetryUI()
     {
-        GameManager.isOpenRestartUI = false;
-        RetryPanel.SetActive(false);
+        //GameManager.isStaticUiOpen = false;
         shadowControl.gameObject.SetActive(true);
+
+        UiManager.isStaticUiOpen = false;
+
+        RetryPanel.SetActive(false);
         basePanel.LifeUIOn();
     }
 
@@ -112,14 +122,15 @@ public class GM : MonoBehaviour
             Debug.Log("컴수 던전 클리어");
             GameEventsManager.instance.playerEvents.FinishDungeon("DiscreteMath");
             shadowControl.gameObject.SetActive(false);
+            CreateGate(finalGatePrefab);
         }
         else
         {
-            CreateGate();
+            CreateGate(gatePrefab);
         }
     }
 
-    private void CreateGate()
+    private void CreateGate(GameObject gatePrefab)
     {
         Vector3 pos = player.transform.position + player.transform.forward * 4.5f + Vector3.up * -1f;
         gate = Instantiate(gatePrefab, pos, player.transform.rotation);
@@ -128,6 +139,8 @@ public class GM : MonoBehaviour
     public void NextStage()
     {
         Destroy(gate);
+        startNodeChoice.InitUi();
+
         stages[currentStage++].gameObject.SetActive(false);
         stages[currentStage].gameObject.SetActive(true);
         shadowControl.LevelTime(stages[currentStage].shadowTime);
@@ -135,6 +148,11 @@ public class GM : MonoBehaviour
         //ui 세팅
         shadowControl.InitUI();
         player.Reposition(stages[currentStage].startPos);
+    }
+
+    public void SetStartPoint(int n)
+    {
+        stages[currentStage].SetStartNode(n);
     }
 
 }

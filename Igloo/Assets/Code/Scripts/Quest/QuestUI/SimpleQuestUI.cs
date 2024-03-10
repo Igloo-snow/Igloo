@@ -22,7 +22,6 @@ public class SimpleQuestUI : MonoBehaviour
 
     public void CreateSimpleQuestUI(string questId)
     {
-        Debug.Log(questId);
         InitUI();
         Quest relatedQuest = QuestManager.instance.GetQuestById(questId);
 

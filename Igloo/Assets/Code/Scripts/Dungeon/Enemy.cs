@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.ParticleSystem;
 
 public class Enemy : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class Enemy : MonoBehaviour
     SphereCollider meleeArea;
 
     [SerializeField] private GameObject obstruction;
+    [SerializeField] private ParticleSystem particle;
+    [SerializeField] private GameObject pageItem;
 
     private void Awake()
     {
@@ -103,8 +106,6 @@ public class Enemy : MonoBehaviour
 
     private void ChasePlayer()
     {
-        Debug.Log("Chase");
-
         agent.SetDestination(player.transform.position);
     }
 
@@ -136,10 +137,10 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, attackRange);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -172,18 +173,33 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            isDead = true;
-            anim.SetBool("IsAttacked", true);
-            reactVec = reactVec.normalized;
-            rigid.AddForce(reactVec * 4, ForceMode.Impulse);
-            float originalMass = rigid.mass;
-            rigid.mass *= 2;
-            yield return new WaitForSeconds(1f);
-            anim.SetBool("IsAttacked", false);
-            rigid.mass = originalMass;
-            
+            //Die();
         }
     }
+
+    public void ReadyToDie()
+    {
+        StartCoroutine(Die());
+    }
+
+    IEnumerator Die()
+    {
+        isDead = true;
+        meleeArea.enabled = false;
+        yield return new WaitForSeconds(0.3f);
+        particle.Play();
+        anim.SetBool("IsAttacked", true);
+        yield return new WaitForSeconds(0.5f);
+        if(obstruction != null)
+            obstruction.SetActive(false);
+        if(pageItem != null)
+        {
+            Instantiate(pageItem, transform.position + new Vector3(0, 1, 0), Quaternion.identity, this.transform.parent);
+        }
+
+        this.gameObject.SetActive(false);
+    }
+
 
     private void PathOpen()
     {

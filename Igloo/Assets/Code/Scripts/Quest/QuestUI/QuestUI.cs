@@ -7,14 +7,16 @@ using System.Text;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting.FullSerializer;
 
 public class QuestUI : MonoBehaviour
 {
     public static bool isCheckingQuest = false;
     private QuestManager questManager;
+    private UiManager uiManager;
 
     [Header("Quest UI")]
-    public GameObject questsBoard;
+    public UiBase questsBoard;
     public Dictionary<string, GameObject> pages;
 
     [Header("Quests Board")]
@@ -31,12 +33,16 @@ public class QuestUI : MonoBehaviour
     public Transform simplequestParent;
     private Dictionary<string, Image> simpleQuestMap;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip audioClip;
+
     private void Awake()
     {
         buttons = new Dictionary<string, Button>();
         pages = new Dictionary<string, GameObject>();
         simpleQuestMap = new Dictionary<string, Image>();
         questManager = FindObjectOfType<QuestManager>();
+        uiManager = FindObjectOfType<UiManager>();
     }
 
     private void OnEnable()
@@ -68,7 +74,14 @@ public class QuestUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             QuestCheking();
+
         }
+
+        if (!questsBoard.isOpen)
+        {
+            simplequestParent.gameObject.SetActive(true);
+        }
+        
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -206,9 +219,9 @@ public class QuestUI : MonoBehaviour
         isCheckingQuest = !isCheckingQuest;
 
         simplequestParent.gameObject.SetActive(!isCheckingQuest);
-        questsBoard.SetActive(isCheckingQuest);
-        GameManager.isOpenQuestUI = isCheckingQuest;
-        if (!isCheckingQuest)
+        if(uiManager != null)
+            uiManager.CheckUi(questsBoard);
+        if (isCheckingQuest)
         {
             AllPageClose();
         }

@@ -24,6 +24,7 @@ public class SceneMgr : MonoBehaviour
             //m_Text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%"; 
             if (asyncOperation.progress >= 0.9f)
             {
+                SoundManager.instance.Play("071_Unequip_01", Sound.Effect, 1, 0.2f);
                 //Debug.Log("Pro :" + asyncOperation.progress);
 
                 //변수 초기화

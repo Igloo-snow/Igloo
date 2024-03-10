@@ -5,50 +5,35 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //UI 관련 상태 
-    public static bool isOpenQuestUI = false;
-    public static bool isOpenDialogue = false;
-    public static bool isOpenRestartUI = false;
-    public static bool isOpenInfoUI = false; 
+    public static GameManager instance;
 
-    // Start is called before the first frame update
-    void Start()
+    //UI 관련 상태 
+    public static bool isStaticUiOpen = false;
+    public static bool isDynamicUiOpen = false;
+    public static bool isOpenUI = false;
+
+    private void Awake()
     {
-        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
+        if (instance == null)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            instance = this;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Destroy(this.gameObject);
         }
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().name.Equals("DiscreteMath"))
-        {
-            if (isOpenRestartUI || isOpenQuestUI || isOpenInfoUI)
-            {
-                GameEventsManager.instance.playerEvents.PlayerStop();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-
-                //isPlay = false;
-            }
-            else
-            {
-                GameEventsManager.instance.playerEvents.PlayerStart();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-
-                //isPlay = true;
-            }
-        }
-
+        //if (isStaticUiOpen)
+        //{
+        //    GameEventsManager.instance.playerEvents.PlayerStop();
+        //}
+        //else
+        //{
+        //    GameEventsManager.instance.playerEvents.PlayerStart();
+        //}
     }
 }
