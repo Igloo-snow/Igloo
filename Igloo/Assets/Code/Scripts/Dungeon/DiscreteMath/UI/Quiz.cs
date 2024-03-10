@@ -24,7 +24,7 @@ public class Quiz : MonoBehaviour
     {
         this.enemy = enemy;
         quizzes[currentIndex].SetActive(true);
-        GameManager.isStaticUiOpen = true;
+        UiManager.isStaticUiOpen = true;
     }
 
     public void WrongAnswer()
@@ -42,7 +42,7 @@ public class Quiz : MonoBehaviour
         {
             currentIndex++;
         }
-        GameManager.isStaticUiOpen = false;
+        UiManager.isStaticUiOpen = false;
         enemy.ReadyToDie();
     }
 }

@@ -24,7 +24,7 @@ public class BasePanel : MonoBehaviour
 
     public void InfoOn(string str, float time)
     {
-        GameManager.isStaticUiOpen = true;
+        UiManager.isStaticUiOpen = true;
         text.text = null;
         backgroundImg.gameObject.SetActive(true);
         InfoOffButton.gameObject.SetActive(true);
@@ -37,7 +37,7 @@ public class BasePanel : MonoBehaviour
     public void InfoOff()
     {
         backgroundImg.gameObject.SetActive(false);
-        GameManager.isStaticUiOpen = false;
+        UiManager.isStaticUiOpen = false;
     }
 
     public void UpdateLifeUI(int current)

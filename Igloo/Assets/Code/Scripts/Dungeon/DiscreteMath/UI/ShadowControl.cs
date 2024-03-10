@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShadowControl : MonoBehaviour
+public class ShadowControl : UiBase
 {
     [SerializeField] private GameObject panel;
     private Image img;
     public float time = 2f;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         img = panel.GetComponent<Image>();
-        
     }
 
     public void LevelTime(float f)
