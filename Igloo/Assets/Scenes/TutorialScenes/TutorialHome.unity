@@ -2323,15 +2323,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.06013878
+      value: 0.060138784
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000018240042
+      value: -0.000000016655012
       objectReference: {fileID: 0}
     - target: {fileID: 1837308488946834376, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000010989231
+      value: 0.0000000010034285
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2355,11 +2355,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017194594
+      value: -0.00000001719462
       objectReference: {fileID: 0}
     - target: {fileID: 2565383517503102562, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 6.360998e-10
+      value: 6.361008e-10
       objectReference: {fileID: 0}
     - target: {fileID: 3340692996179612504, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2427,11 +2427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000004178253
+      value: 0.000000004286618
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 3.4958625e-10
+      value: -3.5865294e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3497,7 +3497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616481730}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055507008, y: -0.000000034953597, z: 0.0000000019431652, w: 0.9984583}
+  m_LocalRotation: {x: 0.05550701, y: -0.000000034153945, z: 0.0000000018987107, w: 0.9984583}
   m_LocalPosition: {x: -5.3592815, y: 2.1481142, z: 5.127299}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5338,7 +5338,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84379ade7053b794e8e05d2d65f5099a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
 --- !u!4 &1026410117
 Transform:
   m_ObjectHideFlags: 0
@@ -7473,14 +7472,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 2
-    name: Laptop
+  npcId: 0
+  dialogues:
+  - dialogueId: 0
+    name: "\uB178\uD2B8\uBD81"
     sentences:
-    - "\uC219\uBA85\uC5EC\uB300\uC5D0 \uAC00\uBCF4\uC790"
+    - "\uAC1C\uAC15\u3145\u3131"
+  index: 0
   visualCue: {fileID: 6032733600604228450}
   isFirst: 0
   isQuestRelated: 1
+  isPlayerInRange: 0
   cueImage: {fileID: 382982591}
   target: {fileID: 4930096591742383995}
 --- !u!136 &1363458966

@@ -1,28 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class npcData
+{
+    public int npcId;
+    public int index;
+}
+
 public class Data : MonoBehaviour
 {
     public static Data instance;
 
-    public List<Item> items = new List<Item>();
-    public Dictionary<int, int> npcData = new Dictionary<int, int>();
+    //public List<npcData> npcs; 
+    //public Dictionary<int, int> npcData = new Dictionary<int, int>();
     //public List<Npc> npcs = new List<Npc>(); 이거 안돼 씬 전환되면서 npc 참조 잃어
 
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
         GameEventsManager.instance.dialogueEvents.onUpdateDialogueIndex += UpdateDialogueIndex;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-
         GameEventsManager.instance.dialogueEvents.onUpdateDialogueIndex -= UpdateDialogueIndex;
 
     }
@@ -40,28 +44,18 @@ public class Data : MonoBehaviour
         }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        InventoryManager inven = FindObjectOfType<InventoryManager>();
-        if(inven != null)
-        {
-            foreach (var item in items)
-            {
-                inven.Items.Add(item);
-            }
-            inven.InitItemUi();
-        }
-    }
-
     private void UpdateDialogueIndex(int id)
     {
-        if (npcData.Count <= 0)
+        if (DataManager.instance.nowPlayer.npcs.Count <= 0)
             return;
 
-        if (npcData.ContainsKey(id))
+        foreach(npcData npc in DataManager.instance.nowPlayer.npcs)
         {
-            Debug.Log(id + "data 스크립트 안");
-            npcData[id] += 1;
+            if(npc.npcId == id)
+            {
+                npc.index++;
+                Debug.Log(npc.npcId + npc.index);
+            }
         }
     }
 

@@ -21,8 +21,6 @@ public class DialogueTrigger : MonoBehaviour
 
     private void Awake()
     {
-        if(GetComponentInParent<Npc>())
-            npcId = GetComponentInParent<Npc>().npcId;
         isPlayerInRange = false;
         isFirst = true;
         //visualCue.SetActive(false);

@@ -9,8 +9,10 @@ public class PlayerData
 {
     // 이름, 보유 아이템, 퀘스트 진행상황
     public string name;
-    public List<Item> items = new List<Item>();
+    public List<Item> items = new List<Item>(); 
     //public Dictionary<string, Quest> quests;
+    public List<npcData> npcs = new List<npcData>();
+    public List<Quest> quests = new List<Quest>();
 }
 
 public class DataManager : MonoBehaviour
@@ -37,6 +39,11 @@ public class DataManager : MonoBehaviour
         #endregion
 
         path = Application.persistentDataPath + "/save";
+        
+        foreach (npcData npc in DataManager.instance.nowPlayer.npcs)
+        {
+            Debug.Log(npc.npcId + npc.index);
+        }
     }
 
     private void OnEnable()
@@ -68,6 +75,7 @@ public class DataManager : MonoBehaviour
     {
         string data = JsonUtility.ToJson(nowPlayer);
         File.WriteAllText(path + nowSlot.ToString(), data);
+        Debug.Log(data);
     }
 
     public void LoadData()

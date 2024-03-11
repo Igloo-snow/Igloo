@@ -37,7 +37,11 @@ public class Npc : MonoBehaviour
     private void Start()
     {
         npcId = dialogueTrigger.npcId;
-        questId = questPoint.questId;
+        if(questPoint != null )
+        {
+            questId = questPoint.questId;
+
+        }
     }
 
     //private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -62,13 +66,16 @@ public class Npc : MonoBehaviour
     {
         if(id == npcId)
         {
-            Debug.Log(id + "NPC 스크립트 안");
-            if(!Data.instance.npcData.ContainsKey(id))
-                Data.instance.npcData.Add(npcId, dialogueTrigger.index);
-            else
+            foreach(npcData npc in DataManager.instance.nowPlayer.npcs)
             {
-                dialogueTrigger.index = Data.instance.npcData[npcId];
+                if(npc.npcId == id)
+                {
+                    dialogueTrigger.index = npc.index;
+                    Debug.Log(npc.npcId + " npc 스크립트 안" + npc.index);
+                    return;
+                }
             }
+            DataManager.instance.nowPlayer.npcs.Add(new npcData { npcId = id, index = dialogueTrigger.index });
         }
     }
 

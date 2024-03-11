@@ -5961,6 +5961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a2fec2a2dca18142b29eeaa3b51d9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcId: 0
 --- !u!1001 &244637838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23802,6 +23803,22 @@ PrefabInstance:
       propertyPath: cueImage
       value: 
       objectReference: {fileID: 720798032}
+    - target: {fileID: 7696251226436583686, guid: 068615dffa8caab44b5f15d792146509, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696251226436583686, guid: 068615dffa8caab44b5f15d792146509, type: 3}
+      propertyPath: dialogues.Array.data[0].name
+      value: "\uACBD\uCC30\uAD00"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696251226436583686, guid: 068615dffa8caab44b5f15d792146509, type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7696251226436583686, guid: 068615dffa8caab44b5f15d792146509, type: 3}
+      propertyPath: dialogues.Array.data[0].sentences.Array.data[0]
+      value: "\uC544\uC9C1 \uC6B0\uB9AC\uB3C4 \uC870\uC0AC \uC911"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6088552760647770996, guid: 068615dffa8caab44b5f15d792146509, type: 3}
@@ -35520,16 +35537,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 2
-    name: "\uBC31\uAD50\uC218\uB2D8"
+  npcId: 0
+  dialogues:
+  - dialogueId: 0
+    name: "\uAD50\uC218"
     sentences:
-    - "\uC774\uAC8C \uBB34\uC2A8 \uC77C\uC774\uC9C0."
-    - "\uC544\uBB34\uB798\uB3C4 \uD559\uC0DD\uB4E4\uC758 \uC548\uC804\uC744 \uC704\uD574
-      \uD734\uAC15\uC744 \uD574\uC57C\uD560\uAE4C?"
+    - "\u3147"
+  index: 0
   visualCue: {fileID: 0}
   isFirst: 0
   isQuestRelated: 1
+  isPlayerInRange: 0
   cueImage: {fileID: 1666043300}
   target: {fileID: 548351181}
 --- !u!4 &1487619234 stripped
@@ -35957,6 +35975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f74d09dc981ecf418a3162e3beef494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcId: 0
 --- !u!4 &1506357647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4890213490046932, guid: 786c7ca63dbb5ab4797219fb28f871b1, type: 3}
@@ -47952,17 +47971,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 4
-    name: "\uAE40\uC1A1\uC774"
+  npcId: 0
+  dialogues:
+  - dialogueId: 0
+    name: "\uC1A1\uC1A1\uC1A1"
     sentences:
-    - "\uC800 \uB358\uC804\uC774 \uC0DD\uAE34 \uD6C4 \uC774\uC0C1\uD55C \uC77C\uC774
-      \uC0DD\uAE30\uB294 \uAC83 \uAC19\uC544"
-    - "\uB0B4 \uCC45\uB4E4\uC774 .. \uC5C6\uC5B4\uC84C\uC5B4"
-    - "\uB358\uC804\uC5D0\uC11C \uCC3E\uC744 \uC218 \uC788\uC744\uAE4C?"
+    - "\uB358\uC804 \uC0DD\uAE30\uACE0"
+    - "\uAD50\uC7AC \uC5C6\uC5B4\uC9D0"
+    - "\uB358\uC804\uC11C \uCC3E\uC544\uC57C\uB418\uB0D0"
+  index: 0
   visualCue: {fileID: 0}
   isFirst: 0
   isQuestRelated: 1
+  isPlayerInRange: 0
   cueImage: {fileID: 602396000}
   target: {fileID: 1672036389}
 --- !u!65 &2025604941
