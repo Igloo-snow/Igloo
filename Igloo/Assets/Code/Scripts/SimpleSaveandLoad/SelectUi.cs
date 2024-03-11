@@ -66,11 +66,11 @@ public class SelectUi : MonoBehaviour
     {
         DataManager.instance.nowPlayer.name = newPlayerName.text;
         DataManager.instance.SaveData();
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(8);
     }
 
     public void StartLoadedGame()
     {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(1);
     }
 }
