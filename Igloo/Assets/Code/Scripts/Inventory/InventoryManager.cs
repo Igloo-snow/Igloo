@@ -21,7 +21,7 @@ public class InventoryManager : MonoBehaviour
 
     public void InitItemUi()
     {
-        foreach(var item in Data.instance.items)
+        foreach(var item in DataManager.instance.nowPlayer.items)
         {
             GameObject obj = Instantiate(InventoryItemPrefab, ItemContent);
             var itemName = obj.transform.Find("ItemName").GetComponent<Text>();
@@ -35,10 +35,10 @@ public class InventoryManager : MonoBehaviour
 
     public void Add(Item item)
     {
-        if(Data.instance != null)
+        if(DataManager.instance != null)
         {
-            Data.instance.items.Add(item);
-
+            //Data.instance.items.Add(item);
+            DataManager.instance.nowPlayer.items.Add(item);
         }
         Items.Add(item);
         if (!itemUIObjects.ContainsKey(item))
@@ -56,9 +56,10 @@ public class InventoryManager : MonoBehaviour
 
     public void Remove(Item item)
     {
-        if (Data.instance != null)
+        if (DataManager.instance != null)
         {
-            Data.instance.items.Remove(item);
+            //Data.instance.items.Remove(item);
+            DataManager.instance.nowPlayer.items.Remove(item);
         }
         Items.Remove(item);
         if (itemUIObjects.ContainsKey(item))
