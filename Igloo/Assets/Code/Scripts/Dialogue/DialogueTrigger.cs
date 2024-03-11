@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
+    public int npcId;
     public List<Dialogue> dialogues;
     public int index;
     public GameObject visualCue;
@@ -13,13 +14,15 @@ public class DialogueTrigger : MonoBehaviour
     private QuestPoint questPoint;
     [SerializeField]
     private bool isQuestRelated;
-    private bool isPlayerInRange;
+    public bool isPlayerInRange;
 
     public Image cueImage;
     public Transform target;
 
     private void Awake()
     {
+        if(GetComponentInParent<Npc>())
+            npcId = GetComponentInParent<Npc>().npcId;
         isPlayerInRange = false;
         isFirst = true;
         //visualCue.SetActive(false);
@@ -46,6 +49,8 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         if (isFirst)
                         {
+                            Debug.Log(npcId);
+                            GameEventsManager.instance.dialogueEvents.StartDialogue(npcId);
                             TriggerDialogue();
                             //questPoint.AcceptQuest();
                         }

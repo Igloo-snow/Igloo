@@ -142,6 +142,7 @@ public class QuestManager : MonoBehaviour
         else
         {
             ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+            GameEventsManager.instance.dialogueEvents.UpdateDialogueIndex(quest.info.npcId);
         }
 
         GameEventsManager.instance.questEvents.UpdateQuestUI(id);

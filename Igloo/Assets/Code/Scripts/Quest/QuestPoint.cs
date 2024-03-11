@@ -25,7 +25,6 @@ public class QuestPoint : MonoBehaviour
     private void Start()
     {
         questId = questInfoForPoint.id;
-        //���� �����Ҷ����� questManager���� �� ���� �޾ƿ���
         questManager = FindObjectOfType<QuestManager>();
         dialogueTrigger = GetComponent<DialogueTrigger>();
         currentQuestState = questManager.GetQuestById(questId).state;
@@ -45,7 +44,9 @@ public class QuestPoint : MonoBehaviour
 
     private void FinishDialogue(int id)
     {
-        if (dialogueTrigger.dialogues[dialogueTrigger.index].dialogueId.Equals(id) && playerIsNear)
+        //Debug.Log("dialogueTrigger.index" + dialogueTrigger.index);
+        //Debug.Log("존나긴거" + dialogueTrigger.dialogues[dialogueTrigger.index].dialogueId);
+        if (playerIsNear && dialogueTrigger.dialogues[dialogueTrigger.index].dialogueId.Equals(id))
         {
             //Debug.Log(id + dialogueTrigger.dialogue.dialogueId);
             //Debug.Log(transform.name + startPoint.ToString() + "     " + finishPoint.ToString());
