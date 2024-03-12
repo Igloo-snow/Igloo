@@ -7,4 +7,6 @@ public class Item : ScriptableObject
     public string itemName;
     public int value;
     public Sprite icon;
+    [TextArea]
+    public string itemDesc;
 }
