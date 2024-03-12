@@ -24,13 +24,14 @@ public class InventoryManager : MonoBehaviour
     {
         foreach(var item in DataManager.instance.nowPlayer.items)
         {
+            Debug.Log(item.name);
             GameObject obj = Instantiate(InventoryItemPrefab, ItemContent);
             var itemName = obj.transform.Find("ItemName").GetComponent<Text>();
             var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
-            InventoryItemPrefab.GetComponent<Slot>().relatedItem = item;
+            obj.GetComponent<Slot>().relatedItem = item;
 
             itemUIObjects.Add(item, obj);
         }
