@@ -83,6 +83,7 @@ public class DataManager : MonoBehaviour
         string jsonData = File.ReadAllText(path + nowSlot.ToString());
         nowPlayer = JsonUtility.FromJson<PlayerData>(jsonData);
     }
+
     public bool DataExistCheck(int slotNum)
     {
         if (File.Exists(path + $"{slotNum}"))
@@ -97,5 +98,11 @@ public class DataManager : MonoBehaviour
     {
         nowSlot = -1;
         nowPlayer = new PlayerData();
+    }
+
+    public void DeleteLocalData(int n)
+    {
+        string target = path + n;
+        File.Delete(target);
     }
 }
