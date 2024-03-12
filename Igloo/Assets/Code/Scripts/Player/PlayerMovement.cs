@@ -40,14 +40,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (UiManager.CameraStop)
         {
-            freeLook.m_XAxis.m_InputAxisName = "";
-            freeLook.m_YAxis.m_InputAxisName = "";
+            freeLook.m_XAxis.m_MaxSpeed = 0.01f;
+            freeLook.m_YAxis.m_MaxSpeed = 0.01f;
             return;
         }
         else
         {
-            freeLook.m_XAxis.m_InputAxisName = "Mouse X";
-            freeLook.m_YAxis.m_InputAxisName = "Mouse Y";
+            freeLook.m_XAxis.m_MaxSpeed = 300;
+            freeLook.m_YAxis.m_MaxSpeed = 2;
         }
 
         if (cc.isGrounded)
