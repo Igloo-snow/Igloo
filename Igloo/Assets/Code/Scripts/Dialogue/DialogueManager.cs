@@ -69,8 +69,15 @@ public class DialogueManager : MonoBehaviour
     {
         GameEventsManager.instance.dialogueEvents.FinishDialogue(currentDialogueId);
         isPlaying = false;
-        UiManager.isDialogueOpen = false;
         animator.SetBool("IsOpen", false);
+        StartCoroutine(DialogueCloseCoroutine());
+    }
+
+    IEnumerator DialogueCloseCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        UiManager.isDialogueOpen = false;
+
     }
 
     IEnumerator TypeSentence(string sentence)
