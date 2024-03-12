@@ -21,7 +21,14 @@ public class QuestManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            questMap = CreateQuestMap();
+            if(DataManager.instance.nowPlayer.quests.Count > 0)
+            {
+                questMap = LoadQuestData();
+            }
+            else
+            {
+                questMap = CreateQuestMap();
+            }
             currentScene = SceneManager.GetActiveScene().name;
         }
         else
@@ -68,10 +75,7 @@ public class QuestManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         StepSetActive(scene.name);
-        foreach(string str in startedQuests)
-        {
-            Debug.Log(str + " " + scene.name);
-        }
+
     }
 
     private void StepSetActive(string sceneName) {
@@ -142,6 +146,7 @@ public class QuestManager : MonoBehaviour
         else
         {
             ChangeQuestState(quest.info.id, QuestState.CAN_FINISH);
+            GameEventsManager.instance.dialogueEvents.UpdateDialogueIndex(quest.info.npcId);
         }
 
         GameEventsManager.instance.questEvents.UpdateQuestUI(id);
@@ -193,5 +198,51 @@ public class QuestManager : MonoBehaviour
             Debug.LogError("없는 id: " + id);
         }
         return quest;
+    }
+
+    public void SaveQuestData()
+    {
+        foreach(Quest quest in questMap.Values)
+        {
+            quest.SaveQuestData();
+        }
+        
+    }
+
+    public Dictionary<string, Quest> LoadQuestData()
+    {
+        Dictionary<string, Quest> idToQuestMap = new Dictionary<string, Quest>();
+        foreach (Quest quest in DataManager.instance.nowPlayer.quests)
+        {
+            if (idToQuestMap.ContainsKey(quest.info.id))
+            {
+                Debug.Log("중복되는 id 발견");
+            }
+            Quest newQ = new Quest(quest.info);
+            newQ.LoadQuestData(quest);
+            idToQuestMap.Add(quest.info.id, newQ);
+            CheckState(newQ);
+        }
+        return idToQuestMap;
+
+    }
+
+    private void CheckState(Quest quest)
+    {
+        if (quest.state > QuestState.CAN_START)
+            startedQuests.Add(quest.info.id);
+
+        if (quest.state == QuestState.IN_PROGRESS)
+        {
+            inProgressQuests.Add(quest.info.id);
+            if (quest.CurrentStepExists())
+                quest.InstantiateCurrnetQuestStep(this.transform);
+        }
+        else if(quest.state == QuestState.CAN_FINISH)
+        {
+            inProgressQuests.Add(quest.info.id);
+
+        }
+
     }
 }

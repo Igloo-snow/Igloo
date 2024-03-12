@@ -14,7 +14,7 @@ public class UiManager : MonoBehaviour
     public static bool CameraStop = false;
     public static bool isDialogueOpen = false;
 
-    private UiBase currentOpenUi = new UiBase();
+    private UiBase currentOpenUi;
     private UiBase newUi;
 
     public AudioClip audioClip;
@@ -29,6 +29,7 @@ public class UiManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        currentOpenUi = new UiBase();
     }
 
     // Update is called once per frame
@@ -132,7 +133,6 @@ public class UiManager : MonoBehaviour
             newUi.OpenUi();
             PlaySfx();
             currentOpenUi = newUi;
-            Debug.Log("2" + currentOpenUi.name);
 
         }
     }

@@ -1,24 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class npcData
+{
+    public int npcId;
+    public int index;
+}
+
 public class Data : MonoBehaviour
 {
     public static Data instance;
 
-    public List<Item> items = new List<Item>();
-    //public Dictionary<Npc, int> npcData = new Dictionary<Npc, int>();
+    //public List<npcData> npcs; 
+    //public Dictionary<int, int> npcData = new Dictionary<int, int>();
+    //public List<Npc> npcs = new List<Npc>(); ÀÌ°Å ¾ÈµÅ ¾À ÀüÈ¯µÇ¸é¼­ npc ÂüÁ¶ ÀÒ¾î
+
 
     private void OnEnable()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-
+        GameEventsManager.instance.dialogueEvents.onUpdateDialogueIndex += UpdateDialogueIndex;
     }
 
     private void OnDisable()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameEventsManager.instance.dialogueEvents.onUpdateDialogueIndex -= UpdateDialogueIndex;
 
     }
 
@@ -35,20 +44,19 @@ public class Data : MonoBehaviour
         }
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void UpdateDialogueIndex(int id)
     {
-        InventoryManager inven = FindObjectOfType<InventoryManager>();
-        if(inven != null)
+        if (DataManager.instance.nowPlayer.npcs.Count <= 0)
+            return;
+
+        foreach(npcData npc in DataManager.instance.nowPlayer.npcs)
         {
-            foreach (var item in items)
+            if(npc.npcId == id)
             {
-                inven.Items.Add(item);
+                npc.index++;
+                Debug.Log(npc.npcId + npc.index);
             }
-            inven.InitItemUi();
         }
-
-
     }
-
 
 }

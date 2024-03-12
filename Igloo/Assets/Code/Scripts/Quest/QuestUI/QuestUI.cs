@@ -80,8 +80,14 @@ public class QuestUI : MonoBehaviour
         if (!questsBoard.isOpen)
         {
             simplequestParent.gameObject.SetActive(true);
+            AllPageClose();
         }
-        
+        else
+        {
+            simplequestParent.gameObject.SetActive(false);
+
+        }
+
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -221,7 +227,7 @@ public class QuestUI : MonoBehaviour
         simplequestParent.gameObject.SetActive(!isCheckingQuest);
         if(uiManager != null)
             uiManager.CheckUi(questsBoard);
-        if (isCheckingQuest)
+        if (!isCheckingQuest)
         {
             AllPageClose();
         }

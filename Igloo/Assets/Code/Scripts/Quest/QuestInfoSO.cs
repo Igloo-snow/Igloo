@@ -22,6 +22,10 @@ public class QuestInfoSO : ScriptableObject
     [Header("Rewards")]
     public GameObject reward;
 
+    [Header("NPC")]
+    public int npcId;
+
+
     private void OnValidate()
     {   
         #if UNITY_EDITOR

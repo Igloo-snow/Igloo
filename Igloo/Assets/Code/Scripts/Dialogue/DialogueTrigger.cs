@@ -5,14 +5,16 @@ using UnityEngine.UI;
 
 public class DialogueTrigger : MonoBehaviour
 {
-    public Dialogue dialogue;
+    public int npcId;
+    public List<Dialogue> dialogues;
+    public int index;
     public GameObject visualCue;
     public bool isFirst;
 
     private QuestPoint questPoint;
     [SerializeField]
     private bool isQuestRelated;
-    private bool isPlayerInRange;
+    public bool isPlayerInRange;
 
     public Image cueImage;
     public Transform target;
@@ -23,6 +25,7 @@ public class DialogueTrigger : MonoBehaviour
         isFirst = true;
         //visualCue.SetActive(false);
         cueImage.enabled = false;
+        index = 0;
     }
 
     private void Start()
@@ -44,6 +47,8 @@ public class DialogueTrigger : MonoBehaviour
                     {
                         if (isFirst)
                         {
+                            Debug.Log(npcId);
+                            GameEventsManager.instance.dialogueEvents.StartDialogue(npcId);
                             TriggerDialogue();
                             //questPoint.AcceptQuest();
                         }
@@ -83,7 +88,7 @@ public class DialogueTrigger : MonoBehaviour
 
     public void TriggerDialogue()
     {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogues[index]);
     }
     
     public void setIsFirstFalse()

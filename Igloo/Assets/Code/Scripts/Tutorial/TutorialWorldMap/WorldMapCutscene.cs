@@ -22,7 +22,6 @@ public class WorldMapCutscene : TutorialBase
         changeTime -= Time.deltaTime;
         if (changeTime <= 0)
         {
-            Debug.Log("Á¾·á");
             transitionToUniv.SetActive(true);
 
             //controller.SetNextTutorial();

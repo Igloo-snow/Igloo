@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
 
     public Transform ItemContent;
     public GameObject InventoryItemPrefab;
+    public SlotToolTip slotToolTip;
 
     private Dictionary<Item, GameObject> itemUIObjects = new Dictionary<Item, GameObject>();
 
@@ -21,24 +22,27 @@ public class InventoryManager : MonoBehaviour
 
     public void InitItemUi()
     {
-        foreach(var item in Data.instance.items)
+        foreach(var item in DataManager.instance.nowPlayer.items)
         {
+            Debug.Log(item.name);
             GameObject obj = Instantiate(InventoryItemPrefab, ItemContent);
             var itemName = obj.transform.Find("ItemName").GetComponent<Text>();
             var itemIcon = obj.transform.Find("ItemIcon").GetComponent<Image>();
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
+            obj.GetComponent<Slot>().relatedItem = item;
+
             itemUIObjects.Add(item, obj);
         }
     }
 
     public void Add(Item item)
     {
-        if(Data.instance != null)
+        if(DataManager.instance != null)
         {
-            Data.instance.items.Add(item);
-
+            //Data.instance.items.Add(item);
+            DataManager.instance.nowPlayer.items.Add(item);
         }
         Items.Add(item);
         if (!itemUIObjects.ContainsKey(item))
@@ -49,6 +53,7 @@ public class InventoryManager : MonoBehaviour
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
+            obj.GetComponent<Slot>().relatedItem = item;
 
             itemUIObjects.Add(item, obj);
         }
@@ -56,9 +61,10 @@ public class InventoryManager : MonoBehaviour
 
     public void Remove(Item item)
     {
-        if (Data.instance != null)
+        if (DataManager.instance != null)
         {
-            Data.instance.items.Remove(item);
+            //Data.instance.items.Remove(item);
+            DataManager.instance.nowPlayer.items.Remove(item);
         }
         Items.Remove(item);
         if (itemUIObjects.ContainsKey(item))
@@ -88,5 +94,15 @@ public class InventoryManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void ShowTooltip(Item item, Vector3 pos)
+    {
+        slotToolTip.ShowToolTip(item, pos);
+    }
+
+    public void HideTooltip()
+    {
+        slotToolTip.HideToolTip();
     }
 }

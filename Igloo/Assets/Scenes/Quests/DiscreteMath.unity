@@ -647,16 +647,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3828f80f743fe144bbfa1872f013130d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueId: 0
-    name: Skeleton
-    sentences:
-    - "\uCEF4\uC218 \uB358\uC804\uC5D0 \uC628 \uAC78 \uD658\uC601\uD574"
-    - "\uB098\uCC98\uB7FC \uB418\uACE0 \uC2F6\uC9C0 \uC54A\uB2E4\uBA74...."
-    - "\uD798\uB0B4\uC11C \uD0C8\uCD9C\uD558\uB834"
+  npcId: 0
+  dialogues: []
+  index: 0
   visualCue: {fileID: 1995690228}
   isFirst: 1
   isQuestRelated: 1
+  isPlayerInRange: 0
   cueImage: {fileID: 1199652680}
   target: {fileID: 1995690229}
 --- !u!65 &15818547
@@ -11681,6 +11678,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d089bd7853da93640be143ccabfe9172, type: 3}
+--- !u!114 &380049592 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4404561842828501543, guid: d089bd7853da93640be143ccabfe9172, type: 3}
+  m_PrefabInstance: {fileID: 380049591}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82420fa2c5ca63649a83c7d402314d7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &383446806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 412966, guid: f18318a9de51f9b4f993559b01c40e15, type: 3}
@@ -31945,6 +31953,10 @@ PrefabInstance:
       propertyPath: ItemContent
       value: 
       objectReference: {fileID: 944190863}
+    - target: {fileID: 6314119102536380883, guid: 2f3a8656cd952264ba4b24e6aa46a951, type: 3}
+      propertyPath: slotToolTip
+      value: 
+      objectReference: {fileID: 380049592}
     - target: {fileID: 7023495246036871835, guid: 2f3a8656cd952264ba4b24e6aa46a951, type: 3}
       propertyPath: m_LocalPosition.x
       value: 407.16522
@@ -39411,7 +39423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84379ade7053b794e8e05d2d65f5099a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
 --- !u!4 &1942653226
 Transform:
   m_ObjectHideFlags: 0
