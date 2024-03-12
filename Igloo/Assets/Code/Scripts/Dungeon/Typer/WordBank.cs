@@ -13,6 +13,7 @@ public class WordBank : MonoBehaviour
     private List<string> workingWords = new List<string>();
     private int currentIndex = 0;
     public GameObject uiContainer;
+    public Item Item;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class WordBank : MonoBehaviour
             if (uiContainer != null)
             {
                 UiManager.instance.OffUi(uiContainer.GetComponent<UiBase>());
+                InventoryManager.Instance.Add(Item);
                 //uiContainer.SetActive(false);
             }
         }

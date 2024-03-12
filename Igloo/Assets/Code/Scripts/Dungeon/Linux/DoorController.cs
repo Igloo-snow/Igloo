@@ -79,13 +79,19 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    private Coroutine typingCoroutine;
+
     public void CheckPassword()
     {
         string inputText = inputField.text;
 
         if (textDictionary.ContainsKey(inputText))
         {
-            outputText.text = textDictionary[inputText];
+            if (typingCoroutine != null)
+            {
+                StopCoroutine(typingCoroutine);
+            }
+            typingCoroutine = StartCoroutine(TypeText(textDictionary[inputText]));
         }
 
         if (inputText == "rm noonsong")
@@ -163,6 +169,17 @@ public class DoorController : MonoBehaviour
         }
         inputField.text = "";
     }
+
+    IEnumerator TypeText(string text)
+    {
+        outputText.text = "";
+        foreach (char letter in text)
+        {
+            outputText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+    }
+
 
     IEnumerator MovePlayer1()
     {

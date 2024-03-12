@@ -8,6 +8,7 @@ public class Typer : MonoBehaviour
 {
     public WordBank wordBank = null;
     public TextMeshProUGUI wordOutput = null;
+    public TextMeshProUGUI wordOutput2 = null;
     public GameObject[] boxes;
 
     private string remainingWord = string.Empty;
@@ -23,6 +24,7 @@ public class Typer : MonoBehaviour
     {
         currentWord = wordBank.GetWord();
         SetRemainingWord(currentWord);
+        SetRemainingWord2(currentWord);
         DisableBox();
     }
 
@@ -30,6 +32,11 @@ public class Typer : MonoBehaviour
     {
         remainingWord = newString;
         wordOutput.text = remainingWord;
+    }
+
+    private void SetRemainingWord2(string newString)
+    {
+        wordOutput2.text = newString;
     }
 
     private void DisableBox()
@@ -54,6 +61,8 @@ public class Typer : MonoBehaviour
 
             if (keysPressed.Length == 1)
                 EnterLetter(keysPressed);
+                EnterLetter2(keysPressed);
+
         }
     }
 
@@ -68,6 +77,16 @@ public class Typer : MonoBehaviour
         }
 
     }
+
+    private void EnterLetter2(string typedLetter)
+    {
+        if (IsCorrectLetter(typedLetter))
+        {
+            if (IsWordComplete())
+                SetCurrentWord();
+        }
+    }
+
 
     private bool IsCorrectLetter(string letter)
     {
