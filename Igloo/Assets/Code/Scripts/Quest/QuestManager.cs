@@ -27,7 +27,6 @@ public class QuestManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("quest scripte");
                 questMap = CreateQuestMap();
             }
             currentScene = SceneManager.GetActiveScene().name;

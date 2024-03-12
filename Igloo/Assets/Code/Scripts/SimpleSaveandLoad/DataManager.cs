@@ -60,6 +60,7 @@ public class DataManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("dataManager onsceneloaded");
         InventoryManager inven = FindObjectOfType<InventoryManager>();
         if (inven != null && nowPlayer.items.Count > 0)
         {

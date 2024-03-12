@@ -133,7 +133,6 @@ public class UiManager : MonoBehaviour
             newUi.OpenUi();
             PlaySfx();
             currentOpenUi = newUi;
-            Debug.Log("2" + currentOpenUi.name);
 
         }
     }
