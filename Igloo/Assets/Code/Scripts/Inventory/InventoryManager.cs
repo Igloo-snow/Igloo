@@ -11,6 +11,7 @@ public class InventoryManager : MonoBehaviour
 
     public Transform ItemContent;
     public GameObject InventoryItemPrefab;
+    public SlotToolTip slotToolTip;
 
     private Dictionary<Item, GameObject> itemUIObjects = new Dictionary<Item, GameObject>();
 
@@ -29,6 +30,8 @@ public class InventoryManager : MonoBehaviour
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
+            InventoryItemPrefab.GetComponent<Slot>().relatedItem = item;
+
             itemUIObjects.Add(item, obj);
         }
     }
@@ -49,6 +52,7 @@ public class InventoryManager : MonoBehaviour
 
             itemName.text = item.itemName;
             itemIcon.sprite = item.icon;
+            obj.GetComponent<Slot>().relatedItem = item;
 
             itemUIObjects.Add(item, obj);
         }
@@ -88,5 +92,15 @@ public class InventoryManager : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void ShowTooltip(Item item, Vector3 pos)
+    {
+        slotToolTip.ShowToolTip(item, pos);
+    }
+
+    public void HideTooltip()
+    {
+        slotToolTip.HideToolTip();
     }
 }
