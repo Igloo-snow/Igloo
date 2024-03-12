@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class SelectUi : MonoBehaviour
@@ -10,6 +13,8 @@ public class SelectUi : MonoBehaviour
     public TMP_Text[] slotText;
     public TMP_Text newPlayerName;
 
+    private GameObject clickedObject;
+
     private bool[] saveFile = new bool[3];
 
     // Start is called before the first frame update
@@ -17,26 +22,9 @@ public class SelectUi : MonoBehaviour
     {
         for(int i = 0; i < 3; i++)
         {
-            if (DataManager.instance.DataExistCheck(i))
-            {
-                saveFile[i] = true;
-                DataManager.instance.nowSlot = i;
-                DataManager.instance.LoadData();
-                slotText[i].text = DataManager.instance.nowPlayer.name;
-                DataManager.instance.DataClear();
-            }
-            else
-            {
-                slotText[i].text = "비어있음";
-            }
+            SlotDataCheck(i);
         }
         DataManager.instance.DataClear();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void Slot(int num)
@@ -57,6 +45,29 @@ public class SelectUi : MonoBehaviour
         }
     }
 
+    public void SlotDataDelete(int num)
+    {
+        DataManager.instance.DeleteLocalData(num);
+        SlotDataCheck(num);
+    }
+
+    public void SlotDataCheck(int num)
+    {
+        if (DataManager.instance.DataExistCheck(num))
+        {
+            saveFile[num] = true;
+            DataManager.instance.nowSlot = num;
+            DataManager.instance.LoadData();
+            slotText[num].text = DataManager.instance.nowPlayer.name;
+            DataManager.instance.DataClear();
+        }
+        else
+        {
+            slotText[num].text = "비어있음";
+            saveFile[num] = false;
+        }
+    }
+
     public void Create()
     {
         create.SetActive(true);
@@ -73,4 +84,6 @@ public class SelectUi : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+
 }
