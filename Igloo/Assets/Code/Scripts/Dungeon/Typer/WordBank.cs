@@ -7,13 +7,18 @@ public class WordBank : MonoBehaviour
 {
     private List<string> originalWords = new List<string>()
     {
-        "#include <stdio.h>", "int main(void)", "int a, b;", "int sum;", "a = 10;", "b = 20;", "sum = a + b;", "printf(\"sum = %d\\n\", sum);", "return 0;"
+        "#include <stdio.h>", "int main(void)", "int a,b;", "int sum;", "a=10;", "b=20;", "sum=a+b;", "printf(\"sum=%d\\n\",sum);", "return 0;"
     };
 
     private List<string> workingWords = new List<string>();
     private int currentIndex = 0;
     public GameObject uiContainer;
-    public Item Item;
+    public Renderer itemRenderer;
+
+    void Start()
+    {
+        itemRenderer.enabled = false;
+    }
 
     private void Awake()
     {
@@ -40,9 +45,8 @@ public class WordBank : MonoBehaviour
         {
             if (uiContainer != null)
             {
+                itemRenderer.enabled = true;
                 UiManager.instance.OffUi(uiContainer.GetComponent<UiBase>());
-                InventoryManager.Instance.Add(Item);
-                //uiContainer.SetActive(false);
             }
         }
 
