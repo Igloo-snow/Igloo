@@ -37,12 +37,29 @@ public class Quiz : MonoBehaviour
     public void RightAnswer()
     {
         SoundManager.instance.Play(correct);
+        StartCoroutine(AnswerCoroutine());
+        
+    }
+
+    IEnumerator AnswerCoroutine()
+    {
+        if(quizzes[currentIndex].transform.Find("answer"))
+        {
+            quizzes[currentIndex].transform.Find("answer").gameObject.SetActive(true);
+            Debug.Log("done");
+        }
+
+        yield return new WaitForSecondsRealtime(1f);
+        Debug.Log("done1");
+
+
         quizzes[currentIndex].SetActive(false);
-        if(currentIndex+1 < quizzes.Length)
+        if (currentIndex + 1 < quizzes.Length)
         {
             currentIndex++;
         }
         UiManager.isStaticUiOpen = false;
         enemy.ReadyToDie();
+
     }
 }
