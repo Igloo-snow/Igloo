@@ -5,6 +5,7 @@ using UnityEngine;
 public class FourthDoor : Door
 {
     public GameObject itemPrefab;
+    public GameObject answerFXPrefab;
     private bool isFirst = true;
 
     void Start()
@@ -22,6 +23,7 @@ public class FourthDoor : Door
             if (isFirst)
             {
                 GameObject instance = Instantiate(itemPrefab);
+                Instantiate(answerFXPrefab);
                 isFirst = false;
             }
         }
