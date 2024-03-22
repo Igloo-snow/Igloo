@@ -13,11 +13,22 @@ public class WordBank : MonoBehaviour
     private List<string> workingWords = new List<string>();
     private int currentIndex = 0;
     public GameObject uiContainer;
-    public Renderer itemRenderer;
+    public GameObject PGBook;
+    public Rigidbody rb;
 
     void Start()
     {
-        itemRenderer.enabled = false;
+        rb = PGBook.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody 컴포넌트를 찾을 수 없습니다.");
+        }
+        else
+        {
+            rb.useGravity = false;
+        }
+
+        PGBook.SetActive(false);
     }
 
     private void Awake()
@@ -45,7 +56,8 @@ public class WordBank : MonoBehaviour
         {
             if (uiContainer != null)
             {
-                itemRenderer.enabled = true;
+                PGBook.SetActive(true);
+                rb.useGravity = true;
                 UiManager.instance.OffUi(uiContainer.GetComponent<UiBase>());
             }
         }
