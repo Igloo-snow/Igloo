@@ -15,7 +15,7 @@ public class Brochure : Interactable
         if (blinkingObject != null)
             blinkingObject.StopBlinking();
 
-        promptMessage = "컴퓨터과학 학부의 커리큘럼이다!";
+        promptMessage = "컴퓨터과학전공의 커리큘럼이다!";
 
 
     }
