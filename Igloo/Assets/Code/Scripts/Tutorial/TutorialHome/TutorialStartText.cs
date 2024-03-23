@@ -29,10 +29,10 @@ public class TutorialStartText : TutorialBase
         for (int i = 0; i < str.Length; i++)
         {
             text.text += str[i];
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         isCompleted = true;
     }
 

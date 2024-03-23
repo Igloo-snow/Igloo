@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using static UnityEditor.Progress;
 using UnityEngine.SceneManagement;
 
 public class PlayerData
@@ -60,7 +59,6 @@ public class DataManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("dataManager onsceneloaded");
         InventoryManager inven = FindObjectOfType<InventoryManager>();
         if (inven != null && nowPlayer.items.Count > 0)
         {
