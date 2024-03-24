@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7105858258989058849}
   - component: {fileID: 5674149308895533616}
   - component: {fileID: 5551715904383367728}
+  - component: {fileID: 4808945411016368016}
   m_Layer: 0
   m_Name: EndCreditsNPC
   m_TagString: Interactable
@@ -191,6 +192,20 @@ MonoBehaviour:
   promptMessage: 
   EndCredits: {fileID: 6618253865630102306}
   speechBubble: {fileID: 1082289741221249568}
+--- !u!114 &4808945411016368016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071615682772060808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab8748c899007a74ea5205ba76313b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  changeTime: 16
+  sceneName: MainMenu
 --- !u!1 &1790429882802485386
 GameObject:
   m_ObjectHideFlags: 0
