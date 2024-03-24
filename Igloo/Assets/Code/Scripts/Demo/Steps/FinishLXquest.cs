@@ -39,6 +39,8 @@ public class FinishLXquest : StepBase
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            SoundManager.instance.Play("56_Attack_03");
+
             controller.SetNextStep();
         }
     }

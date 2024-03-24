@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class startDDquest : StepBase
@@ -42,6 +43,7 @@ public class startDDquest : StepBase
     {
         if (isCompleted && Input.GetKeyDown(KeyCode.Tab))
         {
+            SoundManager.instance.Play("56_Attack_03");
             controller.SetNextStep();
         }
     }
