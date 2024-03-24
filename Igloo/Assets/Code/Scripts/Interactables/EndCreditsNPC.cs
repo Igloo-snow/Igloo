@@ -21,6 +21,7 @@ public class EndCreditsNPC : Interactable
     protected override void Interact()
     {
         timeline.Play();
+        SoundManager.instance.Play("resolution", Sound.Bgm, 1f, 0.3f);
         EndCredits.SetActive(true);
     }
 
