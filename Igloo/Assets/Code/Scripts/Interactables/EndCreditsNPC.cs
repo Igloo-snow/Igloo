@@ -9,6 +9,7 @@ public class EndCreditsNPC : Interactable
     public GameObject EndCredits;
     public GameObject speechBubble;
     protected Animator anim;
+    private ChangeSceneOnTimer timer;
 
     void Start()
     {
@@ -16,6 +17,9 @@ public class EndCreditsNPC : Interactable
         timeline = GetComponent<PlayableDirector>();
         EndCredits.SetActive(false);
         anim = GetComponentInChildren<Animator>();
+        timer = GetComponent<ChangeSceneOnTimer>();
+
+        timer.enabled = false;
     }
 
     protected override void Interact()
@@ -23,6 +27,7 @@ public class EndCreditsNPC : Interactable
         timeline.Play();
         SoundManager.instance.Play("resolution", Sound.Bgm, 1f, 0.3f);
         EndCredits.SetActive(true);
+        timer.enabled = true;
     }
 
     private void OnTriggerEnter(Collider other)
