@@ -16,6 +16,8 @@ public class SelectUi : MonoBehaviour
 
     private bool[] saveFile = new bool[3];
 
+    public AudioSource fxAudioSource;
+    public AudioSource bgmAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,11 +31,13 @@ public class SelectUi : MonoBehaviour
     public void Slot(int num)
     {
         DataManager.instance.nowSlot = num;
+        fxAudioSource.Play();
 
         if (saveFile[num]) // 저장된 데이터가 있을 때
         {
             Debug.Log(num + "저장된 데이터 잇음");
             DataManager.instance.LoadData();
+
             StartLoadedGame();
         }
         else // 저장된 데이터가 없을 때
@@ -74,6 +78,7 @@ public class SelectUi : MonoBehaviour
 
     public void StartNewGame()
     {
+        fxAudioSource.Play();
         DataManager.instance.nowPlayer.name = newPlayerName.text;
         DataManager.instance.SaveData();
         SceneManager.LoadScene(8);
@@ -83,6 +88,5 @@ public class SelectUi : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
 
 }
