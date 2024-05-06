@@ -19,9 +19,7 @@ public class Survey : MonoBehaviour
     IEnumerator Post(string s1)
     {
         WWWForm form = new WWWForm();
-        form.AddField("", s1);
-
-
+        form.AddField("entry.", s1);
 
 
         UnityWebRequest www = UnityWebRequest.Post(URL, form);
