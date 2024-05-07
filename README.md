@@ -28,9 +28,9 @@
 |    권민지    |    김예린    |    최선호    |
 | :---------: | :---------: | :---------: |
 | <img src="Images/mj.png" width="150"> | <img src="Images/yr.png" width="150"> | <img src="Images/sh.jpeg" width="150"> |
-<br>
-팀이메일 igeullu06@gmail.com
 
+팀이메일 igeullu06@gmail.com
+<br>
 <br>
 
 ## 개발 환경
