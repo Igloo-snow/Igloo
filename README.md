@@ -2,7 +2,7 @@
 
 <p align="center">
   <br>
-  <img src="mainmenu.png">
+  <img src="Images/mainmenu.png">
   <br>
 </p>
 
@@ -27,7 +27,7 @@
 
 |    권민지    |    김예린    |    최선호    |
 | :---------: | :---------: | :---------: |
-| <img src="mj.png"> | <img src="yr.png"> | <img src="sh.jpeg"> |
+| <img src="Images/mj.png" width="150"> | <img src="Images/yr.png" width="150"> | <img src="Images/sh.jpeg" width="150"> |
 <br>
 팀이메일 igeullu06@gmail.com
 
@@ -43,16 +43,19 @@
 ## 구현 기능
 
 ### 기능 1
-<img src="Picture1.png">
+<img src="Images/Picture1.png" width="500">
 
 ### 기능 2
-<img src="Picture4.png">
+<img src="Images/Picture4.png" width="500">
 
 ### 기능 3
-<img src="Picture9.png">
+<img src="Images/Picture9.png" width="500">
 
 ### 기능 4
-<img src="Picture11.png">
+<img src="Images/Picture11.png" width="500">
+
+### 기능 5
+<img src="Images/Picture14.png" width="500">
 
 <br>
 
