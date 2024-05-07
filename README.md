@@ -1,8 +1,8 @@
-# 학과 소개 게임 "눈송이 키우기"
+# 학과 소개 게임 <눈송이 키우기>
 
 <p align="center">
   <br>
-  <img src="igloo.png">
+  <img src="mainmenu.png">
   <br>
 </p>
 
@@ -25,9 +25,11 @@
 
 ## 팀원 구성
 
-|  권민지  |  김예린  |  최선호  |
-| :------: | :------: | :------: |
-|          |          |          |
+|    권민지    |    김예린    |    최선호    |
+| :---------: | :---------: | :---------: |
+| <img src="mj.png"> | <img src="yr.png"> | <img src="sh.jpeg"> |
+<br>
+팀이메일 igeullu06@gmail.com
 
 <br>
 
@@ -41,22 +43,21 @@
 ## 구현 기능
 
 ### 기능 1
+<img src="Picture1.png">
 
 ### 기능 2
+<img src="Picture4.png">
 
 ### 기능 3
+<img src="Picture9.png">
 
 ### 기능 4
+<img src="Picture11.png">
 
 <br>
 
 ## 개발 기간
+2024.01 ~ 2024.03
 
 <br>
 
-## 연락처
-- @gmail.com
-- @gmail.com
-- @gmail.com
-
-<br>
