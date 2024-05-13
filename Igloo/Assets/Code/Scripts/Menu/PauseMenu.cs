@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     private UiManager uiManager;
     [SerializeField]
     private UiBase panel;
+    [SerializeField]
+    private GameObject keyGuide;
 
     private void Start()
     {
@@ -18,7 +21,16 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CheckUi();
+            if(keyGuide.activeSelf == true) 
+            {
+                Debug.Log("keyguide open");
+                keyGuide.SetActive(false);
+                panel.gameObject.SetActive(true);
+            }
+            else
+            {
+                CheckUi();
+            }
         }
     }
 
