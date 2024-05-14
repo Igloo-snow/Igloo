@@ -45,10 +45,6 @@ public class PauseMenu : MonoBehaviour
 
         DataManager.instance.SaveData();
 
-    #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-    #else
-                Application.Quit();
-    #endif
+        FindAnyObjectByType<SceneMgr>().StartLoadScene((int)SceneNames.MainMenu);
     }
 }
