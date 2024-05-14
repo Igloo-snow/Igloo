@@ -8,9 +8,12 @@ public class Brochure : Interactable
     public UiBase uiBase;
     [SerializeField] private BlinkingObject blinkingObject;
 
+    private bool canOpen;
+
     protected override void Interact()
     {
-        UiManager.instance.CheckUi(uiBase);
+        if(canOpen)
+            UiManager.instance.CheckUi(uiBase);
 
         if (blinkingObject != null)
             blinkingObject.StopBlinking();
@@ -24,5 +27,21 @@ public class Brochure : Interactable
     {
         UiManager.instance.CheckUi(uiBase);
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canOpen = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            canOpen = false;
+        }
     }
 }

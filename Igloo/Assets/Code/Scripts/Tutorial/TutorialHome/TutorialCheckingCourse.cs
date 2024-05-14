@@ -10,15 +10,17 @@ public class TutorialCheckingCourse : TutorialBase
     [SerializeField] private GameObject brochureOnDisplay;
     [SerializeField] private TMP_Text infoUi; 
     private bool isCompleted = false;
+    private GameObject nowBrochure;
 
     public override void Enter()
     {
-        Invoke("DropBrochure", 1f);
+        Invoke("DropBrochure", 0.8f);
     }
 
     private void DropBrochure()
     {
         brochure.SetActive(true);
+        nowBrochure = brochure;
 
     }
 
@@ -33,12 +35,29 @@ public class TutorialCheckingCourse : TutorialBase
     public override void Exit()
     {
         infoUi.text = "";
-        brochureOnDisplay.SetActive(true);
     }
 
     public void CloseBrochure()
     {
-        isCompleted = true;
+        if(nowBrochure == brochure)
+        {
+            StartCoroutine("DestroyFirstBrochure");
+            infoUi.text = "";
+            brochureOnDisplay.SetActive(true);
+            nowBrochure = brochureOnDisplay;
+        }
+        else
+        {
+            isCompleted = true;
+        }
+
+    }
+
+    IEnumerator DestroyFirstBrochure()
+    {
+        brochure.transform.position = new Vector3(-20, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        brochure.SetActive(false);
 
     }
 

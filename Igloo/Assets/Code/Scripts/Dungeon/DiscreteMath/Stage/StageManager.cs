@@ -47,7 +47,7 @@ public class GM : MonoBehaviour
     {
         if (!isDead)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Delete))
             {
                 if (isPause)
                 {
