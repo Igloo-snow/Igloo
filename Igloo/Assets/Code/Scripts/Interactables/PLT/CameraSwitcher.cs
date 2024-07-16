@@ -6,7 +6,7 @@ using Cinemachine;
 public class CameraSwitcher : MonoBehaviour
 {
     public CinemachineFreeLook playerCamera;
-    public CinemachineVirtualCamera targetCamera;
+    public CinemachineVirtualCamera[] virtualCameras;
 
     public PlayerMovement playerMovement;
 
@@ -18,5 +18,13 @@ public class CameraSwitcher : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void SwitchToCamera(CinemachineVirtualCamera targetCamera)
+    {
+        foreach (CinemachineVirtualCamera camera in virtualCameras)
+        {
+            camera.enabled = camera == targetCamera;
+        }
     }
 }

@@ -26,12 +26,10 @@ public class PLTLever : Interactable
         if (isMissionOn)
         {
             targetCamera.enabled = false;
-            playerCamera.enabled = true;
             playerMovement.enabled = true;
         }
         else
         {
-            playerCamera.enabled = false;
             targetCamera.enabled = true;
             playerMovement.enabled = false;
         }
