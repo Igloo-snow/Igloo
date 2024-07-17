@@ -10,9 +10,11 @@ public class QuizDialogueManager : MonoBehaviour, IPointerDownHandler
 {
     public static QuizDialogueManager instance;
 
-    public TMP_Text dialogueText;
+    [SerializeField] Transform textGroup;
+    private SpeechBubble SpeechBubblePrefab;
+    private SpeechBubble SpeechBubbleInstance;
+
     public GameObject nextText;
-    public CanvasGroup dialogueGroup;
     public Queue<string> sentences;
 
     private string currenteSentence;
@@ -29,15 +31,18 @@ public class QuizDialogueManager : MonoBehaviour, IPointerDownHandler
         sentences = new Queue<string>();
     }
 
-    public void OnDialogue(string[] lines)
+    public void OnDialogue(string[] lines, string name)
     {
+        //text 들어갈 프리팹 생성
+        SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
+        SpeechBubbleInstance.speakerName.text = name;
+
+        // 
         sentences.Clear();
         foreach (string line in lines)
         {
             sentences.Enqueue(line);
         }
-        dialogueGroup.alpha = 1;
-        dialogueGroup.blocksRaycasts = true;
 
         NextSentence();
     }
@@ -54,17 +59,16 @@ public class QuizDialogueManager : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            dialogueGroup.alpha = 0;
-            dialogueGroup.blocksRaycasts = false;
+            //종료
         }
     }
 
     IEnumerator Typing(string line)
     {
-        dialogueText.text = "";
+        SpeechBubbleInstance.text.text = "";
         foreach (char letter in line.ToCharArray())
         {
-            dialogueText.text += letter;
+            SpeechBubbleInstance.text.text += letter;
             SoundManager.instance.Play("typing");
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -72,7 +76,7 @@ public class QuizDialogueManager : MonoBehaviour, IPointerDownHandler
 
     void Update()
     {
-        if(dialogueText.text.Equals(currenteSentence))
+        if(SpeechBubbleInstance.text.text.Equals(currenteSentence))
         {
             nextText.SetActive(true);
             isTyping = false;
