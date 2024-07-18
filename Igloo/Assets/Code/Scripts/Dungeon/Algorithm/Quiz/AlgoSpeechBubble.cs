@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SpeechBubble : MonoBehaviour
+public class AlgoSpeechBubble : MonoBehaviour
 {
     public TMP_Text speakerName;
     public TMP_Text text;

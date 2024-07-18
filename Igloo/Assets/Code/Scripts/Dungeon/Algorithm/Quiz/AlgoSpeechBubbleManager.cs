@@ -6,13 +6,13 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Net.NetworkInformation;
 
-public class QuizDialogueManager : MonoBehaviour, IPointerDownHandler
+public class AlgoSpeechBubbleManager : MonoBehaviour, IPointerDownHandler
 {
-    public static QuizDialogueManager instance;
+    public static AlgoSpeechBubbleManager instance;
 
     [SerializeField] Transform textGroup;
-    private SpeechBubble SpeechBubblePrefab;
-    private SpeechBubble SpeechBubbleInstance;
+    private AlgoSpeechBubble SpeechBubblePrefab;
+    private AlgoSpeechBubble SpeechBubbleInstance;
 
     public GameObject nextText;
     public Queue<string> sentences;
