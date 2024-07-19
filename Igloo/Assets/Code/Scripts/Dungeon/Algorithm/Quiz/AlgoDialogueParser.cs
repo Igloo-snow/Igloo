@@ -20,6 +20,14 @@ public class AlgoDialogueParser : MonoBehaviour
 
             AlgoDialogue.id = int.Parse(row[0]);
             AlgoDialogue.name = row[1];
+            if(int.Parse(row[6]) == 1)
+            {
+                AlgoDialogue.isFinal = true;
+            }
+            else
+            {
+                AlgoDialogue.isFinal = false;
+            }
             //Debug.Log(row[1]);
 
             //dialogue.context 배열에 넣기 위한 변환 과정
@@ -30,7 +38,7 @@ public class AlgoDialogueParser : MonoBehaviour
             do
             {
                 contextList.Add(row[2]); 
-                Debug.Log(row[2]);
+                //Debug.Log(row[2]);
 
                 if (row[3] == "1") //선택지 있는지 확인
                 {
@@ -54,7 +62,7 @@ public class AlgoDialogueParser : MonoBehaviour
                         //옵션 넣기
                         algoChoice.id = AlgoDialogue.id;
                         algoChoice.option = row[4];
-                        Debug.Log(row[4]);
+                        //Debug.Log(row[4]);
 
                         algoChoice.nextId = int.Parse(row[5]);
                         algochoices.Add(algoChoice);

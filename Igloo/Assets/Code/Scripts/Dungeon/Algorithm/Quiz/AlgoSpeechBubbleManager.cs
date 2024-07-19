@@ -6,18 +6,26 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Net.NetworkInformation;
 
-public class AlgoSpeechBubbleManager : MonoBehaviour, IPointerDownHandler
+public class AlgoSpeechBubbleManager : MonoBehaviour
 {
     public static AlgoSpeechBubbleManager instance;
 
     [SerializeField] Transform textGroup;
-    private AlgoSpeechBubble SpeechBubblePrefab;
+    [SerializeField] private AlgoSpeechBubble SpeechBubblePrefab;
     private AlgoSpeechBubble SpeechBubbleInstance;
+
+    [SerializeField] Transform optionGroup;
+    [SerializeField] private OptionChoiceBubble OptionChoiceBubblePrefab;
+    private OptionChoiceBubble OptionChoiceBubbleInstance;
 
     public GameObject nextText;
     public Queue<string> sentences;
 
+    private List<AlgoDialogue> dialogues = new List<AlgoDialogue>();
+
     private string currenteSentence;
+    private AlgoDialogue currentAlgoDialogue = new AlgoDialogue();
+    private int currentDialogueIndex = 0;
 
     public float typingSpeed = 0.1f;
     private bool isTyping;
@@ -31,15 +39,28 @@ public class AlgoSpeechBubbleManager : MonoBehaviour, IPointerDownHandler
         sentences = new Queue<string>();
     }
 
-    public void OnDialogue(string[] lines, string name)
+    //DialogueOccasion을 받아서 algoDialogue로 쪼개는 메소드
+    public void TryStartDialogue(AlgoDialogueOccasion dialogueOccasion)
     {
+        for(int i = 0; i <= dialogueOccasion.line.y - dialogueOccasion.line.x; i++)
+        {
+            dialogues.Add(dialogueOccasion.dialogues[i]);
+        }
+        Debug.Log(dialogues.Count); 
+        OnDialogue(dialogues[currentDialogueIndex]);
+    }
+
+    //algoDialogue의 context를 확인한 후 출력을 위해 넘기는 메소드
+    public void OnDialogue(AlgoDialogue algoDialogue)
+    {
+        currentAlgoDialogue = algoDialogue;
         //text 들어갈 프리팹 생성
         SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
-        SpeechBubbleInstance.speakerName.text = name;
+        SpeechBubbleInstance.speakerName.text = algoDialogue.name;
 
         // 
         sentences.Clear();
-        foreach (string line in lines)
+        foreach (string line in currentAlgoDialogue.contexts)
         {
             sentences.Enqueue(line);
         }
@@ -59,7 +80,14 @@ public class AlgoSpeechBubbleManager : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            //종료
+            if(currentDialogueIndex+1 < dialogues.Count)
+            {
+                OnDialogue(dialogues[++currentDialogueIndex]);
+            }
+            else
+            {
+                Debug.Log("종료");
+            }
         }
     }
 
@@ -78,14 +106,61 @@ public class AlgoSpeechBubbleManager : MonoBehaviour, IPointerDownHandler
     {
         if(SpeechBubbleInstance.text.text.Equals(currenteSentence))
         {
-            nextText.SetActive(true);
-            isTyping = false;
+            if(currentAlgoDialogue.choices.Length > 0)
+            {
+                currenteSentence = "";
+                //선택지 띄우기
+                OnChoiceOption();
+            }
+            else
+            {
+                nextText.SetActive(true);
+                isTyping = false;
+            }
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void OnChoiceOption()
     {
-        if(!isTyping)
-            NextSentence();
+        foreach(AlgoChoiceOption option in currentAlgoDialogue.choices)
+        {
+            OptionChoiceBubbleInstance = Instantiate(OptionChoiceBubblePrefab, optionGroup);
+            OptionChoiceBubbleInstance.option = option;
+            OptionChoiceBubbleInstance.text.text = option.option;
+        }
     }
+
+    public void ShowOptionChosen(AlgoChoiceOption chosenOne)
+    {
+        foreach(Transform child in optionGroup)
+        {
+            Destroy(child.gameObject);
+        }
+
+        SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
+        SpeechBubbleInstance.speakerName.text = "나";
+        SpeechBubbleInstance.text.text = chosenOne.option;
+        currentDialogueIndex = chosenOne.nextId - 1;
+        OnDialogue(dialogues[currentDialogueIndex]);
+
+    }
+
+    public void NextClicked()
+    {
+        if (!isTyping)
+        {
+            // 조건을 도대체 어떤 걸 확인해야되냐
+            if (dialogues[currentDialogueIndex].isFinal)
+            {
+                //대화 종료
+                Debug.Log("대화 종료");
+            }
+            else
+            {
+                Debug.Log("nextSentence 메소드 호출");
+                NextSentence();
+            }
+        }
+    }
+
 }

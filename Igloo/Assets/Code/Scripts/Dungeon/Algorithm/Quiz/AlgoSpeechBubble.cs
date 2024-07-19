@@ -21,7 +21,6 @@ public class AlgoSpeechBubble : MonoBehaviour
 
     private void ResizeText()
     {
-        Debug.Log(text.GetComponent<TMP_Text>().preferredHeight);
         textRect.sizeDelta = new Vector2(textRect.sizeDelta.x, text.GetComponent<TMP_Text>().preferredHeight);
         thisRect.sizeDelta = new Vector2(thisRect.sizeDelta.x, text.GetComponent<TMP_Text>().preferredHeight);
     }

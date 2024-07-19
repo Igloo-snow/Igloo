@@ -10,7 +10,7 @@ public class AlgoDataManager : MonoBehaviour
 
     Dictionary<int, AlgoDialogue> dialogueDic = new Dictionary<int, AlgoDialogue>();
 
-    public static bool isFinishl = false;
+    public static bool isFinish = false;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class AlgoDataManager : MonoBehaviour
             {
                 dialogueDic.Add(i+1, dialogues[i]);
             }
-            isFinishl = true;
+            isFinish = true;
         }
     }
 
