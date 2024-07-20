@@ -10,15 +10,21 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
 {
     public static AlgoSpeechBubbleManager instance;
 
+    [Header("Text")]
     [SerializeField] Transform textGroup;
     [SerializeField] private AlgoSpeechBubble SpeechBubblePrefab;
     private AlgoSpeechBubble SpeechBubbleInstance;
 
+    [Header("Option")]
     [SerializeField] Transform optionGroup;
     [SerializeField] private OptionChoiceBubble OptionChoiceBubblePrefab;
     private OptionChoiceBubble OptionChoiceBubbleInstance;
 
+    [Header("UI")]
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private GameObject infoUI;
     public GameObject nextText;
+
     public Queue<string> sentences;
 
     private List<AlgoDialogue> dialogues = new List<AlgoDialogue>();
@@ -27,8 +33,9 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     private AlgoDialogue currentAlgoDialogue = new AlgoDialogue();
     private int currentDialogueIndex = 0;
 
-    public float typingSpeed = 0.1f;
+    private float typingSpeed = 0.05f;
     private bool isTyping;
+    private bool isOpenUI = false;
 
     private void Awake()
     {
@@ -46,7 +53,8 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         {
             dialogues.Add(dialogueOccasion.dialogues[i]);
         }
-        Debug.Log(dialogues.Count); 
+        isOpenUI = true;
+        SetUI(isOpenUI);
         OnDialogue(dialogues[currentDialogueIndex]);
     }
 
@@ -58,7 +66,6 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
         SpeechBubbleInstance.speakerName.text = algoDialogue.name;
 
-        // 
         sentences.Clear();
         foreach (string line in currentAlgoDialogue.contexts)
         {
@@ -86,7 +93,8 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("종료");
+                isOpenUI = false;
+                SetUI(isOpenUI);
             }
         }
     }
@@ -102,22 +110,52 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         }
     }
 
+    private void SetUI(bool setting)
+    {
+        //UI 켜고 끄기
+        canvasGroup.alpha = (setting ? 1 : 0);
+        canvasGroup.blocksRaycasts = setting;
+
+        if (!setting)
+        {
+            //이전 내역 지우기
+            foreach (Transform child in optionGroup)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (Transform child in textGroup)
+            {
+                Destroy(child.gameObject);
+            }
+            //이전 Index 초기화
+            dialogues.Clear();
+            currentDialogueIndex = 0;
+            infoUI.SetActive(true);
+            return;
+        }
+        infoUI.SetActive(false);
+    }
+
     void Update()
     {
-        if(SpeechBubbleInstance.text.text.Equals(currenteSentence))
+        if (isOpenUI)
         {
-            if(currentAlgoDialogue.choices.Length > 0)
+            if (SpeechBubbleInstance.text.text.Equals(currenteSentence))
             {
-                currenteSentence = "";
-                //선택지 띄우기
-                OnChoiceOption();
-            }
-            else
-            {
-                nextText.SetActive(true);
-                isTyping = false;
+                if (currentAlgoDialogue.choices.Length > 0)
+                {
+                    currenteSentence = "";
+                    //선택지 띄우기
+                    OnChoiceOption();
+                }
+                else
+                {
+                    nextText.SetActive(true);
+                    isTyping = false;
+                }
             }
         }
+
     }
 
     private void OnChoiceOption()
@@ -137,27 +175,34 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
+        StartCoroutine(ShowOptionCoroutine(chosenOne));
+
+    }
+
+    IEnumerator ShowOptionCoroutine(AlgoChoiceOption chosenOne)
+    {
+        yield return new WaitForSeconds(0.2f);
+
         SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
         SpeechBubbleInstance.speakerName.text = "나";
         SpeechBubbleInstance.text.text = chosenOne.option;
         currentDialogueIndex = chosenOne.nextId - 1;
-        OnDialogue(dialogues[currentDialogueIndex]);
 
+        yield return new WaitForSeconds(0.4f);
+        OnDialogue(dialogues[currentDialogueIndex]);
     }
 
     public void NextClicked()
     {
         if (!isTyping)
         {
-            // 조건을 도대체 어떤 걸 확인해야되냐
             if (dialogues[currentDialogueIndex].isFinal)
             {
-                //대화 종료
-                Debug.Log("대화 종료");
+                isOpenUI = false;
+                SetUI(isOpenUI);
             }
             else
             {
-                Debug.Log("nextSentence 메소드 호출");
                 NextSentence();
             }
         }
