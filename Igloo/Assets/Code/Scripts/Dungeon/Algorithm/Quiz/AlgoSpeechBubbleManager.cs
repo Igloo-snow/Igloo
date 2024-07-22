@@ -33,6 +33,8 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     private AlgoDialogue currentAlgoDialogue = new AlgoDialogue();
     private int currentDialogueIndex = 0;
 
+    private int npcId;
+
     private float typingSpeed = 0.05f;
     private bool isOpenUI = false;
 
@@ -48,7 +50,8 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     //DialogueOccasion을 받아서 algoDialogue로 쪼개는 메소드
     public void TryStartDialogue(AlgoDialogueOccasion dialogueOccasion)
     {
-        for(int i = 0; i <= dialogueOccasion.line.y - dialogueOccasion.line.x; i++)
+        npcId = dialogueOccasion.npcId;
+        for (int i = 0; i <= dialogueOccasion.line.y - dialogueOccasion.line.x; i++)
         {
             dialogues.Add(dialogueOccasion.dialogues[i]);
         }
@@ -209,7 +212,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             SetUI();
             if (currentAlgoDialogue.nextEvent)
             {
-                Debug.Log("이벤트 연결 구간 확인");
+                GameEventsManager.instance.algoEvents.AlgoQuizRight(npcId);
             }
         }
         else

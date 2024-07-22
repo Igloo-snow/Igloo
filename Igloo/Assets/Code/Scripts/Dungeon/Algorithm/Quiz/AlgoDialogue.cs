@@ -25,6 +25,9 @@ public class AlgoDialogue
 [System.Serializable]
 public class AlgoDialogueOccasion
 {
+    [Tooltip("NPC Event¸¦ À§ÇÑ id")]
+    public int npcId;
+
     public string name;
 
     public Vector2 line;
