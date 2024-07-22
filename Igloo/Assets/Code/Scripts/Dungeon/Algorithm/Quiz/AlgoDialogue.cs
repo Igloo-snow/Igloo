@@ -17,6 +17,9 @@ public class AlgoDialogue
     public AlgoChoiceOption[] choices;
 
     public bool isFinal;
+
+    [Tooltip("연관 이벤트 존재 유무")]
+    public bool nextEvent;
 }
 
 [System.Serializable]

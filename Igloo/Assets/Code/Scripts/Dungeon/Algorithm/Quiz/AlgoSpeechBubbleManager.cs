@@ -12,17 +12,17 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
 
     [Header("Text")]
     [SerializeField] Transform textGroup;
-    [SerializeField] private AlgoSpeechBubble SpeechBubblePrefab;
+    [SerializeField] AlgoSpeechBubble SpeechBubblePrefab;
     private AlgoSpeechBubble SpeechBubbleInstance;
 
     [Header("Option")]
     [SerializeField] Transform optionGroup;
-    [SerializeField] private OptionChoiceBubble OptionChoiceBubblePrefab;
+    [SerializeField] OptionChoiceBubble OptionChoiceBubblePrefab;
     private OptionChoiceBubble OptionChoiceBubbleInstance;
 
     [Header("UI")]
-    [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private GameObject infoUI;
+    [SerializeField] CanvasGroup canvasGroup;
+    [SerializeField] GameObject infoUI;
     public GameObject nextText;
 
     public Queue<string> sentences;
@@ -34,7 +34,6 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     private int currentDialogueIndex = 0;
 
     private float typingSpeed = 0.05f;
-    private bool isTyping;
     private bool isOpenUI = false;
 
     private void Awake()
@@ -54,7 +53,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             dialogues.Add(dialogueOccasion.dialogues[i]);
         }
         isOpenUI = true;
-        SetUI(isOpenUI);
+        SetUI();
         OnDialogue(dialogues[currentDialogueIndex]);
     }
 
@@ -81,7 +80,6 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         {
             currenteSentence = sentences.Dequeue();
             //typingEffect Coroutine
-            isTyping = true;
             nextText.SetActive(false);
             StartCoroutine(Typing(currenteSentence));
         }
@@ -94,7 +92,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             else
             {
                 isOpenUI = false;
-                SetUI(isOpenUI);
+                SetUI();
             }
         }
     }
@@ -108,15 +106,16 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             SoundManager.instance.Play("typing");
             yield return new WaitForSeconds(typingSpeed);
         }
+        AutoScroll.instance.AutoScrolling();
     }
 
-    private void SetUI(bool setting)
+    private void SetUI()
     {
         //UI 켜고 끄기
-        canvasGroup.alpha = (setting ? 1 : 0);
-        canvasGroup.blocksRaycasts = setting;
+        canvasGroup.alpha = (isOpenUI ? 1 : 0);
+        canvasGroup.blocksRaycasts = isOpenUI;
 
-        if (!setting)
+        if (!isOpenUI)
         {
             //이전 내역 지우기
             foreach (Transform child in optionGroup)
@@ -133,8 +132,11 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             infoUI.SetActive(true);
             return;
         }
+
         infoUI.SetActive(false);
     }
+
+
 
     void Update()
     {
@@ -142,7 +144,13 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         {
             if (SpeechBubbleInstance.text.text.Equals(currenteSentence))
             {
-                if (currentAlgoDialogue.choices.Length > 0)
+                if (sentences.Count != 0)
+                {
+                    SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
+                    SpeechBubbleInstance.speakerName.text = "";
+                    NextSentence();
+                }
+                else if (currentAlgoDialogue.choices.Length > 0)
                 {
                     currenteSentence = "";
                     //선택지 띄우기
@@ -151,8 +159,8 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
                 else
                 {
                     nextText.SetActive(true);
-                    isTyping = false;
                 }
+
             }
         }
 
@@ -174,7 +182,6 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
         StartCoroutine(ShowOptionCoroutine(chosenOne));
 
     }
@@ -187,25 +194,27 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         SpeechBubbleInstance.speakerName.text = "나";
         SpeechBubbleInstance.text.text = chosenOne.option;
         currentDialogueIndex = chosenOne.nextId - 1;
-
+        
         yield return new WaitForSeconds(0.4f);
+        AutoScroll.instance.AutoScrolling();
         OnDialogue(dialogues[currentDialogueIndex]);
     }
 
+    //버튼 이벤트
     public void NextClicked()
     {
-        if (!isTyping)
+        if (dialogues[currentDialogueIndex].isFinal)
         {
-            if (dialogues[currentDialogueIndex].isFinal)
+            isOpenUI = false;
+            SetUI();
+            if (currentAlgoDialogue.nextEvent)
             {
-                isOpenUI = false;
-                SetUI(isOpenUI);
-            }
-            else
-            {
-                NextSentence();
+                Debug.Log("이벤트 연결 구간 확인");
             }
         }
+        else
+        {
+            NextSentence();
+        }
     }
-
 }

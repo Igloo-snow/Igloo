@@ -15,7 +15,6 @@ public class Teleportation : Interactable
     private Vector3 detectPlayerArea;
 
     private bool isAnimationPlaying = false;
-    private bool isPlayerNear = false;
 
     private void Start()
     {
@@ -61,10 +60,5 @@ public class Teleportation : Interactable
         {
             player.Reposition(destination);
         }
-    }
-
-    private void StartTeleport()
-    {
-
     }
 }

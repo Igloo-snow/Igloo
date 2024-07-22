@@ -13,5 +13,6 @@ public class OptionChoiceBubble : MonoBehaviour
     public void Chosen()
     {
         AlgoSpeechBubbleManager.instance.ShowOptionChosen(option);
+        
     }
 }

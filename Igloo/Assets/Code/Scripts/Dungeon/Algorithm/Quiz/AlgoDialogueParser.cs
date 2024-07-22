@@ -20,15 +20,6 @@ public class AlgoDialogueParser : MonoBehaviour
 
             AlgoDialogue.id = int.Parse(row[0]);
             AlgoDialogue.name = row[1];
-            if(int.Parse(row[6]) == 1)
-            {
-                AlgoDialogue.isFinal = true;
-            }
-            else
-            {
-                AlgoDialogue.isFinal = false;
-            }
-            //Debug.Log(row[1]);
 
             //dialogue.context 배열에 넣기 위한 변환 과정
             List<string> contextList = new List<string>();
@@ -37,8 +28,18 @@ public class AlgoDialogueParser : MonoBehaviour
 
             do
             {
-                contextList.Add(row[2]); 
+                contextList.Add(row[2]);
                 //Debug.Log(row[2]);
+
+                if (row[6] == "1") // 마지막 대사인지 확인
+                {
+                    AlgoDialogue.isFinal = true;
+                }
+
+                if (int.Parse(row[7]) == 1) // 연관 이벤트 확인
+                {
+                    AlgoDialogue.nextEvent = true;
+                }
 
                 if (row[3] == "1") //선택지 있는지 확인
                 {

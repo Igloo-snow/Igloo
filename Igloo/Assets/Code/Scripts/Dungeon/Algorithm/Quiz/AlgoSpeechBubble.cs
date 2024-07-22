@@ -14,7 +14,7 @@ public class AlgoSpeechBubble : MonoBehaviour
 
     private float height;
 
-    private void Awake()
+    private void Start()
     {
         ResizeText();
     }
