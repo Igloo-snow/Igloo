@@ -10,12 +10,18 @@ public class PLTLever : Interactable
     public CinemachineVirtualCamera[] targetCameras;
     public PlayerMovement playerMovement;
 
-    public GameObject DragDropTest;
+    public GameObject dragDropTest;
+    public GameObject problemUI;
 
     void Start()
     {
         promptMessage = "";
         isMissionOn = false;
+        dragDropTest.SetActive(false);
+        problemUI.SetActive(false);
+
+        targetCameras[0].enabled = false;
+        targetCameras[1].enabled = false;
     }
 
     void Update()
@@ -31,7 +37,8 @@ public class PLTLever : Interactable
             playerMovement.enabled = true;
 
             targetCameras[1].enabled = false;
-            DragDropTest.SetActive(false);
+            dragDropTest.SetActive(false);
+            problemUI.SetActive(false);
         }
         else
         {
@@ -51,6 +58,7 @@ public class PLTLever : Interactable
 
     private void ActivateObjs()
     {
-        DragDropTest.SetActive(true);
+        dragDropTest.SetActive(true);
+        problemUI.SetActive(true);
     }
 }
