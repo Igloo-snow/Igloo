@@ -17,12 +17,6 @@ public class LockedDoor : Interactable
         animator = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-            promptMessage = "";
-
-    }
-
     protected override void Interact()
     {
         if (!InventoryManager.Instance.CheckInventory(keyItem.id))

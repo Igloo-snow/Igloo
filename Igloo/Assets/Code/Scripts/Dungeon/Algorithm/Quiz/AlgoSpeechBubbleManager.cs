@@ -56,7 +56,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             dialogues.Add(dialogueOccasion.dialogues[i]);
         }
         isOpenUI = true;
-        SetUI();
+        SetDialogue();
         OnDialogue(dialogues[currentDialogueIndex]);
     }
 
@@ -95,7 +95,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             else
             {
                 isOpenUI = false;
-                SetUI();
+                SetDialogue();
             }
         }
     }
@@ -112,13 +112,13 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         AutoScroll.instance.AutoScrolling();
     }
 
-    private void SetUI()
+    private void SetDialogue()
     {
         //UI 켜고 끄기
         canvasGroup.alpha = (isOpenUI ? 1 : 0);
         canvasGroup.blocksRaycasts = isOpenUI;
 
-        if (!isOpenUI)
+        if (!isOpenUI) // 끌때
         {
             //이전 내역 지우기
             foreach (Transform child in optionGroup)
@@ -133,10 +133,13 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
             dialogues.Clear();
             currentDialogueIndex = 0;
             infoUI.SetActive(true);
+            UiManager.CameraStop = false;
             return;
         }
 
         infoUI.SetActive(false);
+        UiManager.CameraStop = true;
+
     }
 
 
@@ -209,7 +212,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         if (dialogues[currentDialogueIndex].isFinal)
         {
             isOpenUI = false;
-            SetUI();
+            SetDialogue();
             if (currentAlgoDialogue.nextEvent)
             {
                 GameEventsManager.instance.algoEvents.AlgoQuizRight(npcId);
