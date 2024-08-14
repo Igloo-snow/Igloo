@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer); //base·Î
         playerAttackRange = Physics.CheckSphere(transform.position, attackRange, isPlayer);
 
         if (!isDead)
@@ -58,8 +58,6 @@ public class Enemy : MonoBehaviour
             if (playerInSightRange && !playerAttackRange) ChasePlayer();
             if (playerInSightRange && playerAttackRange) TryAttack();
         }
-
-
     }
 
     private void FixedUpdate()
@@ -109,6 +107,14 @@ public class Enemy : MonoBehaviour
         agent.SetDestination(player.transform.position);
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, attackRange);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position, sightRange);
+    }
+
     private void TryAttack()
     {
         if (!isAttacking)
@@ -133,14 +139,6 @@ public class Enemy : MonoBehaviour
         meleeArea.enabled = false;
         isAttacking = false;
         
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, attackRange);
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
     private void OnTriggerEnter(Collider other)

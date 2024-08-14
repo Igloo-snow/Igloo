@@ -80,11 +80,17 @@ public class SoundManager : MonoBehaviour
         }
         else // Effect 효과음 재생
         {
+            Debug.Log("효과음 재생");
             AudioSource audioSource = audioSources[(int)Sound.Effect];
             audioSource.pitch = pitch;
             audioSource.volume = volume;
             audioSource.PlayOneShot(audioClip);
         }
+    }
+
+    public void ChangeBgmSpeed(float value)
+    {
+        audioSources[(int)Sound.Bgm].pitch = value;
     }
 
     public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
