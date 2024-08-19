@@ -37,6 +37,7 @@ public class DPlayer : MonoBehaviour
                 heldItem = hitCollider.gameObject;
                 heldItem.transform.position = holdPosition.position;
                 heldItem.transform.SetParent(holdPosition);
+                Debug.Log("Item picked up: " + heldItem.name);
                 break;
             }
         }
@@ -47,7 +48,8 @@ public class DPlayer : MonoBehaviour
         if (heldItem != null)
         {
             heldItem.transform.SetParent(null);
-            heldItem.transform.position = dropPosition.position; // dropPosition 위치로 이동
+            heldItem.transform.position = dropPosition.position;
+            Debug.Log("Item dropped: " + heldItem.name);
             heldItem = null;
         }
     }
@@ -60,12 +62,33 @@ public class DPlayer : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             NPC npc = hitCollider.GetComponent<NPC>();
-            if (npc != null && npc == FindObjectOfType<NPCManager>().GetFrontNPC())
+            if (npc != null)
             {
-                if (npc.IsItemCorrect(heldItem))
+                Debug.Log("NPC found: " + npc.name);
+                NPC frontNPC = FindObjectOfType<NPCManager>().GetFrontNPC();
+                if (npc == frontNPC)
                 {
+                    Debug.Log("Front NPC is: " + frontNPC.name);
+                    // NPC에게 아이템을 전달합니다.
                     npc.ReceiveItem(heldItem);
-                    heldItem = null;
+                    if (npc.IsItemCorrect(heldItem))
+                    {
+                        DItem itemScript = heldItem.GetComponent<DItem>();
+                        if (itemScript != null)
+                        {
+                            itemScript.ReturnToOriginalPosition();
+                        }
+                        heldItem = null;
+                        Debug.Log("Item given to NPC and returned to original position: " + npc.name);
+                    }
+                    else
+                    {
+                        Debug.Log("Incorrect item for NPC: " + npc.name);
+                    }
+                }
+                else
+                {
+                    Debug.Log("NPC is not the front NPC: " + npc.name);
                 }
                 break;
             }
