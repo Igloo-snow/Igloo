@@ -5,6 +5,7 @@ using UnityEngine;
 public class DPlayer : MonoBehaviour
 {
     public Transform holdPosition;
+    public Transform dropPosition;
     private GameObject heldItem;
 
     void Update()
@@ -46,7 +47,7 @@ public class DPlayer : MonoBehaviour
         if (heldItem != null)
         {
             heldItem.transform.SetParent(null);
-            heldItem.transform.position = transform.position + transform.forward * 2;
+            heldItem.transform.position = dropPosition.position; // dropPosition 위치로 이동
             heldItem = null;
         }
     }
