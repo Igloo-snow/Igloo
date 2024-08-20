@@ -15,24 +15,9 @@ public class ChasingBase : MonoBehaviour
     protected NavMeshAgent agent;
     protected ActionController player;
 
-
-    protected void PatrollingOrChasing()
+    protected bool CheckPlayerInSightRange(Vector3 center)
     {
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, isPlayer);
-
-        if(playerInSightRange)
-        {
-            ChasePlayer();
-        }
-        else //조건고민필요
-        {
-            Patroling();
-        }
-    }
-
-    private void ChasePlayer()
-    {
-        agent.SetDestination(player.transform.position);
+        return Physics.CheckSphere(center, sightRange, isPlayer);
     }
 
     //protected virtual void FreezeVelocity()
@@ -40,7 +25,21 @@ public class ChasingBase : MonoBehaviour
 
     //}
 
-    private void Patroling()
+    protected void ChasePlayer()
+    {
+        agent.SetDestination(player.transform.position);
+    }
+
+    protected void StayInArea(Vector3 center)
+    {
+        float centerDistance = Vector3.Distance(center, transform.position);
+        if(centerDistance > patrolRange)
+        {
+            agent.SetDestination(center);
+        }
+    }
+
+    protected void Patroling()
     {
         if (agent.remainingDistance <= agent.stoppingDistance)
         {
@@ -53,7 +52,7 @@ public class ChasingBase : MonoBehaviour
         }
     }
 
-    private bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    protected bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
         Vector3 randomPoint = center + Random.insideUnitSphere * range;
         NavMeshHit hit;

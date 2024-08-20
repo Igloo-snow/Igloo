@@ -12,6 +12,7 @@ public class EnemyNs : ChasingBase
     private bool playerInSlowEffectRange;
     [SerializeField] private float slowEffectRange;
     [SerializeField] private float slowRatio = 0.3f;
+    [SerializeField] private Vector3 centerPos;
 
 
     private void Awake()
@@ -20,21 +21,33 @@ public class EnemyNs : ChasingBase
         base.agent = GetComponent<NavMeshAgent>();
         base.player = FindObjectOfType<ActionController>();
         anim = GetComponent<Animator>();
+        centerPos = transform.position;
     }
 
     private void Update()
     {
-        base.PatrollingOrChasing();
+        if (CheckPlayerInSightRange(centerPos))
+        {
+            ChasePlayer();
+        }
+        else
+        {
+            Patroling();
+        }
+
+        StayInArea(centerPos);
     }
 
 
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected(); // (color yellow,sightRange)
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, patrolRange);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, patrolRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, slowEffectRange);
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireSphere(centerPos, patrolRange);
     }
 
     private void OnTriggerEnter(Collider other)
