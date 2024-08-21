@@ -80,7 +80,6 @@ public class SoundManager : MonoBehaviour
         }
         else // Effect 효과음 재생
         {
-            Debug.Log("효과음 재생");
             AudioSource audioSource = audioSources[(int)Sound.Effect];
             audioSource.pitch = pitch;
             audioSource.volume = volume;
