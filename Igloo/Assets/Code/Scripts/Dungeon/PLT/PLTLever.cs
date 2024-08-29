@@ -18,10 +18,6 @@ public class PLTLever : Interactable
     public GameObject pot;
     public GameObject root;
 
-    public AudioClip right;
-    public AudioClip wrong;
-
-
 
     void Start()
     {
@@ -89,8 +85,9 @@ public class PLTLever : Interactable
 
     }
 
-    public void RightAnswer()
+    public void DisableLever()
     {
-        SoundManager.instance.Play(right);
+        Interact();
+        gameObject.GetComponent<PLTLever>().enabled = false;
     }
 }

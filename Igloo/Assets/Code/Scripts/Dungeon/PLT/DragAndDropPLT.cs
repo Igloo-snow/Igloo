@@ -7,12 +7,22 @@ public class DragAndDropPLT : MonoBehaviour
     Vector3 offset;
     Vector3 originPos;
     public string destinationTag = "DropArea";
+    public string destinationName = "";
     bool isHit;
+    bool answer;
+
+    public GameObject quest1;
+
+    public bool getAnswer()
+    {
+        return answer;
+    }
 
     void Start()
     {
         originPos = transform.position;
         isHit = false;
+        quest1 = transform.parent.gameObject;
     }
 
     void OnMouseDown()
@@ -39,6 +49,14 @@ public class DragAndDropPLT : MonoBehaviour
             {
                 transform.position = hitInfo.transform.position;
                 isHit = true;
+
+                if (hitInfo.transform.name == destinationName)
+                {
+                    answer = true;
+                    quest1.GetComponent<PLTQuest1>().CheckRoots();
+                }
+                else
+                    answer = false;
             }
         }
         transform.GetComponent<Collider>().enabled = true;
