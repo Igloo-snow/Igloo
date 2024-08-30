@@ -27,6 +27,7 @@ public class LockedDoor : Interactable
         else
         {
             promptMessage = "";
+            InventoryManager.Instance.Remove(keyItem);
         }
         
         isOpen = !isOpen;

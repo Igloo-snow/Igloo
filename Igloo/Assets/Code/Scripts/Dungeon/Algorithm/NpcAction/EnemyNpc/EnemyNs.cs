@@ -76,7 +76,7 @@ public class EnemyNs : ChasingBase
 
     }
 
-    private void ResetSpeed()
+    public void ResetSpeed()
     {
         player.GetComponent<PlayerMovement>().ChangeSpeed(1f);
         SoundManager.instance.ChangeBgmSpeed(1f);
