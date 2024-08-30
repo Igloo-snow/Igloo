@@ -87,6 +87,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void ChangeBgmSpeed(float value)
+    {
+        audioSources[(int)Sound.Bgm].pitch = value;
+    }
+
     public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
     {
         AudioClip audioClip = GetorAddAudioClip(path, type);

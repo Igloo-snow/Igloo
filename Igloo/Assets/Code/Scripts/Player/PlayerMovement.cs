@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     public CinemachineFreeLook freeLook;
     private Animator anim;
+    private float slowFator = 1f;
     [SerializeField]
     private float speed = 6f;
     [SerializeField]
@@ -90,7 +91,14 @@ public class PlayerMovement : MonoBehaviour
         }
 
         direction.y += Physics.gravity.y * Time.deltaTime;
-        cc.Move(direction.normalized * speed * Time.deltaTime);
+        cc.Move(direction.normalized * speed * slowFator * Time.deltaTime);
 
     }
+
+    public void ChangeSpeed(float value)
+    {
+        slowFator = value;
+        anim.speed = value;
+    }
+
 }
