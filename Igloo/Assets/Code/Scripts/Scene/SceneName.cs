@@ -18,7 +18,9 @@ public enum SceneNames
     CutsceneLx,
     Linux,
     CutscenePLT,
-    PLT
+    PLT,
+    CutsceneAG,
+    Algorithm
 }
 
 public class SceneName : MonoBehaviour
@@ -57,6 +59,10 @@ public class SceneName : MonoBehaviour
                 return "프언론 던전";
             case 14:
                 return "프언론 던전";
+            case 15:
+                return "알고리즘 던전";
+            case 16:
+                return "알고리즘 던전";
             default:
                 return "";
         }
