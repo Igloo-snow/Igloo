@@ -20,7 +20,8 @@ public enum SceneNames
     CutscenePLT,
     PLT,
     CutsceneAG,
-    Algorithm
+    Algorithm,
+    DataStructure
 }
 
 public class SceneName : MonoBehaviour
