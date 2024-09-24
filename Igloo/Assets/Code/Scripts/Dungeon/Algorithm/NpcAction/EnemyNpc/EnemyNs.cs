@@ -39,16 +39,16 @@ public class EnemyNs : ChasingBase
     }
 
 
-    protected override void OnDrawGizmosSelected()
-    {
-        base.OnDrawGizmosSelected(); // (color yellow,sightRange)
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, patrolRange);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, slowEffectRange);
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(centerPos, patrolRange);
-    }
+    //protected override void OnDrawGizmosSelected()
+    //{
+    //    base.OnDrawGizmosSelected(); // (color yellow,sightRange)
+    //    //Gizmos.color = Color.red;
+    //    //Gizmos.DrawWireSphere(transform.position, patrolRange);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, slowEffectRange);
+    //    Gizmos.color = Color.black;
+    //    Gizmos.DrawWireSphere(centerPos, patrolRange);
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
