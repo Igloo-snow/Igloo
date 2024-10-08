@@ -8,6 +8,7 @@ public enum Sound
 {
     Bgm,
     Effect,
+    Effect2,
     MaxCount
 }
 public class SoundManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class SoundManager : MonoBehaviour
 
     public void Init()
     {
-        string[] soundNames = System.Enum.GetNames(typeof(Sound)); // "Bgm", "Effect"
+        string[] soundNames = System.Enum.GetNames(typeof(Sound)); // "Bgm", "Effect", "Effect2"
         for (int i = 0; i < soundNames.Length - 1; i++)
         {
             GameObject go = new GameObject { name = soundNames[i] };

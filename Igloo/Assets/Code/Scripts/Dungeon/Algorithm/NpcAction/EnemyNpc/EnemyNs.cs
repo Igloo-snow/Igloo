@@ -10,7 +10,7 @@ public class EnemyNs : ChasingBase
     private Animator anim;
 
     private bool playerInSlowEffectRange;
-    [SerializeField] private float slowEffectRange;
+    //[SerializeField] private float slowEffectRange;
     [SerializeField] private float slowRatio = 0.3f;
     [SerializeField] private Vector3 centerPos;
 
