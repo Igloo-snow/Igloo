@@ -6,6 +6,7 @@ public class BubbleNpcV2 : MonoBehaviour
 {
     [SerializeField] private string[] contents;
     [SerializeField] private SpeechBubbleV2 speechBubble;
+    [SerializeField] private BoxCollider boxCollider;
 
     private bool isLeverUp = false;
     private void OnTriggerEnter(Collider other)
@@ -47,5 +48,24 @@ public class BubbleNpcV2 : MonoBehaviour
     public void LeverUp()
     {
         isLeverUp = true;
+    }
+
+    public void CloseEternally()
+    {
+        CloseBubble();
+        // 활성화 되지 않도록 collider 삭제
+        boxCollider.gameObject.SetActive(false);
+    }
+
+    public bool IsNowOpen()
+    {
+        if (speechBubble.gameObject.activeSelf)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

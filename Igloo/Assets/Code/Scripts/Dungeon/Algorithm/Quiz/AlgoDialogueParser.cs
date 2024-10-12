@@ -23,6 +23,7 @@ public class AlgoDialogueParser : MonoBehaviour
 
             //dialogue.context 배열에 넣기 위한 변환 과정
             List<string> contextList = new List<string>();
+
             List<AlgoChoiceOption> algochoices = new List<AlgoChoiceOption>();
             AlgoChoiceOption algoChoice = new AlgoChoiceOption();
 

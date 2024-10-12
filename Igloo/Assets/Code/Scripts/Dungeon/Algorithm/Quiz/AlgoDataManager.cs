@@ -33,7 +33,7 @@ public class AlgoDataManager : MonoBehaviour
 
         for(int i = 0; i<= endNum - startNum; i++)
         {
-            dialogueList.Add(dialogueDic[i +1]);
+            dialogueList.Add(dialogueDic[(startNum-1) + i +1]);
         }
 
         return dialogueList.ToArray();
