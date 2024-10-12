@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class AlgoNpc : Interactable
 {
     [SerializeField] private AlgoDialogueOccasion dialogue;
+    [SerializeField] bool speechBubbleRelated = false;
 
     private void OnEnable()
     {
@@ -40,12 +41,13 @@ public class AlgoNpc : Interactable
         GetComponent<AlgoNpc>().ShowDialogue();
     }
 
-    private void StartActing(int id)
+    private void StartActing(int id, int eventId)
     {
         if(id == dialogue.npcId)
         {
             if (GetComponent<AlgoNpcAction>())
             {
+                GetComponent<AlgoNpcAction>().nextEventId = eventId;
                 GetComponent<AlgoNpcAction>().Base();
             }
         }

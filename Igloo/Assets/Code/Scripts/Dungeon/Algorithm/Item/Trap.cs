@@ -11,9 +11,12 @@ public class Trap : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            
+            
             Debug.Log("플레이어인식1");
             Animator anim = collision.gameObject.GetComponent<Animator>();
             anim.SetTrigger("Jump");
+
         }
     }
 }

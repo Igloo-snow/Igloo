@@ -5008,7 +5008,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -5106,8 +5106,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8424816248227766286}
-  - component: {fileID: 9085906111867999926}
   - component: {fileID: 621123076238051671}
+  - component: {fileID: 4510374391809868792}
   m_Layer: 13
   m_Name: Trigger
   m_TagString: Interactable
@@ -5130,27 +5130,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3240131982534488250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &9085906111867999926
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840664058890279654}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &621123076238051671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5168,8 +5147,29 @@ MonoBehaviour:
   offParticle: {fileID: 4864913767683583842}
   baseParticle: {fileID: 7961057207742083314}
   baseNs: {fileID: 1380691465799300285}
-  sphereCollider: {fileID: 9085906111867999926}
+  collider: {fileID: 4510374391809868792}
   baseModel: {fileID: 2587046719924296917}
+--- !u!65 &4510374391809868792
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840664058890279654}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1, z: 5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2539037992088529992
 GameObject:
   m_ObjectHideFlags: 0

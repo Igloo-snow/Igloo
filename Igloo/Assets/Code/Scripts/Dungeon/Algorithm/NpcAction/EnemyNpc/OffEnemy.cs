@@ -10,7 +10,7 @@ public class OffEnemy : Interactable
     [SerializeField] private ParticleSystem offParticle;
     [SerializeField] private ParticleSystem baseParticle;
     [SerializeField] private EnemyNs baseNs;
-    [SerializeField] private SphereCollider sphereCollider;
+    [SerializeField] private BoxCollider collider;
     [SerializeField] private GameObject baseModel;
 
     private bool canGive = false;
@@ -39,7 +39,7 @@ public class OffEnemy : Interactable
     IEnumerator ClearNSCoroutine()
     {
         baseNs.ResetSpeed();
-        sphereCollider.enabled = false;
+        collider.enabled = false;
         baseParticle.gameObject.SetActive(false);
         offParticle.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.7f);

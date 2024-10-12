@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AlgoNpcAction : MonoBehaviour
 {
+    public int nextEventId;
     public void Base()
     {
         ActionStart();

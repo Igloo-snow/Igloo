@@ -29,9 +29,10 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
 
     private List<AlgoDialogue> dialogues = new List<AlgoDialogue>();
 
-    private string currenteSentence;
+    private string currentSentence;
     private AlgoDialogue currentAlgoDialogue = new AlgoDialogue();
     private int currentDialogueIndex = 0;
+    private int currentDialogueStart = 0;
 
     private int npcId;
 
@@ -51,6 +52,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     public void TryStartDialogue(AlgoDialogueOccasion dialogueOccasion)
     {
         npcId = dialogueOccasion.npcId;
+        currentDialogueStart = (int)dialogueOccasion.line.x;
         for (int i = 0; i <= dialogueOccasion.line.y - dialogueOccasion.line.x; i++)
         {
             dialogues.Add(dialogueOccasion.dialogues[i]);
@@ -81,10 +83,10 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     {
         if(sentences.Count != 0)
         {
-            currenteSentence = sentences.Dequeue();
+            currentSentence = sentences.Dequeue();
             //typingEffect Coroutine
             nextText.SetActive(false);
-            StartCoroutine(Typing(currenteSentence));
+            StartCoroutine(Typing(currentSentence));
         }
         else
         {
@@ -148,7 +150,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     {
         if (isOpenUI)
         {
-            if (SpeechBubbleInstance.text.text.Equals(currenteSentence))
+            if (SpeechBubbleInstance.text.text.Equals(currentSentence))
             {
                 if (sentences.Count != 0)
                 {
@@ -158,7 +160,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
                 }
                 else if (currentAlgoDialogue.choices.Length > 0)
                 {
-                    currenteSentence = "";
+                    currentSentence = "";
                     //선택지 띄우기
                     OnChoiceOption();
                 }
@@ -199,7 +201,7 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
         SpeechBubbleInstance = Instantiate(SpeechBubblePrefab, textGroup);
         SpeechBubbleInstance.speakerName.text = "나";
         SpeechBubbleInstance.text.text = chosenOne.option;
-        currentDialogueIndex = chosenOne.nextId - 1;
+        currentDialogueIndex = chosenOne.nextId - currentDialogueStart;
         
         yield return new WaitForSeconds(0.4f);
         AutoScroll.instance.AutoScrolling();
@@ -211,11 +213,13 @@ public class AlgoSpeechBubbleManager : MonoBehaviour
     {
         if (dialogues[currentDialogueIndex].isFinal)
         {
+            int indexForNextEvent = currentDialogueIndex;
             isOpenUI = false;
             SetDialogue();
             if (currentAlgoDialogue.nextEvent)
             {
-                GameEventsManager.instance.algoEvents.AlgoQuizRight(npcId);
+                Debug.Log(indexForNextEvent);
+                GameEventsManager.instance.algoEvents.AlgoQuizRight(npcId, indexForNextEvent);
             }
         }
         else
