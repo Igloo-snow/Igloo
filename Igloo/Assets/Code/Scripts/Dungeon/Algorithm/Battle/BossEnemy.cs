@@ -10,16 +10,19 @@ using UnityEngine.Rendering;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class BossEnemy : ChasingBase
+public class BossEnemy : MonoBehaviour ,ICharacterState
 {
     public enum AttackType { AttackHorizontal,  AttackDown, AttackJump, Cry }
     private Animator animator;
+    private ActionController player;
+    private NavMeshAgent agent;
 
     public bool isAwake = false;
     private bool isAttacking = false;
     public bool tryToAttack = false;
     public GameObject weapon;
     private int cryCount = 1;
+    private int finishAnimCallCount = 1;
 
     [Header("Range")]
     [SerializeField] private float jumpAttackRange;
@@ -36,20 +39,64 @@ public class BossEnemy : ChasingBase
     public HealthUI playerHealth;
     public GameObject[] attacks;
 
+    [Header("Health")]
+    private int maxHealth = 500;
+
+    [Header("Finish")]
+    public Vector3 startPos;
+    public Quaternion startRotation;
+    public bool isFinish = false;
+
     private bool jumpAttack;
     private bool meleeAttack;
+
+    public int GetHealth()
+    {
+        return maxHealth;
+    }
+
+    public void Die()
+    {
+        //아직 구현 전.
+    }
+    private void OnEnable()
+    {
+        GameEventsManager.instance.playerEvents.onPlayerDie += FinishBattle;
+        GameEventsManager.instance.algoEvents.onAlgoFinalBattleInit += InitBoss;
+    }
+
+    private void OnDisable()
+    {
+        GameEventsManager.instance.playerEvents.onPlayerDie -= FinishBattle;
+        GameEventsManager.instance.algoEvents.onAlgoFinalBattleInit -= InitBoss;
+    }
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").GetComponent<ActionController>();
         agent = GetComponent<NavMeshAgent>();
-
+        startPos = transform.position;
+        startRotation = transform.rotation;
     }
 
     private void Update()
     {
         if (!isAwake)   return;
+        if (isFinish)
+        {
+            //agent.SetDestination(startPos);
+            agent.SetDestination(player.transform.position);
+            animator.SetFloat("Blend", agent.velocity.magnitude);
+
+            if (MathF.Abs(transform.position.x - startPos.x) < 6f && finishAnimCallCount > 0)
+            {
+                transform.rotation = startRotation;
+                animator.SetTrigger("BattleFinish");
+                finishAnimCallCount--; // 이후 리셋시 초기화 필요
+            }
+            return;
+        }
 
         if(currentCooltime > 0)
         {
@@ -57,7 +104,7 @@ public class BossEnemy : ChasingBase
         }
         if (isAttacking) return;
 
-        ChasePlayer();
+        //ChasePlayer();
         animator.SetFloat("Blend", agent.velocity.magnitude);
 
         if (DistanceFromPlayer() <= meleeAttackRange)
@@ -70,6 +117,7 @@ public class BossEnemy : ChasingBase
         }
 
     }
+
 
     private void TryCloseAttack()
     {
@@ -103,6 +151,19 @@ public class BossEnemy : ChasingBase
     {
         animator.SetTrigger(((AttackType)randomIndex).ToString());
     }   
+
+    private void FinishBattle()
+    {
+        isFinish = true;
+        finishAnimCallCount = 1;
+        agent.SetDestination(startPos);
+    }
+
+    private void InitBoss()
+    {
+        isAwake = false;
+        animator.SetTrigger("StartAgain");
+    }
 
     private float GetAngleToPlayer()
     {
@@ -145,4 +206,6 @@ public class BossEnemy : ChasingBase
         }
 
     }
+
+
 }

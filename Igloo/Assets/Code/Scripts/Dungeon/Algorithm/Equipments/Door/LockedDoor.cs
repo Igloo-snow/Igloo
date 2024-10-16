@@ -9,6 +9,9 @@ public class LockedDoor : Interactable
 
     public bool isOpen;
     private Animator animator;
+    [SerializeField] bool isFinalDoor = false;
+
+    private int finalAlgoScene = 17;
 
     void Start()
     {
@@ -35,7 +38,20 @@ public class LockedDoor : Interactable
         {
             animator.SetTrigger("open");
             SoundManager.instance.Play("OpenWoodDoor3");
+            if (isFinalDoor)
+            {
+                // 씬 전환
+                // 몇 초 정도 기다려야할듯
+                StartCoroutine(ChangeSceneCoroutine());        
+            }
 
         }
+    }
+
+    IEnumerator ChangeSceneCoroutine()
+    {
+        yield return new WaitForSeconds(1);
+        FindAnyObjectByType<SceneMgr>().StartLoadScene(finalAlgoScene);
+
     }
 }
