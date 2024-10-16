@@ -11,7 +11,7 @@ public class LockedDoor : Interactable
     private Animator animator;
     [SerializeField] bool isFinalDoor = false;
 
-    private int finalAlgoScene = 17;
+    private int finalAlgoScene = 18;
 
     void Start()
     {

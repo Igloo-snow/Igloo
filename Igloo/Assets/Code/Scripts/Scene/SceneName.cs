@@ -22,6 +22,7 @@ public enum SceneNames
     CutsceneAG,
     Algorithm,
     CutsceneAG_2,
+    Algorithm_2,
     DataStructure
 }
 
@@ -67,6 +68,10 @@ public class SceneName : MonoBehaviour
                 return "알고리즘 던전";
             case 17:
                 return "알고리즘 던전";
+            case 18:
+                return "알고리즘 던전";
+            case 19:
+                return "자료구조 던전";
             default:
                 return "";
         }
