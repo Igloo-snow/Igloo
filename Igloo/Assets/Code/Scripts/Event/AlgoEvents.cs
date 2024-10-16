@@ -11,4 +11,13 @@ public class AlgoEvents
             onAlgoQuizRight(id, eventId);
         }
     }
+
+    public event Action onAlgoFinalBattleInit;
+    public void AlgoFinalBattleInit()
+    {
+        if(onAlgoFinalBattleInit != null)
+        {
+            onAlgoFinalBattleInit();
+        }
+    }
 }

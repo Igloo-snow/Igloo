@@ -18,7 +18,7 @@ public class ActionController : MonoBehaviour
 
     public int maxHealth = 3;
     public int currentHealth = 3;
-    private float attackDelay;
+    private float attackDelay = 0;
 
     private bool isAttackReady = true;
 
@@ -29,8 +29,7 @@ public class ActionController : MonoBehaviour
         freeLook = FindObjectOfType<CinemachineFreeLook>();
 
         weapon = GetComponentInChildren<Weapon>();
-        if(weapon != null )
-        weapon.gameObject.SetActive(false);
+        if (weapon != null) { weapon.gameObject.SetActive(false); }
     }
 
     private void OnEnable()
@@ -68,8 +67,8 @@ public class ActionController : MonoBehaviour
         {
             changingScene = false;
         }
-        
-        //Attack();
+
+        Attack();
     }
 
     void Attack()
@@ -78,7 +77,7 @@ public class ActionController : MonoBehaviour
         if (!weapon || !weapon.isActiveAndEnabled)
             return;
 
-        if (Input.GetMouseButtonDown(0) && !stopMoving && weapon)
+        if (Input.GetMouseButtonDown(0) && !stopMoving && weapon.gameObject.activeSelf)
         {
             isAttackReady = weapon.rate < attackDelay;
 
