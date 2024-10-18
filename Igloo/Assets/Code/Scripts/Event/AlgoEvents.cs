@@ -20,4 +20,13 @@ public class AlgoEvents
             onAlgoFinalBattleInit();
         }
     }
+
+    public event Action onAlgoFinalBattleFinish;
+    public void AlgoFinalBattleFinish()
+    {
+        if (onAlgoFinalBattleFinish != null)
+        {
+            onAlgoFinalBattleFinish();
+        }
+    }
 }

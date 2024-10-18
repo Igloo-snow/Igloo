@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
     {
         meleeArea.enabled = true;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         meleeArea.enabled = false;
     }
 }

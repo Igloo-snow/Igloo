@@ -10,12 +10,10 @@ using UnityEngine.Rendering;
 using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.EventSystems.EventTrigger;
 
-public class BossEnemy : MonoBehaviour ,ICharacterState
+public class BossEnemy : ChasingBase ,ICharacterState
 {
     public enum AttackType { AttackHorizontal,  AttackDown, AttackJump, Cry }
     private Animator animator;
-    private ActionController player;
-    private NavMeshAgent agent;
 
     public bool isAwake = false;
     private bool isAttacking = false;
@@ -41,6 +39,7 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
 
     [Header("Health")]
     private int maxHealth = 500;
+    [SerializeField] HealthUI healthUI;
 
     [Header("Finish")]
     public Vector3 startPos;
@@ -61,13 +60,13 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
     }
     private void OnEnable()
     {
-        GameEventsManager.instance.playerEvents.onPlayerDie += FinishBattle;
+        GameEventsManager.instance.algoEvents.onAlgoFinalBattleFinish += FinishBattle;
         GameEventsManager.instance.algoEvents.onAlgoFinalBattleInit += InitBoss;
     }
 
     private void OnDisable()
     {
-        GameEventsManager.instance.playerEvents.onPlayerDie -= FinishBattle;
+        GameEventsManager.instance.algoEvents.onAlgoFinalBattleFinish -= FinishBattle;
         GameEventsManager.instance.algoEvents.onAlgoFinalBattleInit -= InitBoss;
     }
 
@@ -80,13 +79,22 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
         startRotation = transform.rotation;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PlayerWeapon"))
+        {
+            Debug.Log("플레이어 인식 확인");
+            healthUI.decreaseHealth(50);
+        }
+    }
+
     private void Update()
     {
         if (!isAwake)   return;
         if (isFinish)
         {
             //agent.SetDestination(startPos);
-            agent.SetDestination(player.transform.position);
+            //agent.SetDestination(player.transform.position);
             animator.SetFloat("Blend", agent.velocity.magnitude);
 
             if (MathF.Abs(transform.position.x - startPos.x) < 6f && finishAnimCallCount > 0)
@@ -103,8 +111,10 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
             currentCooltime -= Time.deltaTime;
         }
         if (isAttacking) return;
-
-        //ChasePlayer();
+        if (agent.enabled)
+        {
+            ChasePlayer();
+        }
         animator.SetFloat("Blend", agent.velocity.magnitude);
 
         if (DistanceFromPlayer() <= meleeAttackRange)
@@ -117,7 +127,6 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
         }
 
     }
-
 
     private void TryCloseAttack()
     {
@@ -156,12 +165,17 @@ public class BossEnemy : MonoBehaviour ,ICharacterState
     {
         isFinish = true;
         finishAnimCallCount = 1;
-        agent.SetDestination(startPos);
+
     }
 
     private void InitBoss()
     {
+        if (agent.enabled == false)
+        {
+            agent.enabled = true;
+        }
         isAwake = false;
+        isFinish = false;
         animator.SetTrigger("StartAgain");
     }
 

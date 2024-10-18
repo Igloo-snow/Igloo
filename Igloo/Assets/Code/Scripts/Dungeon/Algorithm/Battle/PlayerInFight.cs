@@ -19,6 +19,7 @@ public class PlayerInFight : MonoBehaviour, ICharacterState
     {
         animator = GetComponent<Animator>();
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Melee"))
@@ -38,7 +39,7 @@ public class PlayerInFight : MonoBehaviour, ICharacterState
 
     public void Die()
     {
-        GameEventsManager.instance.playerEvents.PlayerDie();
+        GameEventsManager.instance.algoEvents.AlgoFinalBattleFinish();
         StartCoroutine(DieCoroutine());
     }
 
