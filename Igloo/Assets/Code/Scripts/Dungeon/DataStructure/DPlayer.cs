@@ -69,26 +69,9 @@ public class DPlayer : MonoBehaviour
                 if (npc == frontNPC)
                 {
                     Debug.Log("Front NPC is: " + frontNPC.name);
-                    // NPC에게 아이템을 전달합니다.
                     npc.ReceiveItem(heldItem);
-                    if (npc.IsItemCorrect(heldItem))
-                    {
-                        DItem itemScript = heldItem.GetComponent<DItem>();
-                        if (itemScript != null)
-                        {
-                            itemScript.ReturnToOriginalPosition();
-                        }
-                        heldItem = null;
-                        Debug.Log("Item given to NPC and returned to original position: " + npc.name);
-                    }
-                    else
-                    {
-                        Debug.Log("Incorrect item for NPC: " + npc.name);
-                    }
-                }
-                else
-                {
-                    Debug.Log("NPC is not the front NPC: " + npc.name);
+                    heldItem = null; // 현재 아이템 제거
+                    Debug.Log("Item given to NPC: " + npc.name);
                 }
                 break;
             }

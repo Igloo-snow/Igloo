@@ -13,6 +13,8 @@ public class NPCManager : MonoBehaviour
     private NPC[] npcs;
     private bool isHandlingNPCRemoval = false;
     private int rewardIndex = 0;
+    private int npcRemovalCount = 0;
+    public float moveDuration = 1f;
 
     void Start()
     {
@@ -69,8 +71,9 @@ public class NPCManager : MonoBehaviour
     IEnumerator HandleNPCRemoval()
     {
         isHandlingNPCRemoval = true;
+        npcRemovalCount++;
 
-        if (rewardIndex < rewardItems.Length)
+        if (npcRemovalCount % 2 == 0 && rewardIndex < rewardItems.Length)
         {
             GameObject reward = rewardItems[rewardIndex];
             reward.SetActive(true);
@@ -81,7 +84,7 @@ public class NPCManager : MonoBehaviour
 
         MoveNPCs();
 
-        yield return new WaitForSeconds(1f);
+        yield return StartCoroutine(MoveNPCs());
 
         SpawnNPC(spawnPoints.Length - 1);
         UpdateNPCInteractivity();
@@ -89,14 +92,26 @@ public class NPCManager : MonoBehaviour
         isHandlingNPCRemoval = false;
     }
 
-    void MoveNPCs()
+    IEnumerator MoveNPCs()
     {
         for (int i = 1; i < npcs.Length; i++)
         {
             if (npcs[i] != null)
             {
-                npcs[i - 1] = npcs[i];
-                npcs[i - 1].transform.position = spawnPoints[i - 1].position;
+                NPC currentNPC = npcs[i];
+                Vector3 startPosition = currentNPC.transform.position;
+                Vector3 targetPosition = spawnPoints[i - 1].position;
+
+                float elapsedTime = 0f;
+                while (elapsedTime < moveDuration)
+                {
+                    currentNPC.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveDuration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+
+                currentNPC.transform.position = targetPosition; // 이동이 끝나면 정확한 위치로 설정
+                npcs[i - 1] = currentNPC;
                 npcs[i] = null;
             }
         }
