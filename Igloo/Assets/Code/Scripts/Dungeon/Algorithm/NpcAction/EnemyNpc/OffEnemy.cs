@@ -22,7 +22,7 @@ public class OffEnemy : Interactable
             if(InventoryManager.Instance.CheckInventory(item.id))
             {
                 canGive = true;
-                promptMessage = "지친 눈송이에게 쿠키를 준다:E";
+                promptMessage = "지친 눈송이에게 도넛을 준다:E";
             }
         }
     }
