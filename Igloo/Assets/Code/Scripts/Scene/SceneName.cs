@@ -23,6 +23,7 @@ public enum SceneNames
     Algorithm,
     CutsceneAG_2,
     Algorithm_2,
+    CutsceneDS,
     DataStructure
 }
 
