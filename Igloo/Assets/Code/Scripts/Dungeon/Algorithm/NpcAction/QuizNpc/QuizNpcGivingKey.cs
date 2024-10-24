@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Quiz1Npc : AlgoNpcAction
+public class QuizNpcGivingKey : AlgoNpcAction
 {
     [SerializeField] Animator animator;
 
