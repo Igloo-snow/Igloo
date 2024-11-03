@@ -8,7 +8,7 @@ public class DragAndDropPLT : MonoBehaviour
     Vector3 originPos;
     public string destinationTag = "DropArea";
     public string destinationName = "";
-    bool isHit;
+    public bool isHit;
     bool answer;
 
     public GameObject quest1;
@@ -53,10 +53,11 @@ public class DragAndDropPLT : MonoBehaviour
                 if (hitInfo.transform.name == destinationName)
                 {
                     answer = true;
-                    quest1.GetComponent<PLTQuest1>().CheckRoots();
                 }
                 else
                     answer = false;
+                quest1.GetComponent<PLTQuest1>().CheckRoots();
+
             }
         }
         transform.GetComponent<Collider>().enabled = true;

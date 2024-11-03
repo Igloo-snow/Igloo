@@ -12,6 +12,7 @@ public class PLTQuest1 : MonoBehaviour
     public GameObject itemPrefab;
     //public GameObject answerFXPrefab;
     public AudioClip right;
+    public AudioClip wrong;
 
     void Awake()
     {
@@ -30,6 +31,14 @@ public class PLTQuest1 : MonoBehaviour
 
         for (int i = 0; i < childs.Length; i++)
         {
+            if (childs[i].isHit == false)
+            {
+                return;
+            }
+        }
+
+        for (int i = 0; i < childs.Length; i++)
+        {
             result = result && childs[i].getAnswer();
         }
 
@@ -40,6 +49,8 @@ public class PLTQuest1 : MonoBehaviour
 
             Invoke("Answer1", 2f);
         }
+        else
+            WrongAnswer();
     }
     
     public void Answer1()
@@ -53,5 +64,10 @@ public class PLTQuest1 : MonoBehaviour
     public void RightAnswer()
     {
         SoundManager.instance.Play(right);
+    }
+
+    public void WrongAnswer()
+    {
+        SoundManager.instance.Play(wrong);
     }
 }
