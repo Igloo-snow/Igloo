@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Progress;
+using System;
+using Unity.VisualScripting;
 
 public class PlayerData
 {
     // 이름, 보유 아이템, 퀘스트 진행상황
     public string name;
-    public List<Item> items = new List<Item>(); 
+    public List<ActiveItem> items = new List<ActiveItem>();
     //public Dictionary<string, Quest> quests;
     public List<npcData> npcs = new List<npcData>();
     public List<Quest> quests = new List<Quest>();
@@ -43,6 +46,7 @@ public class DataManager : MonoBehaviour
         {
             Debug.Log(npc.npcId + npc.index);
         }
+
     }
 
     private void OnEnable()
@@ -59,12 +63,15 @@ public class DataManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        InventoryManager inven = FindObjectOfType<InventoryManager>();
+        InventoryManager inven  = FindObjectOfType<InventoryManager>();
+
         if (inven != null && nowPlayer.items.Count > 0)
         {
-            foreach (var item in nowPlayer.items)
+            foreach (ActiveItem activeItem in nowPlayer.items)
             {
-                inven.Items.Add(item);
+                //inven.AddFromData(activeItem);
+                inven.Items.Add(activeItem.item);
+                inven.itemCount.Add(activeItem.item, activeItem.count);
             }
             inven.InitItemUi();
         }

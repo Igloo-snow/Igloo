@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform cameraTransform;
     public CinemachineFreeLook freeLook;
     private Animator anim;
+    private float slowFator = 1f;
     [SerializeField]
     private float speed = 6f;
     [SerializeField]
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 direction;
 
+    public bool isAttacked = false;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -32,6 +35,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (isAttacked)
+        {
+            return;
+        }
 
         if (DialogueManager.GetInstance().isPlaying)
         {
@@ -90,7 +97,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         direction.y += Physics.gravity.y * Time.deltaTime;
-        cc.Move(direction.normalized * speed * Time.deltaTime);
+        cc.Move(direction.normalized * speed * slowFator * Time.deltaTime);
 
     }
+
+    public void ChangeSpeed(float value)
+    {
+        slowFator = value;
+        anim.speed = value;
+    }
+
+    public void Attacked(Transform obstacle)
+    {
+        isAttacked = true;
+        anim.CrossFade("JumpBack", 0.2f);
+        direction = -(obstacle.position - transform.position);
+        direction.y = jumpSpeed;
+        cc.Move(direction.normalized * speed * Time.deltaTime);
+
+        isAttacked = false;
+    }
+
 }

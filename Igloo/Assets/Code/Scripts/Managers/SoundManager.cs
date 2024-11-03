@@ -8,6 +8,7 @@ public enum Sound
 {
     Bgm,
     Effect,
+    Effect2,
     MaxCount
 }
 public class SoundManager : MonoBehaviour
@@ -36,7 +37,7 @@ public class SoundManager : MonoBehaviour
 
     public void Init()
     {
-        string[] soundNames = System.Enum.GetNames(typeof(Sound)); // "Bgm", "Effect"
+        string[] soundNames = System.Enum.GetNames(typeof(Sound)); // "Bgm", "Effect", "Effect2"
         for (int i = 0; i < soundNames.Length - 1; i++)
         {
             GameObject go = new GameObject { name = soundNames[i] };
@@ -85,6 +86,11 @@ public class SoundManager : MonoBehaviour
             audioSource.volume = volume;
             audioSource.PlayOneShot(audioClip);
         }
+    }
+
+    public void ChangeBgmSpeed(float value)
+    {
+        audioSources[(int)Sound.Bgm].pitch = value;
     }
 
     public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f, float volume = 0.5f)
