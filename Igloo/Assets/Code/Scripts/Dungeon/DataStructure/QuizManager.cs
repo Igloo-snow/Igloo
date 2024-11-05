@@ -9,12 +9,10 @@ public class QuizManager : MonoBehaviour
     public GameObject rewardUIPanel;
     public Button[] rewardButtons;
     public GameObject[] rewardItems;
-    public AudioClip correct;
-    public AudioClip wrong;
-    private AudioSource audioSource;
     private List<int> remainingQuizzes;
     public int currentQuizIndex = -1;
     private bool isQuizActive = false;
+    private bool isRewardActive = false;
 
     private GameObject player;
     private GameObject camera;
@@ -22,10 +20,13 @@ public class QuizManager : MonoBehaviour
 
     public Transform dropPositionObject;
 
+    public AudioSource audioSource;
+    public AudioClip correctSound;
+    public AudioClip incorrectSound;
+
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
+        Time.timeScale = 1f;
         player = GameObject.FindWithTag("Player");
         camera = GameObject.Find("Camera");
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -48,7 +49,7 @@ public class QuizManager : MonoBehaviour
 
     void Update()
     {
-        if (isQuizActive)
+        if (isQuizActive || isRewardActive)
         {
             if (playerMovement != null)
             {
@@ -68,6 +69,8 @@ public class QuizManager : MonoBehaviour
 
     public void StartQuiz()
     {
+        Time.timeScale = 1f;
+
         if (remainingQuizzes.Count == 0)
         {
             ResetQuizList();
@@ -79,21 +82,24 @@ public class QuizManager : MonoBehaviour
 
         quizUIPanels[currentQuizIndex].SetActive(true);
         isQuizActive = true;
+        isRewardActive = false;
 
         foreach (var panel in quizUIPanels)
         {
             var quizPanel = panel.GetComponent<QuizPanel>();
             if (quizPanel != null)
             {
-                quizPanel.quizIndex = currentQuizIndex; // 올바른 인덱스를 설정
+                quizPanel.quizIndex = currentQuizIndex;
             }
         }
     }
 
     IEnumerator ShowRewardUI()
     {
+        yield return new WaitForSeconds(0.5f);
         rewardUIPanel.SetActive(true);
-        yield break;
+        isRewardActive = true;
+        isQuizActive = false;
     }
 
     public void OnRewardSelected(int itemIndex)
@@ -102,6 +108,7 @@ public class QuizManager : MonoBehaviour
 
         rewardUIPanel.SetActive(false);
         GiveItemToPlayer(rewardItems[itemIndex]);
+        isRewardActive = false;
         isQuizActive = false;
         currentQuizIndex = -1;
     }
@@ -133,12 +140,16 @@ public class QuizManager : MonoBehaviour
     {
         if (isCorrect)
         {
-            audioSource.PlayOneShot(correct);
+            Time.timeScale = 1f;
+            audioSource.PlayOneShot(correctSound);
+            quizUIPanels[quizIndex].SetActive(false);
+            isQuizActive = false;
             StartCoroutine(ShowRewardUI());
         }
         else
         {
-            audioSource.PlayOneShot(wrong);
+            Time.timeScale = 1f;
+            audioSource.PlayOneShot(incorrectSound);
         }
         quizUIPanels[quizIndex].SetActive(false);
     }
