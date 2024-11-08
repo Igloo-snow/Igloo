@@ -14,7 +14,7 @@ public class QuestStepUI : MonoBehaviour
     public GameObject FadePannel;
 
     private QuestManager questManager;
-    private readonly List<string> questIds = new List<string> { "DSQuest", "DDQuest", "LXQuest", "TypingQuest", "PLTQuest", "DiscreteMath", "AlgoQuest" };
+    private readonly List<string> questIds = new List<string> {"DDQuest", "LXQuest", "TypingQuest", "PLTQuest", "DiscreteMath", "AlgoQuest" };
 
     private void Start()
     {

@@ -56,8 +56,23 @@ public class WordBank : MonoBehaviour
         {
             if (uiContainer != null)
             {
-                PGBook.SetActive(true);
-                rb.useGravity = true;
+                if (PGBook != null)
+                {
+                    PGBook.SetActive(true);
+                    /*Instantiate(PGBook);
+
+                    rb = PGBook.GetComponent<Rigidbody>();
+                    if (rb == null)
+                    {
+                        Debug.LogError("Rigidbody 컴포넌트를 찾을 수 없습니다.");
+                    }
+                    else
+                    {
+                        rb.useGravity = false;
+                    }*/
+
+                    rb.useGravity = true;
+                }
                 UiManager.instance.OffUi(uiContainer.GetComponent<UiBase>());
             }
         }
