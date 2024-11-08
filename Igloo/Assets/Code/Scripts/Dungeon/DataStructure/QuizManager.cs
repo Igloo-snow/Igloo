@@ -151,6 +151,5 @@ public class QuizManager : MonoBehaviour
             Time.timeScale = 1f;
             audioSource.PlayOneShot(incorrectSound);
         }
-        quizUIPanels[quizIndex].SetActive(false);
     }
 }
