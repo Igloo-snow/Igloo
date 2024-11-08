@@ -10,7 +10,8 @@ public class QuestStepUI : MonoBehaviour
     public Transform questListContainer;
     public GameObject questUIPrefab;
     public Button sceneTransitionButton;
-    public string EndingScene;
+    public int EndingScenenum;
+    public GameObject FadePannel;
 
     private QuestManager questManager;
     private readonly List<string> questIds = new List<string> { "DSQuest", "DDQuest", "LXQuest", "TypingQuest", "PLTQuest", "DiscreteMath", "AlgoQuest" };
@@ -75,13 +76,19 @@ public class QuestStepUI : MonoBehaviour
 
     public void TransitionToScene()
     {
-        if (!string.IsNullOrEmpty(EndingScene))
+        StartCoroutine(FadeOutStart());
+    }
+
+    public IEnumerator FadeOutStart()
+    {
+        FadePannel.SetActive(true);
+        for (float f = 0f; f < 1; f += 0.02f)
         {
-            SceneManager.LoadScene(EndingScene);
+            Color c = FadePannel.GetComponent<Image>().color;
+            c.a = f;
+            FadePannel.GetComponent<Image>().color = c;
+            yield return null;
         }
-        else
-        {
-            Debug.LogError("타겟 씬 이름이 설정되지 않았습니다.");
-        }
+        SceneManager.LoadScene(EndingScenenum);
     }
 }
