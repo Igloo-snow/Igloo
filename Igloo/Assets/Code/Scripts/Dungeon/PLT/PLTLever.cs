@@ -6,6 +6,7 @@ using Cinemachine;
 public class PLTLever : Interactable
 {
     private bool isMissionOn;
+    private bool canInteract;
     public CinemachineFreeLook playerCamera;
     public CinemachineVirtualCamera[] targetCameras;
     public PlayerMovement playerMovement;
@@ -23,6 +24,8 @@ public class PLTLever : Interactable
     {
         promptMessage = "";
         isMissionOn = false;
+        canInteract = true;
+
         dragDropTest.SetActive(false);
         problemUI.SetActive(false);
 
@@ -40,6 +43,9 @@ public class PLTLever : Interactable
 
     protected override void Interact()
     {
+        if (canInteract == false)
+            return;
+
         if (isMissionOn)
         {
             targetCameras[0].enabled = false;
@@ -57,6 +63,8 @@ public class PLTLever : Interactable
         }
         else
         {
+            canInteract = false;
+
             targetCameras[0].enabled = true;
             playerMovement.enabled = false;
 
@@ -83,6 +91,7 @@ public class PLTLever : Interactable
         pot.SetActive(false);
         root.SetActive(true);
 
+        canInteract = true;
     }
 
     public void DisableLever()
