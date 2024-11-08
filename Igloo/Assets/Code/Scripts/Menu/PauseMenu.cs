@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour
     private UiBase panel;
     [SerializeField]
     private GameObject keyGuide;
+    [SerializeField]
+    private GameObject audioMenu;
 
     private void Start()
     {
@@ -23,8 +25,12 @@ public class PauseMenu : MonoBehaviour
         {
             if(keyGuide.activeSelf == true) 
             {
-                Debug.Log("keyguide open");
                 keyGuide.SetActive(false);
+                panel.gameObject.SetActive(true);
+            }
+            else if (audioMenu.activeSelf == true)
+            {
+                audioMenu.SetActive(false);
                 panel.gameObject.SetActive(true);
             }
             else

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public enum Sound
@@ -15,10 +16,16 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;
 
+    [HideInInspector]
+    public float bgmVolume = -6.0f;
+    [HideInInspector]
+    public float sfxVolume = -6.0f;
+
     AudioSource[] audioSources = new AudioSource[(int)Sound.MaxCount];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip> ();
 
-    [SerializeField] AudioClip bgmClip; 
+    [SerializeField] AudioClip bgmClip;
+    [SerializeField] AudioMixer audioMixer;
 
     private void Awake()
     {
@@ -46,6 +53,20 @@ public class SoundManager : MonoBehaviour
         }
 
         audioSources[(int)Sound.Bgm].loop = true; // bgm 재생기는 무한 반복 재생
+        AudioMixerGroup[] groups = audioMixer.FindMatchingGroups("Master");
+        foreach(AudioMixerGroup group in groups)
+        {
+            if(group.name == "BGM")
+            {
+                audioSources[(int)Sound.Bgm].outputAudioMixerGroup = group;
+            }
+            if(group.name == "SFX")
+            {
+                audioSources[(int)Sound.Effect].outputAudioMixerGroup = group;
+            }
+        }
+        
+
 
         Play(bgmClip, Sound.Bgm, 1, 0.1f);
 

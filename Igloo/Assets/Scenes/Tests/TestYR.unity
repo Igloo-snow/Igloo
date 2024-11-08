@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &31417967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20763,7 +20763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1171053026
 Transform:
   m_ObjectHideFlags: 0
@@ -21462,8 +21462,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 781247581}
   backgroundBar: {fileID: 1185847868}
+  character: {fileID: 0}
   maxHealth: 1000
-  currentHealth: 1000
 --- !u!114 &1335178791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43635,8 +43635,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1840740233}
   backgroundBar: {fileID: 737243290}
+  character: {fileID: 0}
   maxHealth: 500
-  currentHealth: 500
 --- !u!222 &1852076906
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -49435,6 +49435,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinalBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 8799360661272608692, guid: a1bb9d584c3c4e84eabcd511dab3d9bd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8850927755856590572, guid: a1bb9d584c3c4e84eabcd511dab3d9bd, type: 3}
       propertyPath: playerHealth
       value: 
@@ -49457,6 +49461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: 1728c429aebdf412ab76d617e40d8845, type: 3}
+  audioMixer: {fileID: 24100000, guid: 03f37e533f620944ea0aa408b7a1a538, type: 2}
 --- !u!4 &1052404489398033167
 Transform:
   m_ObjectHideFlags: 0
@@ -49806,7 +49811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7137269483787108043}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.034654297, y: -0.0000000029464913, z: -1.02169946e-10, w: 0.99939936}
+  m_LocalRotation: {x: -0.0346543, y: 8.78895e-10, z: 3.0475816e-11, w: 0.99939936}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -61763,13 +61768,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8611516926613940435}
     m_Modifications:
+    - target: {fileID: 990217773139733865, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 990217773139733865, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2381852043157393309, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
     - target: {fileID: 2381852043157393309, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4889549844070393658, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
       propertyPath: m_Pivot.x
@@ -61849,6 +61862,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4889549844070393658, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247232565956931463, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247232565956931463, guid: 03e28fcf145ad764eb4c61a46fd442a8, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -63913,6 +63934,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 1852076905}
+  UIImage: {fileID: 0}
+  startPos: {fileID: 0}
 --- !u!222 &8671598321558919205
 CanvasRenderer:
   m_ObjectHideFlags: 0
