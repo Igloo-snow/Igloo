@@ -118,4 +118,10 @@ public class PlayerMovement : MonoBehaviour
         isAttacked = false;
     }
 
+    public void Sit(bool onOff, Transform t, Vector3 offset)
+    {
+        anim.SetBool("IsSitting", onOff);
+        gameObject.transform.position = t.position + offset;
+        gameObject.transform.rotation = t.rotation;
+    }
 }
