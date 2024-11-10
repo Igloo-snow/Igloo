@@ -16,7 +16,7 @@ public class DialogueTrigger : MonoBehaviour
     private bool isQuestRelated;
     public bool isPlayerInRange;
 
-    public Image cueImage;
+    //public Image cueImage;
     public Transform target;
 
     private void Awake()
@@ -24,7 +24,7 @@ public class DialogueTrigger : MonoBehaviour
         isPlayerInRange = false;
         isFirst = true;
         //visualCue.SetActive(false);
-        cueImage.enabled = false;
+        //cueImage.enabled = false;
         index = 0;
     }
 
@@ -38,7 +38,7 @@ public class DialogueTrigger : MonoBehaviour
         if (isPlayerInRange)
         {
             //visualCue.SetActive(true);
-            cueImage.enabled = true;
+            //cueImage.enabled = true;
             if (!DialogueManager.GetInstance().isPlaying)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -64,10 +64,10 @@ public class DialogueTrigger : MonoBehaviour
         else
         {
             //visualCue.SetActive(false);
-            cueImage.enabled = false;
+            //cueImage.enabled = false;
         }
 
-        cueImage.transform.position = Camera.main.WorldToScreenPoint(target.position);
+        //cueImage.transform.position = Camera.main.WorldToScreenPoint(target.position);
     }
 
     private void OnTriggerEnter(Collider collider)

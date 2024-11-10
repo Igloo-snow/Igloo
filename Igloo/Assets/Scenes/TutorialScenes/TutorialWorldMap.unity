@@ -14034,17 +14034,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
---- !u!114 &602396000 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 314760055624714509, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
-  m_PrefabInstance: {fileID: 602395999}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &602396001 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3198669838693674361, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
@@ -20967,7 +20956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &897136464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35583,7 +35572,6 @@ MonoBehaviour:
   isFirst: 0
   isQuestRelated: 1
   isPlayerInRange: 0
-  cueImage: {fileID: 1666043300}
   target: {fileID: 548351181}
 --- !u!4 &1487619234 stripped
 Transform:
@@ -39592,17 +39580,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
---- !u!114 &1666043300 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 314760055624714509, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
-  m_PrefabInstance: {fileID: 1666043299}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1666043301 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3198669838693674361, guid: d59c3e302585e0c43ac4f1ce6c79d280, type: 3}
@@ -47853,11 +47830,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7269191
+      value: 0.72691905
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09930319
+      value: 0.09930317
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.y
@@ -47865,7 +47842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8157042065538123513, guid: 0d27af89671cf674dbb9a230aed3b32d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.09197187
+      value: 0.09197188
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -48081,7 +48058,6 @@ MonoBehaviour:
   isFirst: 0
   isQuestRelated: 1
   isPlayerInRange: 0
-  cueImage: {fileID: 602396000}
   target: {fileID: 1672036389}
 --- !u!65 &2025604941
 BoxCollider:

@@ -7,8 +7,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryManager : MonoBehaviour
 {
